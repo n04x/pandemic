@@ -1,0 +1,29 @@
+# http://stackoverflow.com/a/30925448/238687
+sudo: false
+
+language: cpp
+
+compiler:
+  - gcc
+  - clang
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    - george-edison55-precise-backports
+    packages:
+    - gcc-6
+    - g++-6
+    - clang
+    - cmake
+    - cmake-data
+
+before_script:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
+  - mkdir build
+  - cd build
+  - cmake ..
+
+script:
+  - make && ./pandemic
