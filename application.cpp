@@ -1,29 +1,31 @@
 #include "application.h"
-#include <fstream>
-#include <vector>
+#include "command/reference_card.h"
+#include "command/setup.h"
+#include "command/status.h"
 #include <iomanip>
-#include <iterator>
 
-application::application(std::istream &in, std::ostream &out) : in(in), out(out), p() {
+application::application(std::istream &in, std::ostream &out) :
+		in{in},
+		out{out},
+		c{out},
+		commands() {
+	make_command<reference_card>();
+	make_command<setup>();
+	make_command<status>();
 };
 
 auto application::help() -> void {
-	out << "reference-card	Print reference card" << std::endl;
-	out << "setup			Setup the game" << std::endl;
-	out << "status			Show game status" << std::endl;
-	out << "exit			Exit the application" << std::endl;
+	static constexpr auto col1 = 16;
+	static constexpr auto fill = ' ';
+	for (auto const &i : commands) {
+		out << std::left << std::setw(col1) << std::setfill(fill) << i.second->name();
+		out << i.second->description();
+		out << std::endl;
+	}
 }
 
 auto application::invalid_command(std::string const &command) -> void {
 	out << "'" << command << "'" << " is not a valid command" << std::endl;
-}
-
-auto application::reference_card() -> void {
-	std::ifstream s("../text/reference_card.md");
-	if (!s.is_open()) {
-		throw "could not open reference card";
-	}
-	out << s.rdbuf() << std::endl;
 }
 
 auto application::prompt() -> void {
@@ -41,51 +43,25 @@ auto application::intro() -> void {
 	out << banner << std::endl << std::endl;
 }
 
-auto application::setup() -> void {
-	p.add_player("red"_h);
-	p.set_role("red"_h, "dispatcher"_h);
-	p.add_player("blue"_h);
-	p.set_role("blue"_h, "scientist"_h);
-}
-
-auto application::status() -> void {
-	std::vector<handle> v;
-	p.get_players(std::back_inserter(v));
-	if (v.empty()) {
-		out << "no players" << std::endl;
-		return;
-	}
-	static constexpr auto col1 = 8;
-	static constexpr auto col2 = 10;
-	static constexpr auto fill = ' ';
-	out << std::left << std::setw(col1) << std::setfill(fill) << "PLAYER";
-	out << std::left << std::setw(col2) << std::setfill(fill) << "ROLE";
-	out << std::endl;
-	for (auto i : v) {
-		auto role = p.get_role(i);
-		out << std::left << std::setw(col1) << std::setfill(fill) << i;
-		out << std::left << std::setw(col2) << std::setfill(fill) << role;
-		out << std::endl;
-	}
-}
-
 auto application::run() -> void {
-	std::string token;
 	intro();
 	prompt();
-	while (in >> token) {
-		if (token == "help" || token == "commands") {
-			help();
-		} else if (token == "reference-card") {
-			reference_card();
-		} else if (token == "setup") {
-			setup();
-		} else if (token == "s" || token == "status") {
-			status();
-		} else if (token == "exit") {
+	for (std::string line; std::getline(in, line);) {
+		std::istringstream iss(line);
+		std::string com;
+		if (!(iss >> com)) {
+			throw "unexpected input error";
+		}
+		if (com == "exit") {
 			break;
+		} else if (com == "help") {
+			help();
 		} else {
-			invalid_command(token);
+			try {
+				commands.at(com)->run(c);
+			} catch (std::out_of_range const &) {
+				invalid_command(com);
+			}
 		}
 		prompt();
 	}
