@@ -5,7 +5,7 @@
 
 using handle = std::string;
 
-auto inline operator ""_h(char const *s, long unsigned int count) -> handle {
+auto inline operator ""_h(char const *s, size_t count) -> handle {
 	return std::string(s, count);
 }
 

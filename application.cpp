@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include <iterator>
 
 application::application(std::istream &in, std::ostream &out) : in(in), out(out), p() {
 };
