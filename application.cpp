@@ -3,6 +3,7 @@
 #include "command/setup.h"
 #include "command/status.h"
 #include <iomanip>
+#include <sstream>
 
 application::application(std::istream &in, std::ostream &out) :
 		in{in},

@@ -1,5 +1,6 @@
 #include <vector>
 #include <iomanip>
+#include <iterator>
 #include "status.h"
 
 auto status::name() const -> std::string {

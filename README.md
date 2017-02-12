@@ -9,6 +9,8 @@ Implements the PANDEMIC role playing game.
 1. Run *build.cmd*
 2. Open *build/pandemic.sln*
 
+After pulling changes, do these steps again to update the project files.
+
 ### Adding files to the project
 
 1. Open *CMakeLists.txt*
