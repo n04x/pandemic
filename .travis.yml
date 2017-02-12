@@ -26,4 +26,4 @@ before_script:
   - cmake ..
 
 script:
-  - make && ./pandemic
+  - make && echo "exit" | ./pandemic

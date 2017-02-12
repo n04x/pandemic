@@ -30,7 +30,7 @@ auto application::prompt() -> void {
 }
 
 auto application::intro() -> void {
-	static auto banner = R"(
+	static constexpr auto banner = R"(
                         _                _
   _ __   __ _ _ __   __| | ___ _ __ ___ (_) ___
  | '_ \ / _` | '_ \ / _` |/ _ \ '_ ` _ \| |/ __|
