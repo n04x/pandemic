@@ -2,7 +2,7 @@
 #define PANDEMIC_CONTEXT_H
 
 #include <ostream>
-#include "../players.h"
+#include "../state/players.h"
 
 struct context {
 	inline context(std::ostream &out) : out{out}, p{} {}
