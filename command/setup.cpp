@@ -11,6 +11,8 @@ auto setup::description() const -> std::string {
 auto setup::run(context &c) const -> void {
 	c.p.add_player("red"_h);
 	c.p.set_role("red"_h, "dispatcher"_h);
+	c.p.set_city("red"_h, "vancouver"_h);
 	c.p.add_player("blue"_h);
 	c.p.set_role("blue"_h, "scientist"_h);
+	c.p.set_city("blue"_h, "atlanta"_h);
 }
