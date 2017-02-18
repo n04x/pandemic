@@ -3,7 +3,7 @@
 
 #include <iosfwd>
 #include <string>
-#include "context.h"
+#include "../context.h"
 
 struct command {
 	virtual ~command() = default;
