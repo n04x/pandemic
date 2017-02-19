@@ -22,7 +22,9 @@ After pulling changes, do these steps again to update the project files.
 ### Linux
 
 ```bash
-$ mkdir build && cmake .. && make
+$ mkdir build && cd build
+$ cmake ..
+$ make
 ```
 
 ## Design
