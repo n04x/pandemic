@@ -9,9 +9,12 @@
 #include "state/players.h"
 #include "command/command.h"
 
+// application handles user input and output.
 struct application {
+
 	application(std::istream &in, std::ostream &out);
 
+	// run starts the game loop. It returns when the user exits the game.
 	auto run() -> void;
 
 private:
@@ -24,7 +27,7 @@ private:
 	auto intro() -> void;
 
 	template<class T>
-	auto make_command() -> void {
+	auto insert_command() -> void {
 		auto com = std::make_unique<T>();
 		commands.insert(std::make_pair(com->name(), std::move(com)));
 	}

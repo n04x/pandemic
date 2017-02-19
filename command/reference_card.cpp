@@ -9,8 +9,8 @@ auto reference_card::description() const -> std::string {
 	return "Print reference card";
 }
 
-auto reference_card::run(context &c) const -> void {
-	std::ifstream s("../text/reference_card.md");
+auto reference_card::run(context &c, command::args_t const &args) const -> void {
+	std::ifstream s{"../text/reference_card.md"};
 	if (!s.is_open()) {
 		throw "could not open reference card";
 	}

@@ -7,6 +7,7 @@
 #include <random>
 #include "../handle.h"
 
+// decks represents a collection of card decks.
 struct decks {
     using cards_t = std::deque<handle>;
     using const_iterator = cards_t::const_iterator;
@@ -20,21 +21,21 @@ struct decks {
     }
 
     inline auto remove_from_top(handle name) -> handle {
-        auto cards = d.at(name).cards;
+        auto &cards = d.at(name).cards;
         auto result = cards.front();
         cards.pop_front();
         return result;
     }
 
     inline auto remove_from_bottom(handle name) -> handle {
-        auto cards = d.at(name).cards;
+        auto &cards = d.at(name).cards;
         auto result = cards.back();
         cards.pop_back();
         return result;
     }
 
     inline auto remove(handle name, handle card) -> void {
-        auto cards = d.at(name).cards;
+        auto &cards = d.at(name).cards;
         std::remove(cards.begin(), cards.end(), card);
     }
 
@@ -53,7 +54,7 @@ struct decks {
     inline auto shuffle(handle name) -> void {
         static std::random_device rd;
         static std::mt19937 g{rd()};
-        auto cards = d.at(name).cards;
+        auto &cards = d.at(name).cards;
         std::shuffle(cards.begin(), cards.end(), g);
     }
 

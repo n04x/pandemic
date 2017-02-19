@@ -1,0 +1,24 @@
+blue san_francisco chicago los_angeles tokyo manila
+blue chicago montreal atlanta mexico_city san_francisco
+blue montreal new_york washington chicago
+blue new_york london madrid washington montreal
+blue washington new_york atlanta montreal
+blue atlanta montreal washington miami chicago
+blue london essen paris madrid new_york
+blue essen st_petersburg milan paris london
+blue st_petersburg moscow istanbul essen
+blue milan istanbul paris essen
+blue paris essen milan algiers madrid london
+blue madrid london paris algiers sao_paulo new_york
+yellow los_angeles chicago mexico_city sydney san_francisco
+yellow mexico_city chicago miami bogota lima los_angeles
+yellow miami washington bogota mexico_city atlanta
+yellow bogota miami sao_paulo buenos_aires lima mexico_city
+yellow sao_paulo madrid lagos buenos_aires bogota
+yellow buenos_aires sao_paulo bogota
+yellow santirgo lima
+yellow lima bogota santirgo
+yellow lagos khartoum kinshrsr sao_paulo
+yellow khartoum johannesburg kinshrsr lagos cairo
+yellow johannesburg khartoum kinshrsr
+yellow kinshrsr khartoum johannesburg lagos

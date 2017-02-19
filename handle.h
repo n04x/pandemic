@@ -3,46 +3,50 @@
 
 #include <string>
 
+// handle represents an opaque identifier for a game object.
 struct handle {
-    inline handle() : name{} {
-    }
+	inline handle() : name{} {
+	}
 
-    inline explicit handle(std::string name) : name{name} {
-    }
+	inline handle(std::string name) : name{name} {
+	}
 
-    friend auto operator==(handle const &lhs, handle const &rhs) -> bool;
+	friend auto operator==(handle const &lhs, handle const &rhs) -> bool;
 
-    friend auto operator<<(std::ostream &os, const handle &h) -> std::ostream &;
+	friend auto operator<<(std::ostream &os, const handle &h) -> std::ostream &;
 
-    friend struct std::hash<handle>;
-
+	friend struct std::hash<handle>;
 private:
-    std::string name;
+	std::string name;
 };
 
+// _h returns a handle for the given string
 inline auto operator ""_h(char const *s, std::size_t count) -> handle {
-    return handle{std::string{s, count}};
+	return handle{std::string{s, count}};
 }
 
+// == returns true if lhs and rhs represent the same game object
 inline auto operator==(handle const &lhs, handle const &rhs) -> bool {
-    return lhs.name == rhs.name;
+	return lhs.name == rhs.name;
 }
 
+// << writes the handle to the given stream
 inline auto operator<<(std::ostream &os, const handle &h) -> std::ostream & {
-    os << h.name;
-    return os;
+	os << h.name;
+	return os;
 }
 
 namespace std {
-    template<>
-    struct hash<handle> {
-        using argument_type = handle;
-        using result_type = std::size_t;
+	// hash<handle> specializes the hash for handles
+	template<>
+	struct hash<handle> {
+		using argument_type = handle;
+		using result_type = std::size_t;
 
-        result_type operator()(argument_type const &s) const {
-            return std::hash<std::string>{}(s.name);
-        }
-    };
+		auto operator()(argument_type const &s) const -> result_type {
+			return std::hash<std::string>{}(s.name);
+		}
+	};
 }
 
 #endif //PANDEMIC_HANDLE_H

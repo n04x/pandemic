@@ -1,9 +1,9 @@
-#ifndef PANDEMIC_STATUS_H
-#define PANDEMIC_STATUS_H
+#ifndef PANDEMIC_CITIES_H
+#define PANDEMIC_CITIES_H
 
 #include "command.h"
 
-struct status : command {
+struct cities : command {
 	virtual auto name() const -> std::string override;
 
 	virtual auto description() const -> std::string override;
@@ -11,4 +11,4 @@ struct status : command {
 	virtual auto run(context &c, command::args_t const &args) const -> void override;
 };
 
-#endif //PANDEMIC_STATUS_H
+#endif //PANDEMIC_CITIES_H

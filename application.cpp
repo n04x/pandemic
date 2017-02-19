@@ -2,6 +2,10 @@
 #include "command/reference_card.h"
 #include "command/setup.h"
 #include "command/status.h"
+#include "command/load.h"
+#include "command/cities.h"
+#include "command/place_pawn.h"
+#include "command/save.h"
 #include <iomanip>
 #include <sstream>
 
@@ -10,9 +14,13 @@ application::application(std::istream &in, std::ostream &out) :
 		out{out},
 		c{out},
 		commands() {
-	make_command<reference_card>();
-	make_command<setup>();
-	make_command<status>();
+	insert_command<reference_card>();
+	insert_command<setup>();
+	insert_command<status>();
+	insert_command<load>();
+	insert_command<save>();
+	insert_command<cities>();
+	insert_command<place_pawn>();
 };
 
 auto application::help() -> void {
@@ -47,8 +55,10 @@ auto application::intro() -> void {
 auto application::run() -> void {
 	intro();
 	prompt();
-	for (std::string line; std::getline(in, line);) {
-		std::istringstream iss(line);
+	std::string line;
+	while (std::getline(in, line)) {
+		// use stream to tokenize line
+		std::istringstream iss{line};
 		std::string com;
 		if (!(iss >> com)) {
 			throw "unexpected input error";
@@ -58,8 +68,15 @@ auto application::run() -> void {
 		} else if (com == "help") {
 			help();
 		} else {
+			// read command arguments
+			std::vector<std::string> args;
+			std::string arg;
+			while (iss >> arg) {
+				args.emplace_back(arg);
+			}
+			// run command
 			try {
-				commands.at(com)->run(c);
+				commands.at(com)->run(c, args);
 			} catch (std::out_of_range const &) {
 				invalid_command(com);
 			}

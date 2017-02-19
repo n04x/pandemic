@@ -8,7 +8,7 @@ struct setup : command {
 
 	virtual auto description() const -> std::string override;
 
-	virtual auto run(context &) const -> void override;
+	virtual auto run(context &c, command::args_t const &args) const -> void override;
 };
 
 #endif //PANDEMIC_SETUP_H

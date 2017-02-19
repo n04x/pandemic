@@ -1,4 +1,3 @@
-#include <vector>
 #include <iomanip>
 #include <iterator>
 #include "status.h"
@@ -11,13 +10,7 @@ auto status::description() const -> std::string {
 	return "Show game status";
 }
 
-auto status::run(context &c) const -> void {
-	std::vector<handle> v;
-	c.p.get_players(std::back_inserter(v));
-	if (v.empty()) {
-		c.out << "no players" << std::endl;
-		return;
-	}
+auto status::run(context &c, command::args_t const &args) const -> void {
 	static constexpr auto col1 = 8;
 	static constexpr auto col2 = 12;
 	static constexpr auto col3 = 12;
@@ -26,10 +19,11 @@ auto status::run(context &c) const -> void {
 	c.out << std::left << std::setw(col2) << std::setfill(fill) << "ROLE";
 	c.out << std::left << std::setw(col3) << std::setfill(fill) << "CITY";
 	c.out << std::endl;
-	for (auto i : v) {
-		auto role = c.p.get_role(i);
-		auto city = c.p.get_city(i);
-		c.out << std::left << std::setw(col1) << std::setfill(fill) << i;
+	for (auto i : c.game_players) {
+		auto name = i.first;
+		auto role = c.game_players.get_role(name);
+		auto city = c.game_players.get_city(name);
+		c.out << std::left << std::setw(col1) << std::setfill(fill) << name;
 		c.out << std::left << std::setw(col2) << std::setfill(fill) << role;
 		c.out << std::left << std::setw(col3) << std::setfill(fill) << city;
 		c.out << std::endl;
