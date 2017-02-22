@@ -13,7 +13,7 @@ application::application(std::istream &in, std::ostream &out) :
 		in{in},
 		out{out},
 		c{out},
-		commands() {
+		commands{} {
 	insert_command<reference_card>();
 	insert_command<setup>();
 	insert_command<status>();
