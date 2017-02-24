@@ -6,7 +6,7 @@
 #include <unordered_map>
 
 // map represents a PANDEMIC map.
-class map {
+class cities_model {
 	using connected_cities_t = std::unordered_set<handle>;
 
 	struct city {

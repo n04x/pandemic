@@ -29,10 +29,10 @@ auto load::run(context &c, command::args_t const &args) const -> void {
 		iss >> color;
 		std::string name;
 		iss >> name;
-		c.game_map.add_city(color, name);
+		c.cities.add_city(color, name);
 		std::string connection;
 		while (iss >> connection) {
-			c.game_map.connect_city(name, connection);
+			c.cities.connect_city(name, connection);
 		}
 	}
 }

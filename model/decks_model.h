@@ -8,7 +8,7 @@
 #include "../handle.h"
 
 // decks represents a collection of card decks.
-struct decks {
+struct decks_model {
     using cards_t = std::deque<handle>;
     using const_iterator = cards_t::const_iterator;
 

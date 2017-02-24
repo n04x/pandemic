@@ -6,7 +6,7 @@
 #include "../handle.h"
 
 // board represents the PANDEMIC game board.
-struct board {
+struct game_model {
 	inline auto cube_supply_count(handle color) const -> int {
 		return cube_supply.at(color);
 	}
@@ -47,7 +47,7 @@ struct board {
 		return research_station_supply;
 	}
 
-	inline auto remove_research_station() -> void {
+	inline auto remove_research_station_supply() -> void {
 		research_station_supply--;
 	}
 

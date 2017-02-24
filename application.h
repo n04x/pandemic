@@ -6,7 +6,6 @@
 #include <string>
 #include <memory>
 #include <unordered_map>
-#include "state/players.h"
 #include "command/command.h"
 
 // application handles user input and output.

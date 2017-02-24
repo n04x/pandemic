@@ -19,10 +19,10 @@ auto status::run(context &c, command::args_t const &args) const -> void {
 	c.out << std::left << std::setw(col2) << std::setfill(fill) << "ROLE";
 	c.out << std::left << std::setw(col3) << std::setfill(fill) << "CITY";
 	c.out << std::endl;
-	for (auto i : c.game_players) {
+	for (auto i : c.players) {
 		auto name = i.first;
-		auto role = c.game_players.get_role(name);
-		auto city = c.game_players.get_city(name);
+		auto role = c.players.get_role(name);
+		auto city = c.players.get_city(name);
 		c.out << std::left << std::setw(col1) << std::setfill(fill) << name;
 		c.out << std::left << std::setw(col2) << std::setfill(fill) << role;
 		c.out << std::left << std::setw(col3) << std::setfill(fill) << city;

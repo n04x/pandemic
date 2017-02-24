@@ -2,25 +2,29 @@
 #define PANDEMIC_CONTEXT_H
 
 #include <ostream>
-#include "state/players.h"
-#include "state/decks.h"
-#include "state/map.h"
+#include "model/players_model.h"
+#include "model/decks_model.h"
+#include "model/cities_model.h"
+#include "model/game_model.h"
 
 // context represents the game state.
 struct context {
-	inline context(std::ostream &out) : out{out}, game_players{}, game_decks{} {}
+	inline context(std::ostream &out) : out{out}, players{}, decks{}, cities{}, game{} {}
 
 	// out prints text to the user.
 	std::ostream &out;
 
-	// game_players represents all the game players.
-	players game_players;
+	// players represents all the game players.
+	players_model players;
 
-	// game_decks represents all the game decks.
-	decks game_decks;
+	// decks represents all the game decks.
+	decks_model decks;
 
-	// game_map represents the PANDEMIC map.
-	map game_map;
+	// cities represents the PANDEMIC map.
+	cities_model cities;
+
+	// game represents the PANDEMIC game.
+	game_model game;
 };
 
 #endif //PANDEMIC_CONTEXT_H

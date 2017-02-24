@@ -13,12 +13,12 @@ auto save::run(context &c, command::args_t const &args) const -> void {
 	auto const &filename = args.at(0);
 	std::ofstream s;
 	s.open(filename);
-	for (auto i : c.game_map) {
+	for (auto i : c.cities) {
 		auto city = i.first;
-		auto color = c.game_map.get_color(city);
+		auto color = c.cities.get_color(city);
 		s << color << " ";
 		s << city << " ";
-		for (auto connection = c.game_map.begin(city); connection != c.game_map.end(city); connection++) {
+		for (auto connection = c.cities.begin(city); connection != c.cities.end(city); connection++) {
 			s << *connection << " ";
 		}
 		s << std::endl;

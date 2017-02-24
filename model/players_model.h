@@ -4,7 +4,7 @@
 #include "../handle.h"
 #include <unordered_map>
 
-class players {
+class players_model {
 	struct player {
 		handle color;
 		handle role;
