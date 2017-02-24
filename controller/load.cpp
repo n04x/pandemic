@@ -11,7 +11,7 @@ auto load::description() const -> std::string {
 	return "Load map";
 }
 
-auto load::run(context &c, command::args_t const &args) const -> void {
+auto load::run(context &c, controller::args_t const &args) const -> void {
 	std::string filename{"../data/default.panmap.txt"};
 	if (!args.empty()) {
 		filename = args.at(0);

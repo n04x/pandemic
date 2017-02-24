@@ -9,7 +9,7 @@ auto save::description() const -> std::string {
 	return "Save map";
 }
 
-auto save::run(context &c, command::args_t const &args) const -> void {
+auto save::run(context &c, controller::args_t const &args) const -> void {
 	auto const &filename = args.at(0);
 	std::ofstream s;
 	s.open(filename);

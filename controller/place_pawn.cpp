@@ -8,7 +8,7 @@ auto place_pawn::description() const -> std::string {
 	return "Place player pawn";
 }
 
-auto place_pawn::run(context &c, command::args_t const &args) const -> void {
+auto place_pawn::run(context &c, controller::args_t const &args) const -> void {
 	auto const &player = args.at(0);
 	auto const &city = args.at(1);
 	// validate city

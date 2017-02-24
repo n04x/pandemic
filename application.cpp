@@ -1,32 +1,32 @@
 #include "application.h"
-#include "command/reference_card.h"
-#include "command/setup.h"
-#include "command/status.h"
-#include "command/load.h"
-#include "command/cities.h"
-#include "command/place_pawn.h"
-#include "command/save.h"
+#include "controller/reference_card.h"
+#include "controller/setup.h"
+#include "controller/status.h"
+#include "controller/load.h"
+#include "controller/cities.h"
+#include "controller/place_pawn.h"
+#include "controller/save.h"
 #include <iomanip>
 #include <sstream>
 
 application::application(std::istream &in, std::ostream &out) :
 		in{in},
 		out{out},
-		c{out},
-		commands{} {
-	insert_command<reference_card>();
-	insert_command<setup>();
-	insert_command<status>();
-	insert_command<load>();
-	insert_command<save>();
-	insert_command<cities>();
-	insert_command<place_pawn>();
+		ctx{out},
+		controllers{} {
+	insert_controller<reference_card>();
+	insert_controller<setup>();
+	insert_controller<status>();
+	insert_controller<load>();
+	insert_controller<save>();
+	insert_controller<cities>();
+	insert_controller<place_pawn>();
 };
 
 auto application::help() -> void {
 	static constexpr auto col1 = 16;
 	static constexpr auto fill = ' ';
-	for (auto const &i : commands) {
+	for (auto const &i : controllers) {
 		out << std::left << std::setw(col1) << std::setfill(fill) << i.second->name();
 		out << i.second->description();
 		out << std::endl;
@@ -76,7 +76,7 @@ auto application::run() -> void {
 			}
 			// run command
 			try {
-				commands.at(com)->run(c, args);
+				controllers.at(com)->run(ctx, args);
 			} catch (std::out_of_range const &) {
 				invalid_command(com);
 			}

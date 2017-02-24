@@ -6,7 +6,7 @@
 #include <string>
 #include <memory>
 #include <unordered_map>
-#include "command/command.h"
+#include "controller/controller.h"
 
 // application handles user input and output.
 struct application {
@@ -26,15 +26,15 @@ private:
 	auto intro() -> void;
 
 	template<class T>
-	auto insert_command() -> void {
+	auto insert_controller() -> void {
 		auto com = std::make_unique<T>();
-		commands.insert(std::make_pair(com->name(), std::move(com)));
+		controllers.insert(std::make_pair(com->name(), std::move(com)));
 	}
 
 	std::istream &in;
 	std::ostream &out;
-	context c;
-	std::unordered_map<std::string, std::unique_ptr<command>> commands;
+	context ctx;
+	std::unordered_map<std::string, std::unique_ptr<controller>> controllers;
 };
 
 #endif //PANDEMIC_APPLICATION_H

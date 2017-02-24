@@ -1,26 +1,26 @@
-#ifndef PANDEMIC_COMMAND_H
-#define PANDEMIC_COMMAND_H
+#ifndef PANDEMIC_CONTROLLER_H
+#define PANDEMIC_CONTROLLER_H
 
 #include <iosfwd>
 #include <string>
 #include <vector>
 #include "../context.h"
 
-// command represents a game action.
-struct command {
+// controller represents a game action.
+struct controller {
 	using args_t = std::vector<std::string>;
 
-	virtual ~command() = default;
+	virtual ~controller() = default;
 
-	command() = default;
+	controller() = default;
 
-	command(command const &) = default;
+	controller(controller const &) = default;
 
-	command(command &&) = default;
+	controller(controller &&) = default;
 
-	virtual auto operator=(command const &) -> command & = default;
+	virtual auto operator=(controller const &) -> controller & = default;
 
-	virtual auto operator=(command &&) -> command & = default;
+	virtual auto operator=(controller &&) -> controller & = default;
 
 	// name returns the name of the command. Used to execute the command.
 	virtual auto name() const -> std::string = 0;
@@ -32,4 +32,4 @@ struct command {
 	virtual auto run(context &c, args_t const &args) const -> void = 0;
 };
 
-#endif //PANDEMIC_COMMAND_H
+#endif //PANDEMIC_CONTROLLER_H
