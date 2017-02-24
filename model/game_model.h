@@ -1,5 +1,5 @@
-#ifndef PANDEMIC_BOARD_H
-#define PANDEMIC_BOARD_H
+#ifndef PANDEMIC_GAME_MODEL_H
+#define PANDEMIC_GAME_MODEL_H
 
 #include <unordered_set>
 #include <unordered_map>
@@ -59,4 +59,4 @@ private:
 	int research_station_supply;
 };
 
-#endif //PANDEMIC_BOARD_H
+#endif //PANDEMIC_GAME_MODEL_H

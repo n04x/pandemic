@@ -1,5 +1,5 @@
-#ifndef PANDEMIC_MAP_H
-#define PANDEMIC_MAP_H
+#ifndef PANDEMIC_CITIES_MODEL_H
+#define PANDEMIC_CITIES_MODEL_H
 
 #include "../handle.h"
 #include <unordered_set>
@@ -84,4 +84,4 @@ public:
 	}
 };
 
-#endif //PANDEMIC_MAP_H
+#endif //PANDEMIC_CITIES_MODEL_H

@@ -1,5 +1,5 @@
-#ifndef PANDEMIC_DECKS_H
-#define PANDEMIC_DECKS_H
+#ifndef PANDEMIC_DECKS_MODEL_H
+#define PANDEMIC_DECKS_MODEL_H
 
 #include <unordered_map>
 #include <deque>
@@ -66,4 +66,4 @@ private:
     std::unordered_map<handle, deck> d;
 };
 
-#endif //PANDEMIC_DECKS_H
+#endif //PANDEMIC_DECKS_MODEL_H

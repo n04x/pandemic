@@ -1,5 +1,5 @@
-#ifndef PANDEMIC_PLAYERS_H
-#define PANDEMIC_PLAYERS_H
+#ifndef PANDEMIC_PLAYERS_MODEL_H
+#define PANDEMIC_PLAYERS_MODEL_H
 
 #include "../handle.h"
 #include <unordered_map>
@@ -62,4 +62,4 @@ public:
 	}
 };
 
-#endif //PANDEMIC_PLAYERS_H
+#endif //PANDEMIC_PLAYERS_MODEL_H
