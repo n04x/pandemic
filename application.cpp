@@ -2,25 +2,25 @@
 #include "controller/reference_card.h"
 #include "controller/setup.h"
 #include "controller/status.h"
-#include "controller/load.h"
 #include "controller/cities.h"
 #include "controller/place_pawn.h"
-#include "controller/save.h"
+#include "controller/editor/add_city.h"
 #include <iomanip>
 #include <sstream>
+#include <fstream>
 
 application::application(std::istream &in, std::ostream &out) :
 		in{in},
 		out{out},
 		ctx{out},
-		controllers{} {
+		controllers{},
+		command_history{} {
 	insert_controller<reference_card>();
 	insert_controller<setup>();
 	insert_controller<status>();
-	insert_controller<load>();
-	insert_controller<save>();
 	insert_controller<cities>();
 	insert_controller<place_pawn>();
+	insert_controller<add_city>();
 };
 
 auto application::help() -> void {
@@ -57,31 +57,77 @@ auto application::run() -> void {
 	prompt();
 	std::string line;
 	while (std::getline(in, line)) {
-		// use stream to tokenize line
-		std::istringstream iss{line};
-		std::string com;
-		if (!(iss >> com)) {
+		std::string name;
+		auto code = call_controller(line, name);
+		if (code == return_code::blank_input) {
 			prompt();
 			continue;
 		}
-		if (com == "exit") {
-			break;
-		} else if (com == "help") {
-			help();
-		} else {
-			// read command arguments
-			std::vector<std::string> args;
-			std::string arg;
-			while (iss >> arg) {
-				args.emplace_back(arg);
-			}
-			// run command
-			try {
-				controllers.at(com)->run(ctx, args);
-			} catch (std::out_of_range const &) {
-				invalid_command(com);
-			}
+		if (code == return_code::not_found) {
+			invalid_command(name);
+			prompt();
+			continue;
 		}
+		if (code == return_code::exit) {
+			break;
+		}
+		command_history.push_back(line);
 		prompt();
+	}
+}
+
+auto application::call_controller(std::string const &command, std::string &name) -> return_code {
+	std::istringstream iss{command};
+	if (!(iss >> name)) {
+		return return_code::blank_input;
+	}
+	std::vector<std::string> args;
+	std::string arg;
+	while (iss >> arg) {
+		args.emplace_back(arg);
+	}
+	if (name == "exit") {
+		return return_code::exit;
+	} else if (name == "help") {
+		help();
+	} else if (name == "save") {
+		save("game.txt");
+	} else if (name == "load") {
+		load("game.txt");
+	} else {
+		try {
+			controllers.at(name)->run(ctx, args);
+		} catch (std::out_of_range const &) {
+			return return_code::not_found;
+		}
+	}
+	return return_code::ok;
+}
+
+auto application::save(std::string const &filename) -> void {
+	std::ofstream out;
+	out.open(filename);
+	for (auto const &line : command_history) {
+		out << line << std::endl;
+	}
+}
+
+auto application::load(std::string const &filename) -> void {
+	std::ifstream in{filename};
+	if (!in.is_open()) {
+		out << "could not open file '" << filename << "'" << std::endl;
+		return;
+	}
+	std::string line;
+	while (std::getline(in, line)) {
+		std::string name;
+		auto code = call_controller(line, name);
+		if (code == return_code::blank_input) {
+			continue;
+		}
+		if (code == return_code::not_found) {
+			invalid_command(name);
+			continue;
+		}
 	}
 }
