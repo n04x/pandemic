@@ -14,7 +14,7 @@ class players_model {
 
 	using players_t = std::unordered_map<handle, player>;
 
-	players_t p;
+	players_t players;
 public:
 	// TODO remove internal iterator leak
 	using const_iterator = players_t::const_iterator;
@@ -22,43 +22,43 @@ public:
 	static const int actions_per_turn = 4;
 
 	inline auto begin() const -> const_iterator {
-		return p.begin();
+		return players.begin();
 	}
 
 	inline auto end() const -> const_iterator {
-		return p.end();
+		return players.end();
 	}
 
 	inline auto add_player(handle color) -> void {
-		p.emplace(color, player{color});
+		players.emplace(color, player{color});
 	}
 
 	inline auto get_role(handle player) const -> handle {
-		return p.at(player).role;
+		return players.at(player).role;
 	}
 
 	inline auto set_role(handle player, handle role) -> void {
-		p.at(player).role = role;
+		players.at(player).role = role;
 	}
 
 	inline auto get_city(handle player) const -> handle {
-		return p.at(player).city;
+		return players.at(player).city;
 	}
 
 	inline auto set_city(handle player, handle city) -> void {
-		p.at(player).city = city;
+		players.at(player).city = city;
 	}
 
 	inline auto get_actions_remaining(handle player) const -> int {
-		return p.at(player).actions_remaining;
+		return players.at(player).actions_remaining;
 	}
 
 	inline auto decrement_actions_remaining(handle player) -> void {
-		p.at(player).actions_remaining--;
+		players.at(player).actions_remaining--;
 	}
 
 	inline auto reset_actions_remaining(handle player) -> void {
-		p.at(player).actions_remaining = actions_per_turn;
+		players.at(player).actions_remaining = actions_per_turn;
 	}
 };
 

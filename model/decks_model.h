@@ -13,48 +13,48 @@ struct decks_model {
     using const_iterator = cards_t::const_iterator;
 
     inline auto create(handle name) -> void {
-        d.emplace(name, deck{});
+        decks.emplace(name, deck{});
     }
 
     inline auto add_to_top(handle name, handle card) -> void {
-        d.at(name).cards.push_front(card);
+        decks.at(name).cards.push_front(card);
     }
 
     inline auto remove_from_top(handle name) -> handle {
-        auto &cards = d.at(name).cards;
+        auto &cards = decks.at(name).cards;
         auto result = cards.front();
         cards.pop_front();
         return result;
     }
 
     inline auto remove_from_bottom(handle name) -> handle {
-        auto &cards = d.at(name).cards;
+        auto &cards = decks.at(name).cards;
         auto result = cards.back();
         cards.pop_back();
         return result;
     }
 
     inline auto remove(handle name, handle card) -> void {
-        auto &cards = d.at(name).cards;
+        auto &cards = decks.at(name).cards;
         std::remove(cards.begin(), cards.end(), card);
     }
 
     inline auto begin(handle name) const -> const_iterator {
-        return d.at(name).cards.begin();
+        return decks.at(name).cards.begin();
     }
 
     inline auto end(handle name) const -> const_iterator {
-        return d.at(name).cards.end();
+        return decks.at(name).cards.end();
     }
 
     inline auto size(handle name) const -> cards_t::size_type {
-        return d.at(name).cards.size();
+        return decks.at(name).cards.size();
     }
 
     inline auto shuffle(handle name) -> void {
         static std::random_device rd;
         static std::mt19937 g{rd()};
-        auto &cards = d.at(name).cards;
+        auto &cards = decks.at(name).cards;
         std::shuffle(cards.begin(), cards.end(), g);
     }
 
@@ -63,7 +63,7 @@ private:
         cards_t cards;
     };
 
-    std::unordered_map<handle, deck> d;
+    std::unordered_map<handle, deck> decks;
 };
 
 #endif //PANDEMIC_DECKS_MODEL_H
