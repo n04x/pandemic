@@ -61,7 +61,8 @@ auto application::run() -> void {
 		std::istringstream iss{line};
 		std::string com;
 		if (!(iss >> com)) {
-			throw "unexpected input error";
+			prompt();
+			continue;
 		}
 		if (com == "exit") {
 			break;
