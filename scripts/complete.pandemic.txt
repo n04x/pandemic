@@ -1,0 +1,71 @@
+load default
+
+define-role scientist
+define-role dispatcher
+define-pawn red
+define-pawn blue
+create-deck player
+add-cities-to-deck player
+add-to-deck player one_quiet_night
+add-to-deck player forecast
+add-to-deck player government_grant
+add-to-deck player resilient_population
+add-to-deck player airlift
+
+# SETUP 1
+set-research-station-supply 6
+set-disease-cube-supply black 24
+set-disease-cube-supply yellow 24
+set-disease-cube-supply blue 24
+set-disease-cube-supply red 24
+place-research-station atlanta
+
+# SETUP 2
+# no action needed - the initial state is correct for game start
+
+# SETUP 3
+# initial state for infection rate should be '2'
+create-deck infection
+add-cities-to-deck infection
+shuffle-deck infection
+infect infection infection_discard 3
+infect infection infection_discard 3
+infect infection infection_discard 3
+infect infection infection_discard 2
+infect infection infection_discard 2
+infect infection infection_discard 2
+infect infection infection_discard 1
+infect infection infection_discard 1
+infect infection infection_discard 1
+
+# SETUP 4
+give-role red
+give-role blue
+place-pawn red atlanta
+place-pawn blue atlanta
+
+shuffle-deck player
+create-deck red
+move-top-card player red
+move-top-card player red
+move-top-card player red
+move-top-card player red
+create-deck blue
+move-top-card player blue
+move-top-card player blue
+move-top-card player blue
+move-top-card player blue
+
+# SETUP 5
+# TODO should be divided according to game instructions
+add-to-deck player epidemic_1
+add-to-deck player epidemic_2
+add-to-deck player epidemic_3
+add-to-deck player epidemic_4
+add-to-deck player epidemic_5
+add-to-deck player epidemic_6
+shuffle-deck player
+
+# SETUP 6
+# TODO player with highest city population goes first
+begin-play
