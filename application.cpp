@@ -87,18 +87,24 @@ auto application::call_controller(std::string const &command, std::string &name,
 	while (iss >> arg) {
 		args.emplace_back(arg);
 	}
+	if (name == "#") {
+		// comment
+		return return_code::ok;
+	}
 	if (name == "exit") {
 		return return_code::exit;
-	} else if (name == "help") {
+	}
+	if (name == "help") {
 		help();
 	} else if (name == "save") {
-		std::string filename{"user"};
-		if (!args.empty()) {
-			filename = args.at(0);
+		if (args.empty()) {
+			out << "usage: save <filename>" << std::endl;
+			return return_code::ok;
 		}
+		auto const &filename = args.at(0);
 		save(filename);
 	} else if (name == "load") {
-		std::string filename{"user"};
+		std::string filename{"setup"};
 		if (!args.empty()) {
 			filename = args.at(0);
 		}

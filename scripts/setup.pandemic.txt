@@ -1,4 +1,4 @@
-load default
+load cities
 
 define-role scientist
 define-role dispatcher
