@@ -1,20 +1,30 @@
 begin-play
 
+# display players
+players
+
+# display cities
+cities
+
 # red turn
+status
 drive-to chicago
 treat-disease
 charter-flight-to miami
 direct-flight-to mexico_city
+status
 draw-turn player
 infect-turn infection infection_discard
 end-turn
 save example-game
 
 # blue turn
+status
 drive-to montreal
 build-research-station
 drive-to new_york
 share-knowledge-from red
+status
 draw-turn player
 infect-turn infection infection_discard
 end-turn
