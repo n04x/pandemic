@@ -68,4 +68,4 @@ shuffle-deck player
 
 # SETUP 6
 # TODO player with highest city population goes first
-begin-play
+# call begin-play to start the game

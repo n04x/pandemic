@@ -1,0 +1,21 @@
+begin-play
+
+# red turn
+drive-to chicago
+treat-disease
+charter-flight-to miami
+direct-flight-to mexico_city
+draw-turn player
+infect-turn infection infection_discard
+end-turn
+save example-game
+
+# blue turn
+drive-to montreal
+build-research-station
+drive-to new_york
+share-knowledge-from red
+draw-turn player
+infect-turn infection infection_discard
+end-turn
+save example-game
