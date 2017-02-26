@@ -73,7 +73,6 @@ auto application::run() -> void {
 		if (code == return_code::exit) {
 			break;
 		}
-		command_history.push_back(line);
 		prompt();
 	}
 }
@@ -99,6 +98,7 @@ auto application::call_controller(std::string const &command, std::string &name,
 	} else {
 		try {
 			controllers.at(name)->run(ctx, args, out);
+			command_history.push_back(command);
 		} catch (std::out_of_range const &) {
 			return return_code::not_found;
 		}
