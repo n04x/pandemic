@@ -9,16 +9,16 @@ auto save::description() const -> std::string {
 	return "Save map";
 }
 
-auto save::run(context &c, controller::args_t const &args) const -> void {
+auto save::run(context &ctx, controller::args_t const &args, ostream_t &out) const -> void {
 	auto const &filename = args.at(0);
 	std::ofstream s;
 	s.open(filename);
-	for (auto i : c.cities) {
+	for (auto i : ctx.cities) {
 		auto city = i.first;
-		auto color = c.cities.get_color(city);
+		auto color = ctx.cities.get_color(city);
 		s << color << " ";
 		s << city << " ";
-		for (auto connection = c.cities.begin(city); connection != c.cities.end(city); connection++) {
+		for (auto connection = ctx.cities.begin(city); connection != ctx.cities.end(city); connection++) {
 			s << *connection << " ";
 		}
 		s << std::endl;

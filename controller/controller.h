@@ -4,11 +4,14 @@
 #include <iosfwd>
 #include <string>
 #include <vector>
+#include <ostream>
 #include "../context.h"
 
 // controller represents a game action.
 struct controller {
 	using args_t = std::vector<std::string>;
+
+	using ostream_t = std::ostream;
 
 	virtual ~controller() = default;
 
@@ -29,7 +32,7 @@ struct controller {
 	virtual auto description() const -> std::string = 0;
 
 	// run executes the command with the given context and arguments.
-	virtual auto run(context &c, args_t const &args) const -> void = 0;
+	virtual auto run(context &ctx, args_t const &args, ostream_t &out) const -> void = 0;
 };
 
 #endif //PANDEMIC_CONTROLLER_H

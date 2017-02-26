@@ -11,14 +11,14 @@ auto load::description() const -> std::string {
 	return "Load map";
 }
 
-auto load::run(context &c, controller::args_t const &args) const -> void {
+auto load::run(context &ctx, controller::args_t const &args, ostream_t &out) const -> void {
 	std::string filename{"../data/default.panmap.txt"};
 	if (!args.empty()) {
 		filename = args.at(0);
 	}
 	std::ifstream s{filename};
 	if (!s.is_open()) {
-		c.out << "could not open map file '" << filename << "'" << std::endl;
+		out << "could not open map file '" << filename << "'" << std::endl;
 		return;
 	}
 	std::string line;
@@ -29,10 +29,10 @@ auto load::run(context &c, controller::args_t const &args) const -> void {
 		iss >> color;
 		std::string name;
 		iss >> name;
-		c.cities.add_city(color, name);
+		ctx.cities.add_city(color, name);
 		std::string connection;
 		while (iss >> connection) {
-			c.cities.connect_city(name, connection);
+			ctx.cities.connect_city(name, connection);
 		}
 	}
 }

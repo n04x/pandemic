@@ -36,7 +36,7 @@ private:
 		ok, not_found, blank_input, exit
 	};
 
-	auto call_controller(std::string const &command, std::string &name) -> return_code;
+	auto call_controller(std::string const &command, std::string &name, std::ostream &out) -> return_code;
 
 	auto save(std::string const &filename) -> void;
 

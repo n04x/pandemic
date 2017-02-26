@@ -8,11 +8,13 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
+#include <ostream>
+#include <streambuf>
 
 application::application(std::istream &in, std::ostream &out) :
 		in{in},
 		out{out},
-		ctx{out},
+		ctx{},
 		controllers{},
 		command_history{} {
 	insert_controller<reference_card>();
@@ -58,7 +60,7 @@ auto application::run() -> void {
 	std::string line;
 	while (std::getline(in, line)) {
 		std::string name;
-		auto code = call_controller(line, name);
+		auto code = call_controller(line, name, out);
 		if (code == return_code::blank_input) {
 			prompt();
 			continue;
@@ -76,7 +78,7 @@ auto application::run() -> void {
 	}
 }
 
-auto application::call_controller(std::string const &command, std::string &name) -> return_code {
+auto application::call_controller(std::string const &command, std::string &name, std::ostream &out) -> return_code {
 	std::istringstream iss{command};
 	if (!(iss >> name)) {
 		return return_code::blank_input;
@@ -96,7 +98,7 @@ auto application::call_controller(std::string const &command, std::string &name)
 		load("game.txt");
 	} else {
 		try {
-			controllers.at(name)->run(ctx, args);
+			controllers.at(name)->run(ctx, args, out);
 		} catch (std::out_of_range const &) {
 			return return_code::not_found;
 		}
@@ -112,16 +114,24 @@ auto application::save(std::string const &filename) -> void {
 	}
 }
 
+struct null_buffer : std::streambuf {
+	inline auto overflow(int c) -> int {
+		return c;
+	}
+};
+
 auto application::load(std::string const &filename) -> void {
 	std::ifstream in{filename};
 	if (!in.is_open()) {
 		out << "could not open file '" << filename << "'" << std::endl;
 		return;
 	}
+	null_buffer nb;
+	std::ostream null_stream{&nb};
 	std::string line;
 	while (std::getline(in, line)) {
 		std::string name;
-		auto code = call_controller(line, name);
+		auto code = call_controller(line, name, null_stream);
 		if (code == return_code::blank_input) {
 			continue;
 		}

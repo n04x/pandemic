@@ -9,7 +9,7 @@ auto add_city::description() const -> std::string {
 	return "region name connection ...";
 }
 
-auto add_city::run(context &ctx, controller::args_t const &args) const -> void {
+auto add_city::run(context &ctx, controller::args_t const &args, ostream_t &out) const -> void {
 	auto region = args.at(0);
 	auto name = args.at(1);
 	ctx.cities.add_city(region, name);

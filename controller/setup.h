@@ -8,7 +8,7 @@ struct setup : controller {
 
 	virtual auto description() const -> std::string override;
 
-	virtual auto run(context &c, controller::args_t const &args) const -> void override;
+	virtual auto run(context &ctx, controller::args_t const &args, ostream_t &out) const -> void override;
 };
 
 #endif //PANDEMIC_SETUP_H

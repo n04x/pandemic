@@ -9,11 +9,6 @@
 
 // context represents the game state.
 struct context {
-	inline context(std::ostream &out) : out{out}, players{}, decks{}, cities{}, game{} {}
-
-	// out prints text to the user.
-	std::ostream &out;
-
 	// players represents all the game players.
 	players_model players;
 
