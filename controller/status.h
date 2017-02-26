@@ -8,7 +8,7 @@ struct status : controller {
 
 	virtual auto description() const -> std::string override;
 
-	virtual auto run(context &ctx, controller::args_t const &args, ostream_t &out) const -> void override;
+	virtual auto run(context &ctx, args_t const &args, ostream_t &out) const -> void override;
 };
 
 #endif //PANDEMIC_STATUS_H

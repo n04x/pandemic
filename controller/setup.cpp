@@ -8,7 +8,7 @@ auto setup::description() const -> std::string {
 	return "Setup the game";
 }
 
-auto setup::run(context &ctx, controller::args_t const &args, ostream_t &out) const -> void {
+auto setup::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
 	ctx.decks.create("infection"_h);
 	ctx.decks.create("infection_discard"_h);
 	ctx.decks.create("player"_h);

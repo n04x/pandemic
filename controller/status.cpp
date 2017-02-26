@@ -10,7 +10,7 @@ auto status::description() const -> std::string {
 	return "Show game status";
 }
 
-auto status::run(context &ctx, controller::args_t const &args, ostream_t &out) const -> void {
+auto status::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
 	static constexpr auto col1 = 8;
 	static constexpr auto col2 = 12;
 	static constexpr auto col3 = 12;

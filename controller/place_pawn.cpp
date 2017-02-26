@@ -8,20 +8,24 @@ auto place_pawn::description() const -> std::string {
 	return "Place player pawn";
 }
 
-auto place_pawn::run(context &ctx, controller::args_t const &args, ostream_t &out) const -> void {
-	auto const &player = args.at(0);
-	auto const &city = args.at(1);
-	// validate city
+auto place_pawn::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
 	try {
-		ctx.cities.get_color(city);
+		auto const &player = args.at(0);
+		auto const &city = args.at(1);
+		// validate city
+		try {
+			ctx.cities.get_color(city);
+		} catch (std::out_of_range const &) {
+			out << "'" << city << "' is not a valid city" << std::endl;
+			return;
+		}
+		// move pawn or throw if invalid
+		try {
+			ctx.players.set_city(player, city);
+		} catch (std::out_of_range const &) {
+			out << "'" << player << "' is not a valid player" << std::endl;
+		}
 	} catch (std::out_of_range const &) {
-		out << "'" << city << "' is not a valid city" << std::endl;
-		return;
-	}
-	// move pawn or throw if invalid
-	try {
-		ctx.players.set_city(player, city);
-	} catch (std::out_of_range const &) {
-		out << "'" << player << "' is not a valid player" << std::endl;
+		out << "usage: " << name() << " <player> <city>" << std::endl;
 	}
 }
