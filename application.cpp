@@ -92,9 +92,17 @@ auto application::call_controller(std::string const &command, std::string &name,
 	} else if (name == "help") {
 		help();
 	} else if (name == "save") {
-		save("game.txt");
+		std::string filename{"user"};
+		if (!args.empty()) {
+			filename = args.at(0);
+		}
+		save(filename);
 	} else if (name == "load") {
-		load("game.txt");
+		std::string filename{"user"};
+		if (!args.empty()) {
+			filename = args.at(0);
+		}
+		load(filename);
 	} else {
 		try {
 			controllers.at(name)->run(ctx, args, out);
@@ -107,8 +115,9 @@ auto application::call_controller(std::string const &command, std::string &name,
 }
 
 auto application::save(std::string const &filename) -> void {
+	auto path = "../scripts/" + filename + ".pandemic.txt";
 	std::ofstream out;
-	out.open(filename);
+	out.open(path);
 	for (auto const &line : command_history) {
 		out << line << std::endl;
 	}
@@ -121,9 +130,10 @@ struct null_buffer : std::streambuf {
 };
 
 auto application::load(std::string const &filename) -> void {
-	std::ifstream in{filename};
+	auto path = "../scripts/" + filename + ".pandemic.txt";
+	std::ifstream in{path};
 	if (!in.is_open()) {
-		out << "could not open file '" << filename << "'" << std::endl;
+		out << "could not open file '" << path << "'" << std::endl;
 		return;
 	}
 	null_buffer nb;
