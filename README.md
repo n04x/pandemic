@@ -8,7 +8,7 @@ Implements the PANDEMIC role playing game.
 
 ### Visual Studio
 
-1. Run *build.cmd*
+1. Run *bootstrap.cmd*
 2. Open *build/pandemic.sln*
 
 After pulling changes, do these steps again to update the project files.
@@ -16,8 +16,8 @@ After pulling changes, do these steps again to update the project files.
 #### Adding files to the project
 
 1. Open *CMakeLists.txt*
-2. Add the file name to `SOURCE_FILES` variable
-3. Run *build.cmd* to regenerate the Visual Studio solution
+2. Add the file path to `SOURCE_FILES` variable
+3. Run *bootstrap.cmd* to regenerate the Visual Studio solution
 
 ### Linux
 
@@ -29,17 +29,28 @@ $ make
 
 ## Design
 
-The *application* object contains the game loop. It reads a command string from standard input and looks it up in the command map. Then, the corresponding *command* object runs with a *context* and arguments.
+The *application* class contains the game loop. It reads a command string from standard input and looks it up in the controller map. Then, the corresponding *controller* runs with a *context*, arguments, and output stream.
 
-A *context* is an object that contains references to the game state. Commands call methods on *state* objects to implement their actions.
+The *context* contains the entire game state. Each state is encapsulated in a *model* class. Controllers implement their actions by calling methods on the model.
 
-Game objects are identified using a *handle*; an opaque object that can be compared and printed.
+Game objects are identified using a *handle* - an opaque object that can be compared and printed. By using handles, all dynamic memory allocations for game objects are contained to the model classes. This ensures that there are no memory leaks or dangling references, as the game objects are not exposed to the controllers.
 
-### .panmap.txt file format
+After every successful command, the command is saved to a buffer. This buffer can be written to a file using the `save` command. It can then be loaded by using the `load` command. This allows for saving of the entire game state by replaying the command history to regenerate the runtime game objects.
 
-Contains a PANDEMIC map in plain text. Each line contains the city *color*, *name*, and one or more *connected cities*, seperated by whitespace. Example:
+### .pandemic.txt file format
 
-`blue montreal new_york washington chicago`
+Contains commands separated by newlines. Blank lines or lines that start with `#` are ignored by the parser.
+
+Example:
+
+```bash
+# this is a comment
+add-player red
+add-city blue san_francisco chicago los_angeles tokyo manila
+load other-script
+```
+
+Files can be recursively loaded using the `load` command. This allows command scripts to be split and loaded from multiple files.
 
 ## Authors
 

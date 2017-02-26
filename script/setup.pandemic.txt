@@ -1,9 +1,5 @@
 load cities
 
-define-role scientist
-define-role dispatcher
-define-pawn red
-define-pawn blue
 create-deck player
 add-cities-to-deck player
 add-to-deck player one_quiet_night
@@ -11,6 +7,7 @@ add-to-deck player forecast
 add-to-deck player government_grant
 add-to-deck player resilient_population
 add-to-deck player airlift
+create-deck player_discard
 
 # SETUP 1
 set-research-station-supply 6
@@ -28,6 +25,7 @@ place-research-station atlanta
 create-deck infection
 add-cities-to-deck infection
 shuffle-deck infection
+create-deck infection_discard
 infect infection infection_discard 3
 infect infection infection_discard 3
 infect infection infection_discard 3
@@ -39,6 +37,8 @@ infect infection infection_discard 1
 infect infection infection_discard 1
 
 # SETUP 4
+add-player red
+add-player blue
 give-role red
 give-role blue
 place-pawn red atlanta
