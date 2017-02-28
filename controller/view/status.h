@@ -1,7 +1,7 @@
 #ifndef PANDEMIC_STATUS_H
 #define PANDEMIC_STATUS_H
 
-#include "controller.h"
+#include "../controller.h"
 
 struct status : controller {
 	virtual auto name() const -> std::string override;

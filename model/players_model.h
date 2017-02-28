@@ -9,12 +9,14 @@ class players_model {
 		handle color;
 		handle role;
 		handle city;
-		int actions_remaining;
 	};
 
 	using players_t = std::unordered_map<handle, player>;
 
 	players_t players;
+	handle current_turn;
+	int actions_remaining;
+
 public:
 	// TODO remove internal iterator leak
 	using const_iterator = players_t::const_iterator;
@@ -49,16 +51,21 @@ public:
 		players.at(player).city = city;
 	}
 
-	inline auto get_actions_remaining(handle player) const -> int {
-		return players.at(player).actions_remaining;
+	inline auto get_actions_remaining() const -> int {
+		return actions_remaining;
 	}
 
-	inline auto decrement_actions_remaining(handle player) -> void {
-		players.at(player).actions_remaining--;
+	inline auto decrement_actions_remaining() -> void {
+		actions_remaining--;
 	}
 
-	inline auto reset_actions_remaining(handle player) -> void {
-		players.at(player).actions_remaining = actions_per_turn;
+	inline auto get_current_turn() const -> handle {
+		return current_turn;
+	}
+
+	inline auto start_turn(handle player) -> void {
+		current_turn = player;
+		actions_remaining = actions_per_turn;
 	}
 };
 
