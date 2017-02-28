@@ -8,9 +8,21 @@
 #include "../handle.h"
 
 // decks represents a collection of card decks.
-struct decks_model {
+
+class decks_model {
     using cards_t = std::deque<handle>;
-    using const_iterator = cards_t::const_iterator;
+
+    struct deck {
+        cards_t cards;
+    };
+
+    using decks_t = std::unordered_map<handle, deck>;
+
+    decks_t decks;
+
+public:
+    using const_iterator = decks_t::const_iterator;
+    using cards_const_iterator = cards_t::const_iterator;
 
     inline auto create(handle name) -> void {
         decks.emplace(name, deck{});
@@ -39,11 +51,19 @@ struct decks_model {
         std::remove(cards.begin(), cards.end(), card);
     }
 
-    inline auto begin(handle name) const -> const_iterator {
+    inline auto begin() const -> const_iterator {
+        return decks.begin();
+    }
+
+    inline auto end() const -> const_iterator {
+        return decks.end();
+    }
+
+    inline auto begin(handle name) const -> cards_const_iterator {
         return decks.at(name).cards.begin();
     }
 
-    inline auto end(handle name) const -> const_iterator {
+    inline auto end(handle name) const -> cards_const_iterator {
         return decks.at(name).cards.end();
     }
 
@@ -57,13 +77,6 @@ struct decks_model {
         auto &cards = decks.at(name).cards;
         std::shuffle(cards.begin(), cards.end(), g);
     }
-
-private:
-    struct deck {
-        cards_t cards;
-    };
-
-    std::unordered_map<handle, deck> decks;
 };
 
 #endif //PANDEMIC_DECKS_MODEL_H

@@ -5,6 +5,7 @@
 #include "controller/cities.h"
 #include "controller/place_pawn.h"
 #include "controller/editor/add_city.h"
+#include "controller/view/show_deck.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -23,6 +24,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<cities>();
 	insert_controller<place_pawn>();
 	insert_controller<add_city>();
+    insert_controller<show_deck>();
 };
 
 auto application::help() -> void {
