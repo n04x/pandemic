@@ -1,7 +1,7 @@
 #ifndef PANDEMIC_CITIES_H
 #define PANDEMIC_CITIES_H
 
-#include "controller.h"
+#include "../controller.h"
 
 struct cities : controller {
 	virtual auto name() const -> std::string override;

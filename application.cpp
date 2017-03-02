@@ -2,7 +2,7 @@
 #include "controller/reference_card.h"
 #include "controller/setup.h"
 #include "controller/view/status.h"
-#include "controller/cities.h"
+#include "controller/view/cities.h"
 #include "controller/place_pawn.h"
 #include "controller/editor/add_city.h"
 #include "controller/view/show_deck.h"
