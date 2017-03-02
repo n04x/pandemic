@@ -1,6 +1,7 @@
 #include "application.h"
 #include "controller/reference_card.h"
 #include "controller/setup.h"
+#include "controller/begin_play.h"
 #include "controller/view/status.h"
 #include "controller/view/cities.h"
 #include "controller/place_pawn.h"
@@ -27,6 +28,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<add_city>();
     insert_controller<show_deck>();
 	insert_controller<players>();
+    insert_controller<begin_play>();
 };
 
 auto application::help() -> void {
