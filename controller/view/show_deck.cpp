@@ -28,11 +28,15 @@ auto show_deck::run(context &ctx, args_t const &args, ostream_t &out) const -> v
     }
     auto const &deck = args.at(0);
     try {
+        if (ctx.decks.size(deck) == 0) {
+            out << name() << ": '" << deck << "' is empty" << std::endl;
+            return;
+        }
         for (auto i = ctx.decks.begin(deck); i != ctx.decks.end(deck); i++) {
             out << *i;
         }
         out << std::endl;
     } catch (std::out_of_range const &) {
-        out << "show-deck: '" << deck << "' does not exist" << std::endl;
+        out << name() << ": '" << deck << "' does not exist" << std::endl;
     }
 }
