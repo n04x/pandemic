@@ -8,6 +8,7 @@
 #include "controller/editor/add_city.h"
 #include "controller/view/show_deck.h"
 #include "controller/view/players.h"
+#include "controller/end_turn.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -29,6 +30,7 @@ application::application(std::istream &in, std::ostream &out) :
     insert_controller<show_deck>();
 	insert_controller<players>();
     insert_controller<begin_play>();
+    insert_controller<end_turn>();
 };
 
 auto application::help() -> void {
@@ -46,7 +48,12 @@ auto application::invalid_command(std::string const &command) -> void {
 }
 
 auto application::prompt() -> void {
-	out << "$ ";
+    auto const &player = ctx.players.get_current_turn();
+    if (player == ""_h) {
+        out << "$ ";
+        return;
+    }
+    out << player << "$ ";
 }
 
 auto application::intro() -> void {

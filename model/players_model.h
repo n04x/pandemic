@@ -3,6 +3,8 @@
 
 #include "../handle.h"
 #include <unordered_map>
+#include <vector>
+#include <algorithm>
 
 class players_model {
 	struct player {
@@ -14,6 +16,7 @@ class players_model {
 	using players_t = std::unordered_map<handle, player>;
 
 	players_t players;
+    std::vector<handle> turn_order;
 	handle current_turn;
 	int actions_remaining;
 
@@ -33,6 +36,7 @@ public:
 
 	inline auto add_player(handle color) -> void {
 		players.emplace(color, player{color});
+        turn_order.push_back(color);
 	}
 
 	inline auto get_role(handle player) const -> handle {
@@ -62,6 +66,15 @@ public:
 	inline auto get_current_turn() const -> handle {
 		return current_turn;
 	}
+
+    inline auto get_next_turn() const -> handle {
+        auto it = std::find(turn_order.begin(), turn_order.end(), current_turn);
+        it++;
+        if (it == turn_order.end()) {
+            return *turn_order.begin();
+        }
+        return *it;
+    }
 
 	inline auto start_turn(handle player) -> void {
 		current_turn = player;
