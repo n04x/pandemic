@@ -22,6 +22,7 @@
 #include "controller/editor/infect.h"
 #include "controller/action/direct_flight_to.h"
 #include "controller/draw_turn.h"
+#include "controller/infect_turn.h"
 #include "controller/action/drive_to.h"
 #include <iomanip>
 #include <sstream>
@@ -58,6 +59,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<set_disease_cube_supply>();
 	insert_controller<infect>();
 	insert_controller<direct_flight_to>();
+    insert_controller<infect_turn>();
 	insert_controller<drive_to>();
 };
 
