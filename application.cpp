@@ -12,6 +12,7 @@
 #include "controller/editor/add_player.h"
 #include "controller/editor/create_deck.h"
 #include "controller/editor/shuffle_deck.h"
+#include "controller/editor/add_to_deck.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -36,7 +37,8 @@ application::application(std::istream &in, std::ostream &out) :
     insert_controller<end_turn>();
     insert_controller<add_player>();
     insert_controller<create_deck>();
-    insert_controller<shuffle_deck>();
+	insert_controller<shuffle_deck>();
+	insert_controller<add_to_deck>();
 };
 
 auto application::help() -> void {
