@@ -14,6 +14,7 @@
 #include "controller/editor/shuffle_deck.h"
 #include "controller/editor/add_to_deck.h"
 #include "controller/editor/move_top_card.h"
+#include "controller/editor/give_role.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -41,6 +42,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<shuffle_deck>();
 	insert_controller<add_to_deck>();
 	insert_controller<move_top_card>();
+	insert_controller<give_role>();
 };
 
 auto application::help() -> void {
