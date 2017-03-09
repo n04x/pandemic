@@ -15,6 +15,7 @@
 #include "controller/editor/add_to_deck.h"
 #include "controller/editor/move_top_card.h"
 #include "controller/editor/give_role.h"
+#include "controller/editor/add_cities_to_deck.h"
 #include "controller/draw_turn.h"
 #include <iomanip>
 #include <sstream>
@@ -45,6 +46,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<move_top_card>();
 	insert_controller<give_role>();
 	insert_controller<draw_turn>();
+	insert_controller<add_cities_to_deck>();
 };
 
 auto application::help() -> void {
