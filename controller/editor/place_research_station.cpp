@@ -11,7 +11,7 @@ auto place_research_station::description() const->std::string {
 auto place_research_station::run(context &ctx, args_t const &args, ostream_t &out) const->void{
 	try {
 		auto name = args.at(0);
-		if (!ctx.cities.has_research_station) {
+		if (ctx.cities.has_research_station(name) == false) {
 			ctx.game.remove_research_station_supply();
 			ctx.cities.place_research_station(name);
 		}
