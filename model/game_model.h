@@ -46,7 +46,9 @@ struct game_model {
 	inline auto research_station_supply_count() const -> int {
 		return research_station_supply;
 	}
-
+	inline auto set_research_station_supply(int amount) -> void{
+		research_station_supply = amount;
+	}
 	inline auto remove_research_station_supply() -> void {
 		research_station_supply--;
 	}

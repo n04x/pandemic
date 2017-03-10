@@ -10,8 +10,8 @@ auto set_research_station_supply::description() const->std::string {
 
 auto set_research_station_supply::run(context &ctx,const args_t &args, ostream_t &out) const -> void {
 	try {
-		auto name = args.at(0);
-		ctx.game.research_station_supply_count();
+		auto name = std::stoi(args.at(0));
+		ctx.game.set_research_station_supply(name);
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << "<count>" << std::endl;
