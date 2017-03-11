@@ -3,9 +3,6 @@ project(pandemic)
 
 set(CMAKE_CXX_STANDARD 14)
 
-<<<<<<< HEAD
-set(SOURCE_FILES main.cpp model/players_model.h handle.h application.cpp application.h controller/controller.h controller/reference_card.cpp controller/reference_card.h context.h controller/setup.cpp controller/setup.h controller/view/status.cpp controller/view/status.h model/decks_model.h model/cities_model.h controller/view/cities.cpp controller/view/cities.h controller/place_pawn.cpp controller/place_pawn.h model/game_model.h controller/editor/add_city.cpp controller/editor/add_city.h controller/view/show_deck.cpp controller/view/show_deck.h controller/view/players.cpp controller/view/players.h controller/begin_play.cpp controller/begin_play.h controller/end_turn.cpp controller/end_turn.h controller/editor/add_player.cpp controller/editor/add_player.h controller/editor/create_deck.cpp controller/editor/create_deck.h controller/editor/shuffle_deck.cpp controller/editor/add_to_deck.h controller/editor/add_to_deck.cpp controller/editor/shuffle_deck.h controller/editor/move_top_card.h controller/editor/move_top_card.cpp controller/editor/give_role.h controller/editor/give_role.cpp controller/draw_turn.h controller/draw_turn.cpp controller/editor/add_cities_to_deck.h controller/editor/add_cities_to_deck.cpp controller/editor/place_research_station.h controller/editor/place_research_station.cpp controller/editor/set_research_station_supply.h controller/editor/set_research_station_supply.cpp controller/editor/set_disease_cube_supply.h controller/editor/set_disease_cube_supply.cpp controller/editor/infect.h controller/editor/infect.cpp controller/action/direct_flight_to.h controller/action/direct_flight_to.cpp controller/action/drive_to.h controller/action/drive_to.cpp controller/action/shuttle_flight_to.h controller/action/shuttle_flight_to.cpp)
-=======
 set(SOURCE_FILES
         main.cpp
         model/players_model.h
@@ -66,10 +63,9 @@ set(SOURCE_FILES
         controller/infect_turn.cpp
         controller/action/drive_to.h
         controller/action/drive_to.cpp
-	controller/action/shuttle_flight_to.h
-	controller/action/shuttle_flight_to.cpp
+	    controller/action/shuttle_flight_to.h
+	    controller/action/shuttle_flight_to.cpp
         )
->>>>>>> origin/master
 add_executable(pandemic ${SOURCE_FILES})
 
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT pandemic)
