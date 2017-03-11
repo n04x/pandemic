@@ -57,7 +57,7 @@ private:
 	std::unordered_map<handle, int> cube_supply;
 	std::unordered_set<handle> discovered_cures;
 	int outbreak_level;
-	int infection_rate;
+	int infection_rate = 2;
 	int research_station_supply;
 };
 

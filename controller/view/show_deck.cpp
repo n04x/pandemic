@@ -11,7 +11,7 @@ auto show_deck::description() const -> std::string {
 
 auto show_deck::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
     if (args.empty()) {
-        static constexpr auto col1 = 14;
+        static constexpr auto col1 = 18;
         static constexpr auto col2 = 8;
         static constexpr auto fill = ' ';
         out << std::left << std::setw(col1) << std::setfill(fill) << "DECK";
@@ -33,7 +33,7 @@ auto show_deck::run(context &ctx, args_t const &args, ostream_t &out) const -> v
             return;
         }
         for (auto i = ctx.decks.begin(deck); i != ctx.decks.end(deck); i++) {
-            out << *i;
+            out << *i << " ";
         }
         out << std::endl;
     } catch (std::out_of_range const &) {

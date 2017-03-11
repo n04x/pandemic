@@ -15,6 +15,6 @@ auto add_to_deck::run(context &ctx, args_t const &args, ostream_t &out) const ->
 		ctx.decks.add_to_top(deckName, cardName);
 	}
 	catch (std::out_of_range const &) {
-		out << "usage: " << name() << "<deck><card>" << std::endl;
+		out << "usage: " << name() << " <deck> <card>" << std::endl;
 	}
 }
