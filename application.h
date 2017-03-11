@@ -27,8 +27,9 @@ private:
 	auto intro() -> void;
 
 	template<class T>
-	auto insert_controller() -> void {
+	auto insert_controller(std::string const &category) -> void {
 		auto com = std::make_unique<T>();
+		category_controllers.insert({category, com->name()});
 		controllers.insert(std::make_pair(com->name(), std::move(com)));
 	}
 
@@ -46,6 +47,7 @@ private:
 	std::ostream &out;
 	context ctx;
 	std::unordered_map<std::string, std::unique_ptr<controller>> controllers;
+	std::unordered_multimap<std::string, std::string> category_controllers;
 	std::vector<std::string> command_history;
 };
 

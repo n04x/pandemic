@@ -31,6 +31,7 @@
 #include <fstream>
 #include <ostream>
 #include <streambuf>
+#include <unordered_set>
 
 application::application(std::istream &in, std::ostream &out) :
 		in{in},
@@ -38,42 +39,64 @@ application::application(std::istream &in, std::ostream &out) :
 		ctx{},
 		controllers{},
 		command_history{} {
-	insert_controller<reference_card>();
-	insert_controller<setup>();
-	insert_controller<status>();
-	insert_controller<cities>();
-	insert_controller<place_pawn>();
-	insert_controller<add_city>();
-    insert_controller<show_deck>();
-	insert_controller<players>();
-    insert_controller<begin_play>();
-    insert_controller<end_turn>();
-    insert_controller<add_player>();
-    insert_controller<create_deck>();
-	insert_controller<shuffle_deck>();
-	insert_controller<add_to_deck>();
-	insert_controller<move_top_card>();
-	insert_controller<give_role>();
-	insert_controller<draw_turn>();
-	insert_controller<add_cities_to_deck>();
-	insert_controller<place_research_station>();
-	insert_controller<set_research_station_supply>();
-	insert_controller<set_disease_cube_supply>();
-	insert_controller<infect>();
-	insert_controller<direct_flight_to>();
-    insert_controller<infect_turn>();
-	insert_controller<drive_to>();
-	insert_controller<shuttle_flight_to>();
-	insert_controller<charter_flight_to>();
+	insert_controller<reference_card>("view");
+	insert_controller<status>("view");
+	insert_controller<cities>("view");
+	insert_controller<place_pawn>("setup");
+	insert_controller<add_city>("setup");
+    insert_controller<show_deck>("view");
+	insert_controller<players>("view");
+    insert_controller<begin_play>("setup");
+    insert_controller<end_turn>("game");
+    insert_controller<add_player>("setup");
+    insert_controller<create_deck>("setup");
+	insert_controller<shuffle_deck>("setup");
+	insert_controller<add_to_deck>("setup");
+	insert_controller<move_top_card>("setup");
+	insert_controller<give_role>("setup");
+	insert_controller<draw_turn>("game");
+	insert_controller<add_cities_to_deck>("setup");
+	insert_controller<place_research_station>("setup");
+	insert_controller<set_research_station_supply>("setup");
+	insert_controller<set_disease_cube_supply>("setup");
+	insert_controller<infect>("setup");
+	insert_controller<direct_flight_to>("game");
+    insert_controller<infect_turn>("game");
+	insert_controller<drive_to>("game");
+	insert_controller<shuttle_flight_to>("game");
+	insert_controller<charter_flight_to>("game");
 };
 
 auto application::help() -> void {
+	std::unordered_set<std::string> categories;
+	for (auto const &i : category_controllers) {
+		categories.insert(i.first);
+	}
 	static constexpr auto col1 = 30;
 	static constexpr auto fill = ' ';
+	auto iterations = 0;
+	for (auto const &category : categories) {
+		out << category << std::endl;
+		auto const &range = category_controllers.equal_range(category);
+		for (auto it = range.first; it != range.second; it++) {
+			auto const &name = it->second;
+			auto const &search = controllers.find(name);
+			if (search == controllers.end()) {
+				out << "ERROR: could not get object for command '" << name << "'" << std::endl;
+				continue;
+			}
+			auto const &command = search->second;
+			out << "   ";
+			out << std::left << std::setw(col1) << std::setfill(fill) << command->name();
+			out << command->description();
+			out << std::endl;
+		}
+		if (++iterations < categories.size()) {
+			out << std::endl;
+		}
+	}
 	for (auto const &i : controllers) {
-		out << std::left << std::setw(col1) << std::setfill(fill) << i.second->name();
-		out << i.second->description();
-		out << std::endl;
+
 	}
 }
 

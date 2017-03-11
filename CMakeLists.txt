@@ -12,9 +12,7 @@ set(SOURCE_FILES
         controller/controller.h
         controller/reference_card.cpp
         controller/reference_card.h context.h
-        controller/setup.cpp
-        controller/setup.h
-        controller/view/status.cpp
+		controller/view/status.cpp
         controller/view/status.h
         model/decks_model.h
         model/cities_model.h
