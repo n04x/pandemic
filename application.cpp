@@ -18,6 +18,7 @@
 #include "controller/editor/add_cities_to_deck.h"
 #include "controller/editor/place_research_station.h"
 #include "controller/editor/set_research_station_supply.h"
+#include "controller/editor/set_disease_cube_supply.h"
 #include "controller/draw_turn.h"
 #include <iomanip>
 #include <sstream>
@@ -51,6 +52,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<add_cities_to_deck>();
 	insert_controller<place_research_station>();
 	insert_controller<set_research_station_supply>();
+	insert_controller<set_disease_cube_supply>();
 };
 
 auto application::help() -> void {
