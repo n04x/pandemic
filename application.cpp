@@ -19,6 +19,7 @@
 #include "controller/editor/place_research_station.h"
 #include "controller/editor/set_research_station_supply.h"
 #include "controller/editor/set_disease_cube_supply.h"
+#include "controller/editor/infect.h"
 #include "controller/draw_turn.h"
 #include <iomanip>
 #include <sstream>
@@ -53,6 +54,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<place_research_station>();
 	insert_controller<set_research_station_supply>();
 	insert_controller<set_disease_cube_supply>();
+	insert_controller<infect>();
 };
 
 auto application::help() -> void {
