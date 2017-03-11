@@ -23,6 +23,7 @@
 #include "controller/action/direct_flight_to.h"
 #include "controller/draw_turn.h"
 #include "controller/action/drive_to.h"
+#include "controller/action/shuttle_flight_to.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -59,6 +60,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<infect>();
 	insert_controller<direct_flight_to>();
 	insert_controller<drive_to>();
+	insert_controller<shuttle_flight_to>();
 };
 
 auto application::help() -> void {

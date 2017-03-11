@@ -1,7 +1,6 @@
 #pragma once
 #include "../controller.h"
-
-class drive_to :
+class shuttle_flight_to :
 	public controller
 {
 public:
@@ -13,5 +12,6 @@ public:
 
 	// run executes the command with the given context and arguments.
 	virtual auto run(context &ctx, args_t const &args, ostream_t &out) const -> void;
+
 };
 
