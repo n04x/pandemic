@@ -20,6 +20,7 @@
 #include "controller/editor/set_research_station_supply.h"
 #include "controller/editor/set_disease_cube_supply.h"
 #include "controller/editor/infect.h"
+#include "controller/action/direct_flight_to.h"
 #include "controller/draw_turn.h"
 #include <iomanip>
 #include <sstream>
@@ -55,10 +56,11 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<set_research_station_supply>();
 	insert_controller<set_disease_cube_supply>();
 	insert_controller<infect>();
+	insert_controller<direct_flight_to>();
 };
 
 auto application::help() -> void {
-	static constexpr auto col1 = 16;
+	static constexpr auto col1 = 30;
 	static constexpr auto fill = ' ';
 	for (auto const &i : controllers) {
 		out << std::left << std::setw(col1) << std::setfill(fill) << i.second->name();
