@@ -61,10 +61,10 @@ set(SOURCE_FILES
         controller/infect_turn.cpp
         controller/action/drive_to.h
         controller/action/drive_to.cpp
-	controller/action/shuttle_flight_to.h
-	controller/action/shuttle_flight_to.cpp
-	controller/action/charter_flight_to.h
-	controller/action/charter_flight_to.cpp
+        controller/action/shuttle_flight_to.h
+        controller/action/shuttle_flight_to.cpp
+        controller/action/charter_flight_to.h
+        controller/action/charter_flight_to.cpp
         )
 add_executable(pandemic ${SOURCE_FILES})
 
