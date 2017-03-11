@@ -1,6 +1,5 @@
 #include "application.h"
 #include "controller/reference_card.h"
-#include "controller/setup.h"
 #include "controller/begin_play.h"
 #include "controller/view/status.h"
 #include "controller/view/cities.h"
