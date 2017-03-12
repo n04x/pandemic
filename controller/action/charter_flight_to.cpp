@@ -14,6 +14,7 @@ auto charter_flight_to::run(context & ctx, args_t const & args, ostream_t & out)
 {
 	try {
 		auto city = args.at(0);
+		auto discardDeck = args.at(1);
 		auto player = ctx.players.get_current_turn();	// Get the information of which player is playing
 		auto currentCity = ctx.players.get_city(player);	// City player is currently on
 
@@ -21,7 +22,7 @@ auto charter_flight_to::run(context & ctx, args_t const & args, ostream_t & out)
 			if (*card == city) {
 				ctx.players.set_city(player, city);
 				ctx.decks.remove(player, city);
-				ctx.decks.add_to_top(args.at(1), city);
+				ctx.decks.add_to_top(discardDeck, city);
 				return;
 			}
 		}
