@@ -54,7 +54,12 @@ struct game_model {
 	}
 
 private:
-	std::unordered_map<handle, int> cube_supply;
+	std::unordered_map<handle, int> cube_supply = {
+			{"black"_h, 0},
+			{"yellow"_h, 0},
+			{"blue"_h, 0},
+			{"red"_h, 0},
+	};
 	std::unordered_set<handle> discovered_cures;
 	int outbreak_level;
 	int infection_rate = 2;

@@ -12,9 +12,12 @@ auto charter_flight_to::description() const -> std::string
 
 auto charter_flight_to::run(context & ctx, args_t const & args, ostream_t & out) const -> void
 {
+	auto discardDeck = "player_discard"_h;
 	try {
 		auto city = args.at(0);	// City to fly to
-		auto discardDeck = args.at(1);
+		if (args.size() > 1) {
+			discardDeck = args.at(1);
+		}
 		auto player = ctx.players.get_current_turn();	// Get the information of which player is playing
 		auto currentCity = ctx.players.get_city(player);	// City player is currently on
 
@@ -31,7 +34,7 @@ auto charter_flight_to::run(context & ctx, args_t const & args, ostream_t & out)
 		out << player << " does not have " << city << " card!" << std::endl;
 	}
 	catch (std::out_of_range const &) {
-		out << "usage: " << name() << " <city> <discard_deck>" << std::endl;
+		out << "usage: " << name() << " <city> [discard_deck]" << std::endl;
 	}
 
 

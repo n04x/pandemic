@@ -28,7 +28,7 @@ auto draw_turn::run(context & ctx, args_t const & args, ostream_t & out) const -
 		out << "'" << cardTwo << "' added to your hand" << std::endl;
 	}
 	catch (std::out_of_range const &) {
-		out << "usage: " << name() << " <player_deck>" << std::endl;
+		out << "usage: " << name() << " [player_deck]" << std::endl;
 	}
 
 }

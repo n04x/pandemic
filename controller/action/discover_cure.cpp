@@ -12,10 +12,13 @@ auto discover_cure::description() const -> std::string
 
 auto discover_cure::run(context & ctx, args_t const & args, ostream_t & out) const -> void
 {
+	auto discardDeck = "player_discard"_h;
 	try {
 		auto color = args.at(0);
 		auto player = ctx.players.get_current_turn();
-		auto discardDeck = args.at(1);
+		if (args.size() > 1) {
+			discardDeck = args.at(1);
+		}
 
 		if (ctx.game.discovered_cure(color)) {
 			out << color << " already cured!" << std::endl;
@@ -46,6 +49,6 @@ auto discover_cure::run(context & ctx, args_t const & args, ostream_t & out) con
 
 	}
 	catch (std::out_of_range const &) {
-		out << "usage: " << name() << " <color> <discard_deck>" << std::endl;
+		out << "usage: " << name() << " <color> [discard_deck]" << std::endl;
 	}
 }

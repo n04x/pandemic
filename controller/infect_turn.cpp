@@ -31,6 +31,6 @@ auto infect_turn::run(context &ctx, args_t const &args, ostream_t &out) const ->
             out << "'" << city << "' was infected" << std::endl;
         }
 	} catch (std::out_of_range const &) {
-        out << "usage: " << name() << " <infection_deck> <discard_deck>" << std::endl;
+        out << "usage: " << name() << " [infection_deck] [discard_deck]" << std::endl;
     }
 }
