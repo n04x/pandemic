@@ -71,6 +71,8 @@ set(SOURCE_FILES
         controller/action/share_knowledge_to.cpp
 	controller/action/share_knowledge_from.h
         controller/action/share_knowledge_from.cpp
+	controller/action/discover_cure.h
+        controller/action/discover_cure.cpp
         )
 add_executable(pandemic ${SOURCE_FILES})
 

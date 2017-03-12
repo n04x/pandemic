@@ -27,7 +27,7 @@ auto charter_flight_to::run(context & ctx, args_t const & args, ostream_t & out)
 			}
 		}
 
-		out << "Player does not have city card!" << std::endl;
+		out << player << " does not have " << city << " card!" << std::endl;
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <city> <discard_deck>" << std::endl;

@@ -28,6 +28,7 @@
 #include "controller/action/treat_disease.h"
 #include "controller/action/share_knowledge_to.h"
 #include "controller/action/share_knowledge_from.h"
+#include "controller/action/discover_cure.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -70,6 +71,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<treat_disease>("game");
 	insert_controller<share_knowledge_to>("game");
 	insert_controller<share_knowledge_from>("game");
+	insert_controller<discover_cure>("game");
 };
 
 auto application::help() -> void {

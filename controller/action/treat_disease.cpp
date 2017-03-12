@@ -23,6 +23,7 @@ auto treat_disease::run(context & ctx, args_t const & args, ostream_t & out) con
 		}
 
 		ctx.cities.remove_cube(city, color);
+		ctx.game.add_cube_to_supply(color);
 	}
 
 	catch (std::out_of_range const &) {
