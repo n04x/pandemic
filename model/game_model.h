@@ -61,7 +61,7 @@ private:
 			{"red"_h, 0},
 	};
 	std::unordered_set<handle> discovered_cures;
-	int outbreak_level;
+	int outbreak_level = 0;
 	int infection_rate = 2;
 	int research_station_supply;
 };
