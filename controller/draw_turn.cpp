@@ -20,7 +20,9 @@ auto draw_turn::run(context & ctx, args_t const & args, ostream_t & out) const -
 		auto currentPlayer = ctx.players.get_current_turn();
 
 		ctx.decks.add_to_top(currentPlayer, cardOne);
+		out << "'" << cardOne << "' added to your hand" << std::endl;
 		ctx.decks.add_to_top(currentPlayer, cardTwo);
+		out << "'" << cardTwo << "' added to your hand" << std::endl;
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <player_deck>" << std::endl;
