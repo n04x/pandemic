@@ -19,10 +19,12 @@ auto infect_turn::run(context &ctx, args_t const &args, ostream_t &out) const ->
             auto const &color = ctx.cities.get_color(city);
             // TODO handle eradicated diseases (not just cured)
             if (ctx.cities.get_cube_count(city, color) == 3) {
+                out << "'" << city << "' caused an outbreak" << std::endl;
                 // TODO handle outbreak
                 break;
             }
             ctx.cities.add_cube(city, color, 1);
+            out << "'" << city << "' was infected" << std::endl;
         }
 	} catch (std::out_of_range const &) {
         out << "usage: " << name() << " <infection_deck> <discard_deck>" << std::endl;
