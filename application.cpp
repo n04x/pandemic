@@ -26,6 +26,7 @@
 #include "controller/action/shuttle_flight_to.h"
 #include "controller/action/charter_flight_to.h"
 #include "controller/action/treat_disease.h"
+#include "controller/action/share_knowledge_to.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -66,6 +67,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<shuttle_flight_to>("game");
 	insert_controller<charter_flight_to>("game");
 	insert_controller<treat_disease>("game");
+	insert_controller<share_knowledge_to>("game");
 };
 
 auto application::help() -> void {
