@@ -26,6 +26,7 @@ auto share_knowledge_from::run(context & ctx, args_t const & args, ostream_t & o
 			if (*card == city) {
 				ctx.decks.remove(playerTwo, city);
 				ctx.decks.add_to_top(playerOne, city);
+				ctx.players.decrement_actions_remaining();
 				return;
 			}
 		}

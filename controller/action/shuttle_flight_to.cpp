@@ -28,6 +28,7 @@ auto shuttle_flight_to::run(context & ctx, args_t const & args, ostream_t & out)
 		}
 
 		ctx.players.set_city(player, city);				// Set the new position of player
+		ctx.players.decrement_actions_remaining();
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <city>" << std::endl;

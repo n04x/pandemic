@@ -24,10 +24,10 @@ auto drive_to::run(context & ctx, args_t const & args, ostream_t & out) const ->
 				connected = true;
 		}
 
-		if (connected == true)
-			ctx.players.set_city(player, city);				// Set the new position of player
-
-		else
+		if (connected) {
+			ctx.players.set_city(player, city);                // Set the new position of player
+			ctx.players.decrement_actions_remaining();
+		} else
 			out << "Not possible to drive to " << city << std::endl;
 	}
 	catch (std::out_of_range const &) {

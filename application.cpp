@@ -49,29 +49,29 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<add_city>("setup");
     insert_controller<show_deck>("view");
 	insert_controller<players>("view");
-    insert_controller<begin_play>("setup");
-    insert_controller<end_turn>("game");
+    insert_controller<begin_play>("turn");
+    insert_controller<end_turn>("turn");
     insert_controller<add_player>("setup");
     insert_controller<create_deck>("setup");
 	insert_controller<shuffle_deck>("setup");
 	insert_controller<add_to_deck>("setup");
 	insert_controller<move_top_card>("setup");
 	insert_controller<give_role>("setup");
-	insert_controller<draw_turn>("game");
+	insert_controller<draw_turn>("turn");
 	insert_controller<add_cities_to_deck>("setup");
 	insert_controller<place_research_station>("setup");
 	insert_controller<set_research_station_supply>("setup");
 	insert_controller<set_disease_cube_supply>("setup");
 	insert_controller<infect>("setup");
-	insert_controller<direct_flight_to>("game");
-    insert_controller<infect_turn>("game");
-	insert_controller<drive_to>("game");
-	insert_controller<shuttle_flight_to>("game");
-	insert_controller<charter_flight_to>("game");
-	insert_controller<treat_disease>("game");
-	insert_controller<share_knowledge_to>("game");
-	insert_controller<share_knowledge_from>("game");
-	insert_controller<discover_cure>("game");
+	insert_controller<direct_flight_to>("action");
+    insert_controller<infect_turn>("turn");
+	insert_controller<drive_to>("action");
+	insert_controller<shuttle_flight_to>("action");
+	insert_controller<charter_flight_to>("action");
+	insert_controller<treat_disease>("action");
+	insert_controller<share_knowledge_to>("action");
+	insert_controller<share_knowledge_from>("action");
+	insert_controller<discover_cure>("action");
 };
 
 auto application::help() -> void {
@@ -188,6 +188,12 @@ auto application::call_controller(std::string const &command, std::string &name,
 		load(filename);
 	} else {
 		try {
+			auto category = controller_category(name);
+			if (category == "action" && ctx.players.get_actions_remaining() == 0) {
+				out <<  name << ": out of actions" << std::endl;
+				return return_code::ok;
+			}
+			auto const &controller = controllers.at(name);
 			controllers.at(name)->run(ctx, args, out);
 			command_history.push_back(command);
 		} catch (std::out_of_range const &) {
@@ -195,6 +201,15 @@ auto application::call_controller(std::string const &command, std::string &name,
 		}
 	}
 	return return_code::ok;
+}
+
+auto application::controller_category(std::string const &command) -> std::string {
+	for (auto const &pair : category_controllers) {
+		if (pair.second == command) {
+			return pair.first;
+		}
+	}
+	return "";
 }
 
 auto application::save(std::string const &filename) -> void {

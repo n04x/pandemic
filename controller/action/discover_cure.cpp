@@ -36,6 +36,7 @@ auto discover_cure::run(context & ctx, args_t const & args, ostream_t & out) con
 				}
 
 				ctx.game.discover_cure(color);
+				ctx.players.decrement_actions_remaining();
 
 				return;
 			}

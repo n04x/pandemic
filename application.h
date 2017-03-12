@@ -39,6 +39,8 @@ private:
 
 	auto call_controller(std::string const &command, std::string &name, std::ostream &out) -> return_code;
 
+	auto controller_category(std::string const &command) -> std::string;
+
 	auto save(std::string const &filename) -> void;
 
 	auto load(std::string const &filename) -> void;

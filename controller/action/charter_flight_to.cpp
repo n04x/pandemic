@@ -23,6 +23,7 @@ auto charter_flight_to::run(context & ctx, args_t const & args, ostream_t & out)
 				ctx.players.set_city(player, city);
 				ctx.decks.remove(player, currentCity);
 				ctx.decks.add_to_top(discardDeck, currentCity);
+				ctx.players.decrement_actions_remaining();
 				return;
 			}
 		}
