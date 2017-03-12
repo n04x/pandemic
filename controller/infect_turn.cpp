@@ -9,9 +9,13 @@ auto infect_turn::description() const -> std::string {
 }
 
 auto infect_turn::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+    auto infection_deck = "infection"_h;
+    auto discard_deck = "infection_discard"_h;
     try {
-        auto const &infection_deck = args.at(0);
-        auto const &discard_deck = args.at(1);
+        if (!args.empty()) {
+            infection_deck = args.at(0);
+            discard_deck = args.at(1);
+        }
         auto const infection_rate = ctx.game.get_infection_rate();
         for (int i = 0; i < infection_rate; i++) {
             auto const &city = ctx.decks.remove_from_top(infection_deck);

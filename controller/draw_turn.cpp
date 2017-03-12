@@ -12,10 +12,13 @@ auto draw_turn::description() const -> std::string
 
 auto draw_turn::run(context & ctx, args_t const & args, ostream_t & out) const -> void
 {
-
+	auto playerDeck = "player"_h;
 	try {
-		auto cardOne = ctx.decks.remove_from_top(args.at(0));
-		auto cardTwo = ctx.decks.remove_from_top(args.at(0));
+		if (!args.empty()) {
+			playerDeck = args.at(0);
+		}
+		auto cardOne = ctx.decks.remove_from_top(playerDeck);
+		auto cardTwo = ctx.decks.remove_from_top(playerDeck);
 
 		auto currentPlayer = ctx.players.get_current_turn();
 

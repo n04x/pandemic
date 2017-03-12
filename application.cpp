@@ -114,10 +114,10 @@ auto application::invalid_command(std::string const &command) -> void {
 auto application::prompt() -> void {
     auto const &player = ctx.players.get_current_turn();
     if (player == ""_h) {
-        out << "$ ";
+        out << "> ";
         return;
     }
-    out << player << "$ ";
+    out << player << "> ";
 }
 
 auto application::intro() -> void {
