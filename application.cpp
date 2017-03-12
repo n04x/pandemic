@@ -25,6 +25,7 @@
 #include "controller/action/drive_to.h"
 #include "controller/action/shuttle_flight_to.h"
 #include "controller/action/charter_flight_to.h"
+#include "controller/action/treat_disease.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -64,6 +65,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<drive_to>("game");
 	insert_controller<shuttle_flight_to>("game");
 	insert_controller<charter_flight_to>("game");
+	insert_controller<treat_disease>("game");
 };
 
 auto application::help() -> void {

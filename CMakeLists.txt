@@ -65,6 +65,8 @@ set(SOURCE_FILES
         controller/action/shuttle_flight_to.cpp
         controller/action/charter_flight_to.h
         controller/action/charter_flight_to.cpp
+        controller/action/treat_disease.h
+        controller/action/treat_disease.cpp
         )
 add_executable(pandemic ${SOURCE_FILES})
 
