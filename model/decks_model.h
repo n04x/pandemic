@@ -48,7 +48,7 @@ public:
 
     inline auto remove(handle name, handle card) -> void {
         auto &cards = decks.at(name).cards;
-        std::remove(cards.begin(), cards.end(), card);
+        cards.erase(std::remove(cards.begin(), cards.end(), card), cards.end());
     }
 
     inline auto begin() const -> const_iterator {
