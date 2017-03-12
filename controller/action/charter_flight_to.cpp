@@ -2,7 +2,7 @@
 
 auto charter_flight_to::name() const -> std::string
 {
-	return "charter_flight_to";
+	return "charter-flight-to";
 }
 
 auto charter_flight_to::description() const -> std::string

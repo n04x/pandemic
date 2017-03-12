@@ -2,7 +2,7 @@
 
 auto shuttle_flight_to::name() const -> std::string
 {
-	return "shuttle_flight_to";
+	return "shuttle-flight-to";
 }
 
 auto shuttle_flight_to::description() const -> std::string
