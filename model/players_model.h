@@ -2,27 +2,26 @@
 #define PANDEMIC_PLAYERS_MODEL_H
 
 #include "../handle.h"
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <algorithm>
 
 class players_model {
 	struct player {
-		handle color;
 		handle role;
 		handle city;
 	};
 
-	using players_t = std::unordered_map<handle, player>;
+	using players_type = std::map<handle, player>;
 
-	players_t players;
+	players_type players;
 	std::vector<handle> turn_order;
 	handle current_turn;
 	int actions_remaining;
 
 public:
 	// TODO remove internal iterator leak
-	using const_iterator = players_t::const_iterator;
+	using const_iterator = players_type::const_iterator;
 
 	static const int actions_per_turn = 4;
 

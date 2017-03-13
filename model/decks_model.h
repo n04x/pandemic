@@ -1,7 +1,7 @@
 #ifndef PANDEMIC_DECKS_MODEL_H
 #define PANDEMIC_DECKS_MODEL_H
 
-#include <unordered_map>
+#include <map>
 #include <deque>
 #include <algorithm>
 #include <random>
@@ -10,19 +10,19 @@
 // decks represents a collection of card decks.
 
 class decks_model {
-	using cards_t = std::deque<handle>;
+	using cards_type = std::deque<handle>;
 
 	struct deck {
-		cards_t cards;
+		cards_type cards;
 	};
 
-	using decks_t = std::unordered_map<handle, deck>;
+	using decks_type = std::map<handle, deck>;
 
-	decks_t decks;
+	decks_type decks;
 
 public:
-	using const_iterator = decks_t::const_iterator;
-	using cards_const_iterator = cards_t::const_iterator;
+	using const_iterator = decks_type::const_iterator;
+	using cards_const_iterator = cards_type::const_iterator;
 
 	inline auto create(handle name) -> void {
 		decks.emplace(name, deck{});
@@ -67,7 +67,7 @@ public:
 		return decks.at(name).cards.end();
 	}
 
-	inline auto size(handle name) const -> cards_t::size_type {
+	inline auto size(handle name) const -> cards_type::size_type {
 		return decks.at(name).cards.size();
 	}
 

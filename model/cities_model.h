@@ -2,29 +2,29 @@
 #define PANDEMIC_CITIES_MODEL_H
 
 #include "../handle.h"
-#include <unordered_set>
-#include <unordered_map>
+#include <set>
+#include <map>
 
 // map represents a PANDEMIC map.
 class cities_model {
-	using connected_cities_t = std::unordered_set<handle>;
+	using connected_cities_type = std::set<handle>;
 
 	struct city {
 		handle color;
 		handle name;
-		connected_cities_t connected_cities;
+		connected_cities_type connected_cities;
 		bool has_research_station;
-		std::unordered_map<handle, int> cube_count;
+		std::map<handle, int> cube_count;
 	};
 
-	using cities_t = std::unordered_map<handle, city>;
+	using cities_type = std::map<handle, city>;
 
-	cities_t cities;
+	cities_type cities;
 
 public:
 	// TODO remove internal iterator leak
-	using cities_const_iterator = cities_t::const_iterator;
-	using connected_cities_const_iterator = connected_cities_t::const_iterator;
+	using cities_const_iterator = cities_type::const_iterator;
+	using connected_cities_const_iterator = connected_cities_type::const_iterator;
 
 	inline auto add_city(handle color, handle name) -> void {
 		cities.emplace(name, city{color, name, {}, false, {

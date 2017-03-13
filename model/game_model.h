@@ -1,8 +1,8 @@
 #ifndef PANDEMIC_GAME_MODEL_H
 #define PANDEMIC_GAME_MODEL_H
 
-#include <unordered_set>
-#include <unordered_map>
+#include <set>
+#include <map>
 #include "../handle.h"
 
 // board represents the PANDEMIC game board.
@@ -56,13 +56,13 @@ struct game_model {
 	}
 
 private:
-	std::unordered_map<handle, int> cube_supply = {
+	std::map<handle, int> cube_supply = {
 			{"black"_h,  0},
 			{"yellow"_h, 0},
 			{"blue"_h,   0},
 			{"red"_h,    0},
 	};
-	std::unordered_set<handle> discovered_cures;
+	std::set<handle> discovered_cures;
 	int outbreak_level = 0;
 	int infection_rate = 2;
 	int research_station_supply;

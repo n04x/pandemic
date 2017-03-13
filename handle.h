@@ -11,6 +11,8 @@ struct handle {
 	inline handle(std::string name) : name{name} {
 	}
 
+	friend auto operator<(handle const &lhs, handle const &rhs) -> bool;
+
 	friend auto operator==(handle const &lhs, handle const &rhs) -> bool;
 
 	friend auto operator<<(std::ostream &os, const handle &h) -> std::ostream &;
@@ -30,23 +32,20 @@ inline auto operator==(handle const &lhs, handle const &rhs) -> bool {
 	return lhs.name == rhs.name;
 }
 
+// == returns true if lhs and rhs do not represent the same game object
+inline auto operator!=(handle const &lhs, handle const &rhs) -> bool {
+	return !(lhs == rhs);
+}
+
+// < returns true if lhs is less than rhs
+inline auto operator<(handle const &lhs, handle const &rhs) -> bool {
+	return lhs.name < rhs.name;
+}
+
 // << writes the handle to the given stream
 inline auto operator<<(std::ostream &os, const handle &h) -> std::ostream & {
 	os << h.name;
 	return os;
-}
-
-namespace std {
-	// hash<handle> specializes the hash for handles
-	template<>
-	struct hash<handle> {
-		using argument_type = handle;
-		using result_type = std::size_t;
-
-		auto operator()(argument_type const &s) const -> result_type {
-			return std::hash<std::string>{}(s.name);
-		}
-	};
 }
 
 #endif //PANDEMIC_HANDLE_H
