@@ -27,7 +27,8 @@ auto infect_turn::run(context &ctx, args_type const &args, ostream_type &out) co
 				// TODO handle outbreak
 				break;
 			}
-			ctx.cities.add_cube(city, color, 1);
+			ctx.game.remove_cube_from_supply(color);
+			ctx.cities.add_cube(city, color);
 			out << "'" << city << "' was infected" << std::endl;
 		}
 	} catch (std::out_of_range const &) {
