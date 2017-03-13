@@ -1,9 +1,9 @@
 add-city blue san_francisco chicago los_angeles tokyo manila
-add-city blue chicago montreal atlanta mexico_city san_francisco
+add-city blue chicago montreal atlanta mexico_city los_angeles san_francisco
 add-city blue montreal new_york washington chicago
 add-city blue new_york london madrid washington montreal
-add-city blue washington new_york atlanta montreal
-add-city blue atlanta montreal washington miami chicago
+add-city blue washington new_york miami atlanta montreal
+add-city blue atlanta washington miami chicago
 add-city blue london essen paris madrid new_york
 add-city blue essen st_petersburg milan paris london
 add-city blue st_petersburg moscow istanbul essen
@@ -17,7 +17,7 @@ add-city yellow bogota miami sao_paulo buenos_aires lima mexico_city
 add-city yellow sao_paulo madrid lagos buenos_aires bogota
 add-city yellow buenos_aires sao_paulo bogota
 add-city yellow santirgo lima
-add-city yellow lima bogota santirgo
+add-city yellow lima bogota santirgo mexico_city
 add-city yellow lagos khartoum kinshrsr sao_paulo
 add-city yellow khartoum johannesburg kinshrsr lagos cairo
 add-city yellow johannesburg khartoum kinshrsr

@@ -29,6 +29,7 @@
 #include "controller/action/share_knowledge_to.h"
 #include "controller/action/share_knowledge_from.h"
 #include "controller/action/discover_cure.h"
+#include "controller/editor/validate_city_connections.h"
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -72,6 +73,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<share_knowledge_to>("action");
 	insert_controller<share_knowledge_from>("action");
 	insert_controller<discover_cure>("action");
+	insert_controller<validate_city_connections>("setup");
 };
 
 auto application::help() -> void {
