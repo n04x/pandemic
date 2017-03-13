@@ -9,7 +9,7 @@ auto move_top_card::description() const -> std::string {
 	return "Moves the top card";
 }
 
-auto move_top_card::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto move_top_card::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto fromDeck = args.at(0);
 		auto toDeck = args.at(1);

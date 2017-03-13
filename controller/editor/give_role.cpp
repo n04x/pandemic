@@ -10,7 +10,7 @@ auto give_role::description() const -> std::string {
 	return "Give random role to player";
 }
 
-auto give_role::run(context &ctx, args_t const &args, ostream_t &out) const -> void    //TODO Random seed
+auto give_role::run(context &ctx, args_type const &args, ostream_type &out) const -> void    //TODO Random seed
 {
 	try {
 

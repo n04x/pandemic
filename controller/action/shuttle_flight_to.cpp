@@ -8,7 +8,7 @@ auto shuttle_flight_to::description() const -> std::string {
 	return "Fly to another city with a research station (Can only use if in city with research station)";
 }
 
-auto shuttle_flight_to::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto shuttle_flight_to::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto city = args.at(0);    // City flying to
 		auto player = ctx.players.get_current_turn();    // Get the information of which player is playing

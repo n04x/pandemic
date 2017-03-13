@@ -9,7 +9,7 @@ auto validate_city_connections::description() const -> std::string {
 	return "Print any city connection validation errors";
 }
 
-auto validate_city_connections::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto validate_city_connections::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	for (auto const &i : ctx.cities) {
 		auto const &city = i.first;
 		for (auto j = ctx.cities.begin(city); j != ctx.cities.end(city); j++) {

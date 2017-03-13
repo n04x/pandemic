@@ -8,7 +8,7 @@ auto place_pawn::description() const -> std::string {
 	return "Place player pawn";
 }
 
-auto place_pawn::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto place_pawn::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto const &player = args.at(0);
 		auto const &city = args.at(1);

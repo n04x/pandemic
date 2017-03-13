@@ -8,7 +8,7 @@ auto add_player::description() const -> std::string {
 	return "Add a player to the game";
 }
 
-auto add_player::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto add_player::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto name = args.at(0);
 		ctx.players.add_player(name);

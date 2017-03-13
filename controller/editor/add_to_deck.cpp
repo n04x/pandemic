@@ -8,7 +8,7 @@ auto add_to_deck::description() const -> std::string {
 	return "Add to the deck";
 }
 
-auto add_to_deck::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto add_to_deck::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto deckName = args.at(0);
 		auto cardName = args.at(1);

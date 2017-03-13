@@ -8,7 +8,7 @@ auto direct_flight_to::description() const -> std::string {
 	return "Direct Flight To ...";
 }
 
-auto direct_flight_to::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto direct_flight_to::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	auto discard_deck = "player_discard"_h;
 	try {
 		auto city = args.at(0);

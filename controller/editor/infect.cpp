@@ -8,7 +8,7 @@ auto infect::description() const -> std::string {
 	return "infect a city";
 }
 
-auto infect::run(context &ctx, const args_t &args, ostream_t &out) const -> void {
+auto infect::run(context &ctx, const args_type &args, ostream_type &out) const -> void {
 	try {
 		auto infection_deck = args.at(0);
 		auto discard_deck = args.at(1);

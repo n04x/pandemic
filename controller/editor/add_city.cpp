@@ -9,7 +9,7 @@ auto add_city::description() const -> std::string {
 	return "Add a city to the map";
 }
 
-auto add_city::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto add_city::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto region = args.at(0);
 		auto name = args.at(1);

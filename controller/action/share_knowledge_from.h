@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../controller.h"
+#include "../../command.h"
 
 class share_knowledge_from :
-		public controller {
+		public command {
 public:
 	// name returns the name of the command. Used to execute the command.
 	virtual auto name() const -> std::string;
@@ -12,7 +12,7 @@ public:
 	virtual auto description() const -> std::string;
 
 	// run executes the command with the given context and arguments.
-	virtual auto run(context &ctx, args_t const &args, ostream_t &out) const -> void;
+	virtual auto run(context &ctx, args_type const &args, ostream_type &out) const -> void;
 
 };
 

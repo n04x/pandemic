@@ -9,7 +9,7 @@ auto show_deck::description() const -> std::string {
 	return "Show deck information";
 }
 
-auto show_deck::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto show_deck::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	if (args.empty()) {
 		static constexpr auto col1 = 18;
 		static constexpr auto col2 = 8;

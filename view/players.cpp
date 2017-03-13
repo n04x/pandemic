@@ -9,7 +9,7 @@ auto players::description() const -> std::string {
 	return "Show players";
 }
 
-auto players::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto players::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	static constexpr auto col1 = 7;
 	static constexpr auto col2 = 12;
 	static constexpr auto col3 = 12;

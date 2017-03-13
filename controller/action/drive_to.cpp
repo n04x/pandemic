@@ -8,7 +8,7 @@ auto drive_to::description() const -> std::string {
 	return "Drive to city selected";
 }
 
-auto drive_to::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto drive_to::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto city = args.at(0);
 		auto player = ctx.players.get_current_turn();    // Get the information of which player is playing

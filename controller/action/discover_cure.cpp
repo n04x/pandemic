@@ -8,7 +8,7 @@ auto discover_cure::description() const -> std::string {
 	return "At any research station, discard 5 City cards of the same color from your hand to cure the disease of that color";
 }
 
-auto discover_cure::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto discover_cure::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	auto discardDeck = "player_discard"_h;
 	try {
 		auto color = args.at(0);

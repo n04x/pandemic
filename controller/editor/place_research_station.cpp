@@ -8,7 +8,7 @@ auto place_research_station::description() const -> std::string {
 	return "Place a research station on map";
 }
 
-auto place_research_station::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto place_research_station::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto name = args.at(0);
 		if (ctx.cities.has_research_station(name) == false) {

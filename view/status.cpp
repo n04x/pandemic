@@ -10,7 +10,7 @@ auto status::description() const -> std::string {
 	return "Show game status";
 }
 
-auto status::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto status::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	auto const &turn = ctx.players.get_current_turn();
 	if (turn == ""_h) {
 		out << "status: game not started" << std::endl;

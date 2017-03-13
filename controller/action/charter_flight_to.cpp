@@ -8,7 +8,7 @@ auto charter_flight_to::description() const -> std::string {
 	return "Take a chartered flight to a city";
 }
 
-auto charter_flight_to::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto charter_flight_to::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	auto discardDeck = "player_discard"_h;
 	try {
 		auto city = args.at(0);    // City to fly to

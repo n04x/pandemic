@@ -8,7 +8,7 @@ auto infect_turn::description() const -> std::string {
 	return "Infects cities";
 }
 
-auto infect_turn::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto infect_turn::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	auto infection_deck = "infection"_h;
 	auto discard_deck = "infection_discard"_h;
 	try {

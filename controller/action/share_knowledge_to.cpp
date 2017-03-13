@@ -8,7 +8,7 @@ auto share_knowledge_to::description() const -> std::string {
 	return "Give player card of city both players are in to other player";
 }
 
-auto share_knowledge_to::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
+auto share_knowledge_to::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	try {
 		auto playerOne = ctx.players.get_current_turn();
 		auto playerTwo = args.at(0);

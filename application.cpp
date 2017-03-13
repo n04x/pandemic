@@ -1,12 +1,12 @@
 #include "application.h"
 #include "controller/reference_card.h"
 #include "controller/begin_play.h"
-#include "controller/view/status.h"
-#include "controller/view/cities.h"
+#include "view/status.h"
+#include "view/cities.h"
 #include "controller/place_pawn.h"
 #include "controller/editor/add_city.h"
-#include "controller/view/show_deck.h"
-#include "controller/view/players.h"
+#include "view/show_deck.h"
+#include "view/players.h"
 #include "controller/end_turn.h"
 #include "controller/editor/add_player.h"
 #include "controller/editor/create_deck.h"
@@ -31,54 +31,51 @@
 #include "controller/action/discover_cure.h"
 #include "controller/editor/validate_city_connections.h"
 #include <iomanip>
-#include <sstream>
 #include <fstream>
-#include <ostream>
-#include <streambuf>
 #include <unordered_set>
 
 application::application(std::istream &in, std::ostream &out) :
 		in{in},
 		out{out},
 		ctx{},
-		controllers{},
+		commands{},
 		command_history{} {
-	insert_controller<reference_card>("view");
-	insert_controller<status>("view");
-	insert_controller<cities>("view");
-	insert_controller<place_pawn>("setup");
-	insert_controller<add_city>("setup");
-	insert_controller<show_deck>("view");
-	insert_controller<players>("view");
-	insert_controller<begin_play>("turn");
-	insert_controller<end_turn>("turn");
-	insert_controller<add_player>("setup");
-	insert_controller<create_deck>("setup");
-	insert_controller<shuffle_deck>("setup");
-	insert_controller<add_to_deck>("setup");
-	insert_controller<move_top_card>("setup");
-	insert_controller<give_role>("setup");
-	insert_controller<draw_turn>("turn");
-	insert_controller<add_cities_to_deck>("setup");
-	insert_controller<place_research_station>("setup");
-	insert_controller<set_research_station_supply>("setup");
-	insert_controller<set_disease_cube_supply>("setup");
-	insert_controller<infect>("setup");
-	insert_controller<direct_flight_to>("action");
-	insert_controller<infect_turn>("turn");
-	insert_controller<drive_to>("action");
-	insert_controller<shuttle_flight_to>("action");
-	insert_controller<charter_flight_to>("action");
-	insert_controller<treat_disease>("action");
-	insert_controller<share_knowledge_to>("action");
-	insert_controller<share_knowledge_from>("action");
-	insert_controller<discover_cure>("action");
-	insert_controller<validate_city_connections>("setup");
+	insert_command<reference_card>("view");
+	insert_command<status>("view");
+	insert_command<cities>("view");
+	insert_command<place_pawn>("setup");
+	insert_command<add_city>("setup");
+	insert_command<show_deck>("view");
+	insert_command<players>("view");
+	insert_command<begin_play>("turn");
+	insert_command<end_turn>("turn");
+	insert_command<add_player>("setup");
+	insert_command<create_deck>("setup");
+	insert_command<shuffle_deck>("setup");
+	insert_command<add_to_deck>("setup");
+	insert_command<move_top_card>("setup");
+	insert_command<give_role>("setup");
+	insert_command<draw_turn>("turn");
+	insert_command<add_cities_to_deck>("setup");
+	insert_command<place_research_station>("setup");
+	insert_command<set_research_station_supply>("setup");
+	insert_command<set_disease_cube_supply>("setup");
+	insert_command<infect>("setup");
+	insert_command<direct_flight_to>("action");
+	insert_command<infect_turn>("turn");
+	insert_command<drive_to>("action");
+	insert_command<shuttle_flight_to>("action");
+	insert_command<charter_flight_to>("action");
+	insert_command<treat_disease>("action");
+	insert_command<share_knowledge_to>("action");
+	insert_command<share_knowledge_from>("action");
+	insert_command<discover_cure>("action");
+	insert_command<validate_city_connections>("setup");
 };
 
 auto application::help() -> void {
 	std::unordered_set<std::string> categories;
-	for (auto const &i : category_controllers) {
+	for (auto const &i : category_commands) {
 		categories.insert(i.first);
 	}
 	static constexpr auto col1 = 30;
@@ -86,11 +83,11 @@ auto application::help() -> void {
 	auto iterations = 0;
 	for (auto const &category : categories) {
 		out << category << std::endl;
-		auto const &range = category_controllers.equal_range(category);
+		auto const &range = category_commands.equal_range(category);
 		for (auto it = range.first; it != range.second; it++) {
 			auto const &name = it->second;
-			auto const &search = controllers.find(name);
-			if (search == controllers.end()) {
+			auto const &search = commands.find(name);
+			if (search == commands.end()) {
 				out << "ERROR: could not get object for command '" << name << "'" << std::endl;
 				continue;
 			}
@@ -104,7 +101,7 @@ auto application::help() -> void {
 			out << std::endl;
 		}
 	}
-	for (auto const &i : controllers) {
+	for (auto const &i : commands) {
 
 	}
 }
@@ -139,7 +136,7 @@ auto application::run() -> void {
 	std::string line;
 	while (std::getline(in, line)) {
 		std::string name;
-		auto code = call_controller(line, name, out);
+		auto code = call_command(line, name, out);
 		if (code == return_code::blank_input) {
 			prompt();
 			continue;
@@ -156,7 +153,7 @@ auto application::run() -> void {
 	}
 }
 
-auto application::call_controller(std::string const &command, std::string &name, std::ostream &out) -> return_code {
+auto application::call_command(std::string const &command, std::string &name, std::ostream &out) -> return_code {
 	std::istringstream iss{command};
 	if (!(iss >> name)) {
 		return return_code::blank_input;
@@ -190,13 +187,13 @@ auto application::call_controller(std::string const &command, std::string &name,
 		load(filename);
 	} else {
 		try {
-			auto category = controller_category(name);
+			auto category = command_category(name);
 			if (category == "action" && ctx.players.get_actions_remaining() == 0) {
 				out << name << ": out of actions" << std::endl;
 				return return_code::ok;
 			}
-			auto const &controller = controllers.at(name);
-			controllers.at(name)->run(ctx, args, out);
+			auto const &controller = commands.at(name);
+			commands.at(name)->run(ctx, args, out);
 			command_history.push_back(command);
 		} catch (std::out_of_range const &) {
 			return return_code::not_found;
@@ -205,8 +202,8 @@ auto application::call_controller(std::string const &command, std::string &name,
 	return return_code::ok;
 }
 
-auto application::controller_category(std::string const &command) -> std::string {
-	for (auto const &pair : category_controllers) {
+auto application::command_category(std::string const &command) -> std::string {
+	for (auto const &pair : category_commands) {
 		if (pair.second == command) {
 			return pair.first;
 		}
@@ -241,7 +238,7 @@ auto application::load(std::string const &filename) -> void {
 	std::string line;
 	while (std::getline(in, line)) {
 		std::string name;
-		auto code = call_controller(line, name, null_stream);
+		auto code = call_command(line, name, null_stream);
 		if (code == return_code::blank_input) {
 			continue;
 		}

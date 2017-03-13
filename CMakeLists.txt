@@ -9,24 +9,24 @@ set(SOURCE_FILES
 		handle.h
 		application.cpp
 		application.h
-		controller/controller.h
+		command.h
 		controller/reference_card.cpp
 		controller/reference_card.h context.h
-		controller/view/status.cpp
-		controller/view/status.h
+        view/status.cpp
+        view/status.h
 		model/decks_model.h
 		model/cities_model.h
-		controller/view/cities.cpp
-		controller/view/cities.h
+        view/cities.cpp
+        view/cities.h
 		controller/place_pawn.cpp
 		controller/place_pawn.h
 		model/game_model.h
 		controller/editor/add_city.cpp
 		controller/editor/add_city.h
-		controller/view/show_deck.cpp
-		controller/view/show_deck.h
-		controller/view/players.cpp
-		controller/view/players.h
+        view/show_deck.cpp
+        view/show_deck.h
+        view/players.cpp
+        view/players.h
 		controller/begin_play.cpp
 		controller/begin_play.h
 		controller/end_turn.cpp

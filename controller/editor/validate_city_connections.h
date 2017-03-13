@@ -1,12 +1,12 @@
 #ifndef PANDEMIC_VALIDATE_CITY_CONNECTIONS_H
 #define PANDEMIC_VALIDATE_CITY_CONNECTIONS_H
-#include "../controller.h"
+#include "../../command.h"
 
-struct validate_city_connections : controller {
+struct validate_city_connections : command {
 	virtual auto name() const -> std::string override;
 
 	virtual auto description() const -> std::string override;
 
-	virtual auto run(context &c, args_t const &args, ostream_t &out) const -> void override;
+	virtual auto run(context &c, args_type const &args, ostream_type &out) const -> void override;
 };
 #endif //PANDEMIC_VALIDATE_CITY_CONNECTIONS_H
