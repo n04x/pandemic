@@ -16,7 +16,7 @@ auto shuffle_deck::run(context &ctx, args_t const &args, ostream_t &out) const -
 		auto name = args.at(0);
 		ctx.decks.shuffle(name);
 	}
-	catch (std::out_of_range const &){
+	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <deck>" << std::endl;
 	}
 

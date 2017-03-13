@@ -1,17 +1,14 @@
 #include "share_knowledge_to.h"
 
-auto share_knowledge_to::name() const -> std::string
-{
+auto share_knowledge_to::name() const -> std::string {
 	return "share-knowledge-to";
 }
 
-auto share_knowledge_to::description() const -> std::string
-{
+auto share_knowledge_to::description() const -> std::string {
 	return "Give player card of city both players are in to other player";
 }
 
-auto share_knowledge_to::run(context & ctx, args_t const & args, ostream_t & out) const -> void
-{
+auto share_knowledge_to::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
 	try {
 		auto playerOne = ctx.players.get_current_turn();
 		auto playerTwo = args.at(0);

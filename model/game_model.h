@@ -46,19 +46,21 @@ struct game_model {
 	inline auto research_station_supply_count() const -> int {
 		return research_station_supply;
 	}
-	inline auto set_research_station_supply(int amount) -> void{
+
+	inline auto set_research_station_supply(int amount) -> void {
 		research_station_supply = amount;
 	}
+
 	inline auto remove_research_station_supply() -> void {
 		research_station_supply--;
 	}
 
 private:
 	std::unordered_map<handle, int> cube_supply = {
-			{"black"_h, 0},
+			{"black"_h,  0},
 			{"yellow"_h, 0},
-			{"blue"_h, 0},
-			{"red"_h, 0},
+			{"blue"_h,   0},
+			{"red"_h,    0},
 	};
 	std::unordered_set<handle> discovered_cures;
 	int outbreak_level = 0;

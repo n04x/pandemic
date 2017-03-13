@@ -1,25 +1,22 @@
 #include "charter_flight_to.h"
 
-auto charter_flight_to::name() const -> std::string
-{
+auto charter_flight_to::name() const -> std::string {
 	return "charter-flight-to";
 }
 
-auto charter_flight_to::description() const -> std::string
-{
+auto charter_flight_to::description() const -> std::string {
 	return "Take a chartered flight to a city";
 }
 
-auto charter_flight_to::run(context & ctx, args_t const & args, ostream_t & out) const -> void
-{
+auto charter_flight_to::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
 	auto discardDeck = "player_discard"_h;
 	try {
-		auto city = args.at(0);	// City to fly to
+		auto city = args.at(0);    // City to fly to
 		if (args.size() > 1) {
 			discardDeck = args.at(1);
 		}
-		auto player = ctx.players.get_current_turn();	// Get the information of which player is playing
-		auto currentCity = ctx.players.get_city(player);	// City player is currently on
+		auto player = ctx.players.get_current_turn();    // Get the information of which player is playing
+		auto currentCity = ctx.players.get_city(player);    // City player is currently on
 
 		for (auto card = ctx.decks.begin(player); card != ctx.decks.end(player); card++) {
 			if (*card == currentCity) {

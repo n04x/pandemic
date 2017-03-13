@@ -2,17 +2,15 @@
 #include <vector>
 
 
-auto give_role::name() const -> std::string
-{
+auto give_role::name() const -> std::string {
 	return "give-role";
 }
 
-auto give_role::description() const -> std::string
-{
+auto give_role::description() const -> std::string {
 	return "Give random role to player";
 }
 
-auto give_role::run(context & ctx, args_t const & args, ostream_t & out) const -> void	//TODO Random seed
+auto give_role::run(context &ctx, args_t const &args, ostream_t &out) const -> void    //TODO Random seed
 {
 	try {
 
@@ -27,14 +25,15 @@ auto give_role::run(context & ctx, args_t const & args, ostream_t & out) const -
 
 		std::vector<handle> existingRoles;
 
-		for (auto iterator : ctx.players) {	//Don't assign existing roles
+		for (auto iterator : ctx.players) {    //Don't assign existing roles
 			auto playerName = iterator.first;
 			auto playerRole = ctx.players.get_role(playerName);
 
 			existingRoles.push_back(playerRole);
 		}
 
-		std::vector<handle> possibleRoles = { "Dispatcher"_h, "Scientist"_h, "Medic"_h, "Quarantine"_h, "Operations"_h, "Contingency"_h, "Research"_h };	//TODO Check Role Names are correct
+		std::vector<handle> possibleRoles = {"Dispatcher"_h, "Scientist"_h, "Medic"_h, "Quarantine"_h, "Operations"_h,
+											 "Contingency"_h, "Research"_h};    //TODO Check Role Names are correct
 
 		for (auto iterator : existingRoles) {
 			std::remove(possibleRoles.begin(), possibleRoles.end(), iterator);

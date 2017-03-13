@@ -1,21 +1,18 @@
 #include "drive_to.h"
 
-auto drive_to::name() const -> std::string
-{
+auto drive_to::name() const -> std::string {
 	return "drive-to";
 }
 
-auto drive_to::description() const -> std::string
-{
+auto drive_to::description() const -> std::string {
 	return "Drive to city selected";
 }
 
-auto drive_to::run(context & ctx, args_t const & args, ostream_t & out) const -> void
-{
+auto drive_to::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
 	try {
 		auto city = args.at(0);
-		auto player = ctx.players.get_current_turn();	// Get the information of which player is playing
-		auto currentCity = ctx.players.get_city(player);	// City player is currently on
+		auto player = ctx.players.get_current_turn();    // Get the information of which player is playing
+		auto currentCity = ctx.players.get_city(player);    // City player is currently on
 
 		bool connected = false;
 

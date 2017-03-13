@@ -27,12 +27,12 @@ public:
 	using connected_cities_const_iterator = connected_cities_t::const_iterator;
 
 	inline auto add_city(handle color, handle name) -> void {
-		cities.emplace(name, city{ color, name, {}, false, {
-			{ "black"_h, 0 },
-			{ "yellow"_h, 0 },
-			{ "blue"_h, 0 },
-			{ "red"_h, 0 },
-		} });
+		cities.emplace(name, city{color, name, {}, false, {
+				{"black"_h, 0},
+				{"yellow"_h, 0},
+				{"blue"_h, 0},
+				{"red"_h, 0},
+		}});
 	}
 
 	inline auto connect_city(handle name, handle connection) -> void {

@@ -1,17 +1,14 @@
 #include "discover_cure.h"
 
-auto discover_cure::name() const -> std::string
-{
+auto discover_cure::name() const -> std::string {
 	return "discover-cure";
 }
 
-auto discover_cure::description() const -> std::string
-{
+auto discover_cure::description() const -> std::string {
 	return "At any research station, discard 5 City cards of the same color from your hand to cure the disease of that color";
 }
 
-auto discover_cure::run(context & ctx, args_t const & args, ostream_t & out) const -> void
-{
+auto discover_cure::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
 	auto discardDeck = "player_discard"_h;
 	try {
 		auto color = args.at(0);
@@ -24,7 +21,7 @@ auto discover_cure::run(context & ctx, args_t const & args, ostream_t & out) con
 			out << color << " already cured!" << std::endl;
 			return;
 		}
-		
+
 		std::vector<handle> v;
 
 		for (auto card = ctx.decks.begin(player); card != ctx.decks.end(player); card++) {
@@ -44,7 +41,7 @@ auto discover_cure::run(context & ctx, args_t const & args, ostream_t & out) con
 				return;
 			}
 		}
-		
+
 		out << "Not enough " << color << " cards in hand!" << std::endl;
 
 	}

@@ -1,17 +1,14 @@
 #include "draw_turn.h"
 
-auto draw_turn::name() const -> std::string
-{
+auto draw_turn::name() const -> std::string {
 	return "draw-turn";
 }
 
-auto draw_turn::description() const -> std::string
-{
+auto draw_turn::description() const -> std::string {
 	return "Draw 2 cards into player's hand";
 }
 
-auto draw_turn::run(context & ctx, args_t const & args, ostream_t & out) const -> void
-{
+auto draw_turn::run(context &ctx, args_t const &args, ostream_t &out) const -> void {
 	auto playerDeck = "player"_h;
 	try {
 		if (!args.empty()) {

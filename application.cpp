@@ -47,12 +47,12 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<cities>("view");
 	insert_controller<place_pawn>("setup");
 	insert_controller<add_city>("setup");
-    insert_controller<show_deck>("view");
+	insert_controller<show_deck>("view");
 	insert_controller<players>("view");
-    insert_controller<begin_play>("turn");
-    insert_controller<end_turn>("turn");
-    insert_controller<add_player>("setup");
-    insert_controller<create_deck>("setup");
+	insert_controller<begin_play>("turn");
+	insert_controller<end_turn>("turn");
+	insert_controller<add_player>("setup");
+	insert_controller<create_deck>("setup");
 	insert_controller<shuffle_deck>("setup");
 	insert_controller<add_to_deck>("setup");
 	insert_controller<move_top_card>("setup");
@@ -64,7 +64,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_controller<set_disease_cube_supply>("setup");
 	insert_controller<infect>("setup");
 	insert_controller<direct_flight_to>("action");
-    insert_controller<infect_turn>("turn");
+	insert_controller<infect_turn>("turn");
 	insert_controller<drive_to>("action");
 	insert_controller<shuttle_flight_to>("action");
 	insert_controller<charter_flight_to>("action");
@@ -112,12 +112,12 @@ auto application::invalid_command(std::string const &command) -> void {
 }
 
 auto application::prompt() -> void {
-    auto const &player = ctx.players.get_current_turn();
-    if (player == ""_h) {
-        out << "> ";
-        return;
-    }
-    out << player << "> ";
+	auto const &player = ctx.players.get_current_turn();
+	if (player == ""_h) {
+		out << "> ";
+		return;
+	}
+	out << player << "> ";
 }
 
 auto application::intro() -> void {
@@ -190,7 +190,7 @@ auto application::call_controller(std::string const &command, std::string &name,
 		try {
 			auto category = controller_category(name);
 			if (category == "action" && ctx.players.get_actions_remaining() == 0) {
-				out <<  name << ": out of actions" << std::endl;
+				out << name << ": out of actions" << std::endl;
 				return return_code::ok;
 			}
 			auto const &controller = controllers.at(name);
