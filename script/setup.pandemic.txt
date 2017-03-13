@@ -39,8 +39,8 @@ infect infection infection_discard 1
 # SETUP 4
 add-player red
 add-player blue
-give-role red
-give-role blue
+give-role red medic
+give-role blue dispatcher
 place-pawn red atlanta
 place-pawn blue atlanta
 
