@@ -17,7 +17,6 @@ struct handle {
 
 	friend auto operator<<(std::ostream &os, const handle &h) -> std::ostream &;
 
-	friend struct std::hash<handle>;
 private:
 	std::string name;
 };
