@@ -32,7 +32,7 @@
 #include "controller/editor/validate_city_connections.h"
 #include <iomanip>
 #include <fstream>
-#include <unordered_set>
+#include <set>
 
 application::application(std::istream &in, std::ostream &out) :
 		in{in},
@@ -74,12 +74,14 @@ application::application(std::istream &in, std::ostream &out) :
 };
 
 auto application::help() -> void {
-	std::unordered_set<std::string> categories;
+	static constexpr auto col1 = 30;
+	static constexpr auto fill = ' ';
+	// Get list of command categories
+	std::set<std::string> categories;
 	for (auto const &i : category_commands) {
 		categories.insert(i.first);
 	}
-	static constexpr auto col1 = 30;
-	static constexpr auto fill = ' ';
+	// Print help for each command in category
 	auto iterations = 0;
 	for (auto const &category : categories) {
 		out << category << std::endl;
@@ -100,9 +102,6 @@ auto application::help() -> void {
 		if (++iterations < categories.size()) {
 			out << std::endl;
 		}
-	}
-	for (auto const &i : commands) {
-
 	}
 }
 
@@ -133,10 +132,12 @@ auto application::intro() -> void {
 auto application::run() -> void {
 	intro();
 	prompt();
+	// Read input line from user
 	std::string line;
 	while (std::getline(in, line)) {
 		std::string name;
 		auto code = call_command(line, name, out);
+		// Handle return code from command
 		if (code == return_code::blank_input) {
 			prompt();
 			continue;
@@ -154,6 +155,7 @@ auto application::run() -> void {
 }
 
 auto application::call_command(std::string const &command, std::string &name, std::ostream &out) -> return_code {
+	// Split command into tokens
 	std::istringstream iss{command};
 	if (!(iss >> name)) {
 		return return_code::blank_input;
@@ -163,8 +165,9 @@ auto application::call_command(std::string const &command, std::string &name, st
 	while (iss >> arg) {
 		args.emplace_back(arg);
 	}
+	// Handle command name
 	if (name == "#") {
-		// comment
+		// Ignore line
 		return return_code::ok;
 	}
 	if (name == "exit") {
@@ -187,11 +190,13 @@ auto application::call_command(std::string const &command, std::string &name, st
 		load(filename);
 	} else {
 		try {
+			// Ensure player has enough actions remaining
 			auto category = command_category(name);
 			if (category == "action" && ctx.players.get_actions_remaining() == 0) {
 				out << name << ": out of actions" << std::endl;
 				return return_code::ok;
 			}
+			// Run command and push into history
 			auto const &controller = commands.at(name);
 			commands.at(name)->run(ctx, args, out);
 			command_history.push_back(command);
@@ -233,9 +238,11 @@ auto application::load(std::string const &filename) -> void {
 		out << "could not open file '" << path << "'" << std::endl;
 		return;
 	}
+	// Suppress command output
 	null_buffer nb;
 	std::ostream null_stream{&nb};
 	std::string line;
+	// Run commands by line
 	while (std::getline(in, line)) {
 		std::string name;
 		auto code = call_command(line, name, null_stream);
