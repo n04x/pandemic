@@ -32,6 +32,7 @@
 #include "controller/editor/validate_city_connections.h"
 #include <iomanip>
 #include <fstream>
+#include <sstream>
 #include <set>
 
 application::application(std::istream &in, std::ostream &out) :
