@@ -1,0 +1,95 @@
+add-city blue san_francisco chicago los_angeles tokyo manila
+add-city blue chicago montreal atlanta mexico_city los_angeles san_francisco
+add-city blue montreal new_york washington chicago
+add-city blue new_york london madrid washington montreal
+add-city blue washington new_york miami atlanta montreal
+add-city blue atlanta washington miami chicago
+add-city blue london essen paris madrid new_york
+add-city blue essen st_petersburg milan paris london
+add-city blue st_petersburg moscow istanbul essen
+add-city blue milan istanbul paris essen
+add-city blue paris essen milan algiers madrid london
+add-city blue madrid london paris algiers sao_paulo new_york
+add-city yellow los_angeles chicago mexico_city sydney san_francisco
+add-city yellow mexico_city chicago miami bogota lima los_angeles
+add-city yellow miami washington bogota mexico_city atlanta
+add-city yellow bogota miami sao_paulo buenos_aires lima mexico_city
+add-city yellow sao_paulo madrid lagos buenos_aires bogota
+add-city yellow buenos_aires sao_paulo bogota
+add-city yellow santirgo lima
+add-city yellow lima bogota santirgo mexico_city
+add-city yellow lagos khartoum kinshrsr sao_paulo
+add-city yellow khartoum johannesburg kinshrsr lagos cairo
+add-city yellow johannesburg khartoum kinshrsr
+add-city yellow kinshrsr khartoum johannesburg lagos
+create-deck player
+add-cities-to-deck player
+add-to-deck player one_quiet_night
+add-to-deck player forecast
+add-to-deck player government_grant
+add-to-deck player resilient_population
+add-to-deck player airlift
+create-deck player_discard
+set-research-station-supply 6
+set-disease-cube-supply black 24
+set-disease-cube-supply yellow 24
+set-disease-cube-supply blue 24
+set-disease-cube-supply red 24
+place-research-station atlanta
+create-deck infection
+add-cities-to-deck infection
+shuffle-deck infection
+create-deck infection_discard
+infect infection infection_discard 3
+infect infection infection_discard 3
+infect infection infection_discard 3
+infect infection infection_discard 2
+infect infection infection_discard 2
+infect infection infection_discard 2
+infect infection infection_discard 1
+infect infection infection_discard 1
+infect infection infection_discard 1
+add-player red
+add-player blue
+give-role red medic
+give-role blue dispatcher
+place-pawn red atlanta
+place-pawn blue atlanta
+shuffle-deck player
+create-deck red
+move-top-card player red
+move-top-card player red
+move-top-card player red
+move-top-card player red
+create-deck blue
+move-top-card player blue
+move-top-card player blue
+move-top-card player blue
+move-top-card player blue
+add-to-deck player epidemic_1
+add-to-deck player epidemic_2
+add-to-deck player epidemic_3
+add-to-deck player epidemic_4
+add-to-deck player epidemic_5
+add-to-deck player epidemic_6
+shuffle-deck player
+begin-play
+players
+cities
+status
+drive-to chicago
+treat-disease
+charter-flight-to miami
+direct-flight-to mexico_city
+status
+draw-turn player
+infect-turn infection infection_discard
+end-turn
+status
+drive-to montreal
+drive-to new_york
+share-knowledge-from red
+status
+draw-turn player
+infect-turn infection infection_discard
+end-turn

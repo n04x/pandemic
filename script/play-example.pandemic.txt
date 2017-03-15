@@ -21,7 +21,7 @@ save example-game
 # blue turn
 status
 drive-to montreal
-build-research-station
+place-research-station
 drive-to new_york
 share-knowledge-from red
 status
