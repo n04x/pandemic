@@ -126,8 +126,9 @@ auto application::intro() -> void {
  | '_ \ / _` | '_ \ / _` |/ _ \ '_ ` _ \| |/ __|
  | |_) | (_| | | | | (_| |  __/ | | | | | | (__
  | .__/ \__,_|_| |_|\__,_|\___|_| |_| |_|_|\___|
- |_|                                            )";
-	out << banner << std::endl << std::endl;
+ |_|
+)";
+	out << banner << std::endl;
 }
 
 auto application::run() -> void {
@@ -153,6 +154,18 @@ auto application::run() -> void {
 		}
 		prompt();
 	}
+}
+
+auto print_win(std::ostream &out) -> void {
+	static constexpr auto banner = R"(
+ __   __                     _         _
+ \ \ / /__  _   _  __      _(_)_ __   | |
+  \ V / _ \| | | | \ \ /\ / / | '_ \  | |
+   | | (_) | |_| |  \ V  V /| | | | | |_|
+   |_|\___/ \__,_|   \_/\_/ |_|_| |_| (_)
+)";
+	out << banner << std::endl;
+	out << "All four cures has been discovered. Humanity is safe... for now." << std::endl;
 }
 
 auto application::call_command(std::string const &command, std::string &name, std::ostream &out) -> return_code {
@@ -204,6 +217,10 @@ auto application::call_command(std::string const &command, std::string &name, st
 		} catch (std::out_of_range const &) {
 			return return_code::not_found;
 		}
+	}
+	if (ctx.game.win()) {
+		print_win(out);
+		return return_code::exit;
 	}
 	return return_code::ok;
 }

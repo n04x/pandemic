@@ -55,6 +55,13 @@ struct game_model {
 		research_station_supply--;
 	}
 
+	inline auto win() const -> bool {
+		return discovered_cure("black"_h) &&
+			   discovered_cure("yellow"_h) &&
+			   discovered_cure("blue"_h) &&
+			   discovered_cure("red"_h);
+	}
+
 private:
 	std::map<handle, int> cube_supply = {
 			{"black"_h,  0},
