@@ -53,6 +53,9 @@ struct game_model {
 	}
 
 	inline auto increase_outbreak_level() -> void {
+		if (outbreak_limit_reached()) {
+			return;
+		}
 		outbreak_level++;
 	}
 

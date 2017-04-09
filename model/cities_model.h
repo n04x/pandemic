@@ -4,6 +4,7 @@
 #include "../handle.h"
 #include <set>
 #include <map>
+#include <algorithm>
 
 // map represents a PANDEMIC map.
 class cities_model {
@@ -65,6 +66,13 @@ public:
 
 	inline auto remove_cube(handle name, handle color, int count = 1) -> void {
 		cities.at(name).cube_count.at(color) -= count;
+	}
+
+	inline auto eradicated_disease(handle color) -> bool {
+		auto has_cubes = std::any_of(begin(), end(), [&](auto p) {
+			return this->get_cube_count(p.first, color) != 0;
+		});
+		return !has_cubes;
 	}
 
 	inline auto begin() const -> cities_const_iterator {
