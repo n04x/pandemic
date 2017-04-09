@@ -84,6 +84,16 @@ auto draw_cards(context &ctx, end_actions::args_type const &args, end_actions::o
 	draw_card(ctx, args, out);
 }
 
+auto hand_limit(context &ctx, end_actions::args_type const &args, end_actions::ostream_type &out) -> void {
+	static const auto limit = 7;
+	auto current_player = ctx.players.get_current_turn();
+	if (ctx.decks.size(current_player) > limit) {
+		auto card = ctx.decks.remove_from_bottom(current_player);
+		ctx.decks.add_to_top("player_discard"_h, card);
+		out << "'" << current_player << "' player reached hand limit, discarding '" << card << "'" << std::endl;
+	}
+}
+
 auto infect(context &ctx, end_actions::args_type const &args, end_actions::ostream_type &out) -> void {
 	auto infection_deck = "infection"_h;
 	auto discard_deck = "infection_discard"_h;
@@ -114,6 +124,7 @@ auto infect(context &ctx, end_actions::args_type const &args, end_actions::ostre
 auto end_actions::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	// TODO throw error if game not started
 	draw_cards(ctx, args, out);
+	hand_limit(ctx, args, out);
 	infect(ctx, args, out);
 	auto const &next = ctx.players.get_next_turn();
 	ctx.players.start_turn(next);
