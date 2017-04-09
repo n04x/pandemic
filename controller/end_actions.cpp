@@ -25,6 +25,7 @@ auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handl
 			outbreak(ctx, out, city, color, infected);
 			continue;
 		}
+		ctx.game.remove_cube_from_supply(color);
 		ctx.cities.add_cube(city, color);
 		out << "'" << city << "' was infected due to an outbreak from '" << target << "'" << std::endl;
 	}
@@ -33,20 +34,24 @@ auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handl
 auto epidemic(context &ctx, end_actions::args_type const &args, end_actions::ostream_type &out) -> void {
 	// (1) Increase
 	ctx.game.increase_infection_rate();
+	out << "infection rate increased to '" << ctx.game.get_infection_rate() << "'" << std::endl;
 
 	// (2) Infect
 	auto city = ctx.decks.remove_from_bottom("infection"_h);
-	ctx.decks.add_to_top(city, "infection_discard"_h);
+	ctx.decks.add_to_top("infection_discard"_h, city);
 	auto color = ctx.cities.get_color(city);
 	if (!ctx.cities.eradicated_disease(color)) {
 		auto cube_count = ctx.cities.get_cube_count(city, color);
 		if (cube_count != 0) {
-			ctx.cities.add_cube(city, color, cube_limit - cube_count);
+			auto amount = cube_limit - cube_count;
+			ctx.game.remove_cube_from_supply(color, amount);
+			ctx.cities.add_cube(city, color, amount);
 			std::vector<handle> infected;
 			outbreak(ctx, out, city, color, infected);
 		} else {
+			ctx.game.remove_cube_from_supply(color, cube_limit);
 			ctx.cities.add_cube(city, color, cube_limit);
-			out << "'" << city << "' was infected due to an epidemic" << std::endl;
+			out << "'" << city << "' had an epidemic" << std::endl;
 		}
 	}
 
@@ -59,13 +64,14 @@ auto epidemic(context &ctx, end_actions::args_type const &args, end_actions::ost
 
 auto draw_card(context &ctx, end_actions::args_type const &args, end_actions::ostream_type &out) -> void {
 	static const std::array<handle, 6> epidemic_cards = {"epidemic_1"_h, "epidemic_2"_h, "epidemic_3"_h, "epidemic_4"_h, "epidemic_5"_h, "epidemic_6"_h};
-	auto player_hand = "player"_h;
+	auto player_deck = "player"_h;
 	if (!args.empty()) {
-		player_hand = args.at(0);
+		player_deck = args.at(0);
 	}
 	auto current_player = ctx.players.get_current_turn();
-	auto card = ctx.decks.remove_from_top(player_hand);
+	auto card = ctx.decks.remove_from_top(player_deck);
 	if (std::find(epidemic_cards.begin(), epidemic_cards.end(), card) != epidemic_cards.end()) {
+		out << "epidemic card was drawn" << std::endl;
 		epidemic(ctx, args, out);
 	} else {
 		ctx.decks.add_to_top(current_player, card);
@@ -90,11 +96,14 @@ auto infect(context &ctx, end_actions::args_type const &args, end_actions::ostre
 		auto const &city = ctx.decks.remove_from_top(infection_deck);
 		ctx.decks.add_to_top(discard_deck, city);
 		auto const &color = ctx.cities.get_color(city);
-		// TODO handle eradicated diseases (not just cured)
+		if (ctx.cities.eradicated_disease(color)) {
+			continue;
+		}
 		if (ctx.cities.get_cube_count(city, color) == 3) {
 			out << "'" << city << "' caused an outbreak" << std::endl;
-			// TODO handle outbreak
-			break;
+			std::vector<handle> infected;
+			outbreak(ctx, out, city, color, infected);
+			continue;
 		}
 		ctx.game.remove_cube_from_supply(color);
 		ctx.cities.add_cube(city, color);
