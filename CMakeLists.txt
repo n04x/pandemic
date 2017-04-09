@@ -28,8 +28,8 @@ set(SOURCE_FILES
         view/show_deck.h
         view/players.cpp
         view/players.h
-		controller/begin_play.cpp
-		controller/begin_play.h
+		controller/begin.cpp
+		controller/begin.h
 		controller/editor/add_player.cpp
 		controller/editor/add_player.h
 		controller/editor/create_deck.cpp
@@ -70,8 +70,8 @@ set(SOURCE_FILES
 		controller/action/discover_cure.cpp
 		controller/editor/validate_city_connections.cpp
 		controller/editor/validate_city_connections.h
-		controller/end_actions.cpp
-		controller/end_actions.h)
+        controller/end.cpp
+        controller/end.h)
 add_executable(pandemic ${SOURCE_FILES})
 
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT pandemic)

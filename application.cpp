@@ -1,13 +1,13 @@
 #include "application.h"
 #include "controller/reference_card.h"
-#include "controller/begin_play.h"
+#include "controller/begin.h"
 #include "view/status.h"
 #include "view/cities.h"
 #include "controller/place_pawn.h"
 #include "controller/editor/add_city.h"
 #include "view/show_deck.h"
 #include "view/players.h"
-#include "controller/end_actions.h"
+#include "controller/end.h"
 #include "controller/editor/add_player.h"
 #include "controller/editor/create_deck.h"
 #include "controller/editor/shuffle_deck.h"
@@ -46,7 +46,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_command<add_city>("setup");
 	insert_command<show_deck>("view");
 	insert_command<players>("view");
-	insert_command<begin_play>("turn");
+	insert_command<begin>("turn");
 	insert_command<end_actions>("turn");
 	insert_command<add_player>("setup");
 	insert_command<create_deck>("setup");

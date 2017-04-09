@@ -1,4 +1,4 @@
-#include "end_actions.h"
+#include "end.h"
 #include <algorithm>
 #include <vector>
 
@@ -12,10 +12,13 @@ auto end_actions::description() const -> std::string {
 
 static auto cube_limit = 3;
 
-auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handle color, std::vector<handle> &infected) -> void {
+auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handle color, std::vector<handle> &infected, int wave = 1) -> void {
 	ctx.game.increase_outbreak_level();
 	out << "outbreak level increased to '" << ctx.game.get_outbreak_level() << "'" << std::endl;
 
+	infected.push_back(target);
+
+	std::vector<handle> chain_reaction_outbreak;
 	for (auto i = ctx.cities.begin(target); i != ctx.cities.end(target); i++) {
 		auto city = *i;
 
@@ -30,12 +33,16 @@ auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handl
 		infected.push_back(city);
 
 		if (ctx.cities.get_cube_count(city, color) == cube_limit) {
-			outbreak(ctx, out, city, color, infected);
+			chain_reaction_outbreak.push_back(city);
 			continue;
 		}
 		ctx.game.remove_cube_from_supply(color);
 		ctx.cities.add_cube(city, color);
-		out << "'" << city << "' was infected due to an outbreak from '" << target << "'" << std::endl;
+		out << "'" << city << "' was infected due to an outbreak from '" << target << "' (wave " << wave << ")" << std::endl;
+	}
+	for (auto city : chain_reaction_outbreak) {
+		out << "'" << city << "' had a chain reaction outbreak from '" << target << "' (wave " << wave << ")" << std::endl;
+		outbreak(ctx, out, city, color, infected, wave + 1);
 	}
 }
 

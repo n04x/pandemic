@@ -3,7 +3,7 @@
 
 #include "../command.h"
 
-struct begin_play : command {
+struct begin : command {
 	virtual auto name() const -> std::string override;
 
 	virtual auto description() const -> std::string override;
