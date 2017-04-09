@@ -14,13 +14,21 @@ static auto cube_limit = 3;
 
 auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handle color, std::vector<handle> &infected) -> void {
 	ctx.game.increase_outbreak_level();
+	out << "outbreak level increased to '" << ctx.game.get_outbreak_level() << "'" << std::endl;
+
 	for (auto i = ctx.cities.begin(target); i != ctx.cities.end(target); i++) {
 		auto city = *i;
+
+		// Ignore connected cities that have not been defined.
+		if (!ctx.cities.exists(city)) {
+			continue;
+		}
 		// Do not infect cities that already had an outbreak
 		if (std::find(infected.begin(), infected.end(), city) != infected.end()) {
 			continue;
 		}
 		infected.push_back(city);
+
 		if (ctx.cities.get_cube_count(city, color) == cube_limit) {
 			outbreak(ctx, out, city, color, infected);
 			continue;
@@ -51,7 +59,7 @@ auto epidemic(context &ctx, end_actions::args_type const &args, end_actions::ost
 		} else {
 			ctx.game.remove_cube_from_supply(color, cube_limit);
 			ctx.cities.add_cube(city, color, cube_limit);
-			out << "'" << city << "' had an epidemic" << std::endl;
+			out << "'" << city << "' was infected from an epidemic card" << std::endl;
 		}
 	}
 
@@ -110,14 +118,14 @@ auto infect(context &ctx, end_actions::args_type const &args, end_actions::ostre
 			continue;
 		}
 		if (ctx.cities.get_cube_count(city, color) == 3) {
-			out << "'" << city << "' caused an outbreak" << std::endl;
+			out << "'" << city << "' had an outbreak from an infection card" << std::endl;
 			std::vector<handle> infected;
 			outbreak(ctx, out, city, color, infected);
 			continue;
 		}
 		ctx.game.remove_cube_from_supply(color);
 		ctx.cities.add_cube(city, color);
-		out << "'" << city << "' was infected" << std::endl;
+		out << "'" << city << "' was infected from an infection card" << std::endl;
 	}
 }
 

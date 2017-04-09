@@ -27,6 +27,10 @@ public:
 	using cities_const_iterator = cities_type::const_iterator;
 	using connected_cities_const_iterator = connected_cities_type::const_iterator;
 
+	inline auto exists(handle name) const -> bool {
+		return cities.find(name) != cities.end();
+	}
+
 	inline auto add_city(handle color, handle name) -> void {
 		cities.emplace(name, city{color, name, {}, false, {
 				{"black"_h, 0},
@@ -68,7 +72,7 @@ public:
 		cities.at(name).cube_count.at(color) -= count;
 	}
 
-	inline auto eradicated_disease(handle color) -> bool {
+	inline auto eradicated_disease(handle color) const -> bool {
 		auto has_cubes = std::any_of(begin(), end(), [&](auto p) {
 			return this->get_cube_count(p.first, color) != 0;
 		});
