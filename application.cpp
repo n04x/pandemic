@@ -7,7 +7,7 @@
 #include "controller/editor/add_city.h"
 #include "view/show_deck.h"
 #include "view/players.h"
-#include "controller/end_turn.h"
+#include "controller/end_actions.h"
 #include "controller/editor/add_player.h"
 #include "controller/editor/create_deck.h"
 #include "controller/editor/shuffle_deck.h"
@@ -20,8 +20,6 @@
 #include "controller/editor/set_disease_cube_supply.h"
 #include "controller/editor/infect.h"
 #include "controller/action/direct_flight_to.h"
-#include "controller/draw_turn.h"
-#include "controller/infect_turn.h"
 #include "controller/action/drive_to.h"
 #include "controller/action/shuttle_flight_to.h"
 #include "controller/action/charter_flight_to.h"
@@ -49,21 +47,19 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_command<show_deck>("view");
 	insert_command<players>("view");
 	insert_command<begin_play>("turn");
-	insert_command<end_turn>("turn");
+	insert_command<end_actions>("turn");
 	insert_command<add_player>("setup");
 	insert_command<create_deck>("setup");
 	insert_command<shuffle_deck>("setup");
 	insert_command<add_to_deck>("setup");
 	insert_command<move_top_card>("setup");
 	insert_command<give_role>("setup");
-	insert_command<draw_turn>("turn");
 	insert_command<add_cities_to_deck>("setup");
 	insert_command<place_research_station>("setup");
 	insert_command<set_research_station_supply>("setup");
 	insert_command<set_disease_cube_supply>("setup");
 	insert_command<infect>("setup");
 	insert_command<direct_flight_to>("action");
-	insert_command<infect_turn>("turn");
 	insert_command<drive_to>("action");
 	insert_command<shuttle_flight_to>("action");
 	insert_command<charter_flight_to>("action");

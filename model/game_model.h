@@ -23,6 +23,9 @@ struct game_model {
 	}
 
 	inline auto remove_cube_from_supply(handle color, int amount = 1) -> void {
+		if (cube_supply_count(color) - amount < 0) {
+			throw std::out_of_range{"out of cubes"};
+		}
 		cube_supply.at(color) -= amount;
 	}
 

@@ -11,7 +11,8 @@ set(SOURCE_FILES
 		application.h
 		command.h
 		controller/reference_card.cpp
-		controller/reference_card.h context.h
+		controller/reference_card.h
+		context.h
         view/status.cpp
         view/status.h
 		model/decks_model.h
@@ -29,8 +30,6 @@ set(SOURCE_FILES
         view/players.h
 		controller/begin_play.cpp
 		controller/begin_play.h
-		controller/end_turn.cpp
-		controller/end_turn.h
 		controller/editor/add_player.cpp
 		controller/editor/add_player.h
 		controller/editor/create_deck.cpp
@@ -43,8 +42,6 @@ set(SOURCE_FILES
 		controller/editor/move_top_card.cpp
 		controller/editor/give_role.h
 		controller/editor/give_role.cpp
-		controller/draw_turn.h
-		controller/draw_turn.cpp
 		controller/editor/add_cities_to_deck.h
 		controller/editor/add_cities_to_deck.cpp
 		controller/editor/place_research_station.h
@@ -57,8 +54,6 @@ set(SOURCE_FILES
 		controller/editor/infect.cpp
 		controller/action/direct_flight_to.h
 		controller/action/direct_flight_to.cpp
-		controller/infect_turn.h
-		controller/infect_turn.cpp
 		controller/action/drive_to.h
 		controller/action/drive_to.cpp
 		controller/action/shuttle_flight_to.h
@@ -74,7 +69,9 @@ set(SOURCE_FILES
 		controller/action/discover_cure.h
 		controller/action/discover_cure.cpp
 		controller/editor/validate_city_connections.cpp
-		controller/editor/validate_city_connections.h)
+		controller/editor/validate_city_connections.h
+		controller/end_actions.cpp
+		controller/end_actions.h)
 add_executable(pandemic ${SOURCE_FILES})
 
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT pandemic)
