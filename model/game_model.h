@@ -11,6 +11,13 @@ struct game_model {
 		return cube_supply.at(color);
 	}
 
+	inline auto out_of_cubes() const -> bool {
+		return cube_supply_count("black"_h) < 0 ||
+			   cube_supply_count("yellow"_h) < 0 ||
+			   cube_supply_count("blue"_h) < 0 ||
+			   cube_supply_count("red"_h) < 0;
+	}
+
 	inline auto add_cube_to_supply(handle color, int amount = 1) -> void {
 		cube_supply.at(color) += amount;
 	}
@@ -23,12 +30,23 @@ struct game_model {
 		return discovered_cures.count(color) == 1;
 	}
 
+	inline auto all_cures_discovered() const -> bool {
+		return discovered_cure("black"_h) &&
+			   discovered_cure("yellow"_h) &&
+			   discovered_cure("blue"_h) &&
+			   discovered_cure("red"_h);
+	}
+
 	inline auto discover_cure(handle color) -> void {
 		discovered_cures.insert(color);
 	}
 
 	inline auto get_outbreak_level() const -> int {
 		return outbreak_level;
+	}
+
+	inline auto outbreak_limit_reached() -> bool {
+		return get_outbreak_level() == outbreak_limit;
 	}
 
 	inline auto increase_outbreak_level() -> void {
@@ -55,13 +73,6 @@ struct game_model {
 		research_station_supply--;
 	}
 
-	inline auto win() const -> bool {
-		return discovered_cure("black"_h) &&
-			   discovered_cure("yellow"_h) &&
-			   discovered_cure("blue"_h) &&
-			   discovered_cure("red"_h);
-	}
-
 private:
 	std::map<handle, int> cube_supply = {
 			{"black"_h,  0},
@@ -70,6 +81,7 @@ private:
 			{"red"_h,    0},
 	};
 	std::set<handle> discovered_cures;
+	int const outbreak_limit = 8;
 	int outbreak_level = 0;
 	int infection_rate = 2;
 	int research_station_supply;

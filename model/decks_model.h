@@ -14,6 +14,7 @@ class decks_model {
 
 	struct deck {
 		cards_type cards;
+		bool remove_failed;
 	};
 
 	using decks_type = std::map<handle, deck>;
@@ -35,8 +36,13 @@ public:
 	inline auto remove_from_top(handle name) -> handle {
 		auto &cards = decks.at(name).cards;
 		auto result = cards.front();
-		cards.pop_front();
-		return result;
+		try {
+			cards.pop_front();
+			return result;
+		} catch (std::out_of_range const &e) {
+			decks.at(name).remove_failed = true;
+			throw;
+		}
 	}
 
 	inline auto remove_from_bottom(handle name) -> handle {
@@ -75,6 +81,14 @@ public:
 		static std::minstd_rand g{};
 		auto &cards = decks.at(name).cards;
 		std::shuffle(cards.begin(), cards.end(), g);
+	}
+
+	inline auto remove_failed(handle name) -> bool {
+		try {
+			return decks.at(name).remove_failed;
+		} catch (std::out_of_range const &) {
+			return false;
+		}
 	}
 };
 

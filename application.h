@@ -56,6 +56,9 @@ private:
 	// load loads the command history from a file.
 	auto load(std::string const &filename) -> void;
 
+	// game_end returns true if the game has ended.
+	auto game_end() -> bool;
+
 	std::istream &in;
 	std::ostream &out;
 	context ctx;

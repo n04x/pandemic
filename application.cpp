@@ -168,6 +168,19 @@ auto print_win(std::ostream &out) -> void {
 	out << "All four cures has been discovered. Humanity is safe... for now." << std::endl;
 }
 
+auto print_lose(std::ostream &out, std::string const &message) -> void {
+	static constexpr auto banner = R"(
+ __   __            _                       __
+ \ \ / /__  _   _  | | ___  ___  ___   _   / /
+  \ V / _ \| | | | | |/ _ \/ __|/ _ \ (_) | |
+   | | (_) | |_| | | | (_) \__ \  __/  _  | |
+   |_|\___/ \__,_| |_|\___/|___/\___| (_) | |
+                                           \_\
+)";
+	out << banner << std::endl;
+	out << message << std::endl;
+}
+
 auto application::call_command(std::string const &command, std::string &name, std::ostream &out) -> return_code {
 	// Split command into tokens
 	std::istringstream iss{command};
@@ -218,11 +231,30 @@ auto application::call_command(std::string const &command, std::string &name, st
 			return return_code::not_found;
 		}
 	}
-	if (ctx.game.win()) {
-		print_win(out);
+	if (game_end()) {
 		return return_code::exit;
 	}
 	return return_code::ok;
+}
+
+auto application::game_end() -> bool {
+	if (ctx.game.all_cures_discovered()) {
+		print_win(out);
+		return true;
+	}
+	if (ctx.game.outbreak_limit_reached()) {
+		print_lose(out, "Outbreaks marker reached last space of Outbreaks Track!");
+		return true;
+	}
+	if (ctx.game.out_of_cubes()) {
+		print_lose(out, "Unable to place number of disease cubes needed on the board!");
+		return true;
+	}
+	if (ctx.decks.remove_failed("player"_h)) {
+		print_lose(out, "Can not draw 2 Player cards after doing actions!");
+		return true;
+	}
+	return false;
 }
 
 auto application::command_category(std::string const &command) -> std::string {
