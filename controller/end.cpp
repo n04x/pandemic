@@ -13,6 +13,11 @@ auto end_actions::description() const -> std::string {
 
 static auto cube_limit = 3;
 
+auto infect_city(context &ctx, handle city, handle color, int amount = 1) -> void {
+	ctx.game.remove_cube_from_supply(color, amount);
+	ctx.cities.add_cube(city, color, amount);
+}
+
 auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handle color, std::vector<handle> &infected, int wave = 1) -> void {
 	ctx.game.increase_outbreak_level();
 	out << "outbreak level increased to '" << ctx.game.get_outbreak_level() << "'" << std::endl;
@@ -37,8 +42,7 @@ auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handl
 			chain_reaction_outbreak.push_back(city);
 			continue;
 		}
-		ctx.game.remove_cube_from_supply(color);
-		ctx.cities.add_cube(city, color);
+		infect_city(ctx, city, color);
 		out << "'" << city << "' was infected due to an outbreak from '" << target << "' (wave " << wave << ")" << std::endl;
 	}
 	for (auto city : chain_reaction_outbreak) {
@@ -60,13 +64,11 @@ auto epidemic(context &ctx, end_actions::args_type const &args, end_actions::ost
 		auto cube_count = ctx.cities.get_cube_count(city, color);
 		if (cube_count != 0) {
 			auto amount = cube_limit - cube_count;
-			ctx.game.remove_cube_from_supply(color, amount);
-			ctx.cities.add_cube(city, color, amount);
+			infect_city(ctx, city, color, amount);
 			std::vector<handle> infected;
 			outbreak(ctx, out, city, color, infected);
 		} else {
-			ctx.game.remove_cube_from_supply(color, cube_limit);
-			ctx.cities.add_cube(city, color, cube_limit);
+			infect_city(ctx, city, color, cube_limit);
 			out << "'" << city << "' was infected from an epidemic card" << std::endl;
 		}
 	}
@@ -131,8 +133,7 @@ auto infect(context &ctx, end_actions::args_type const &args, end_actions::ostre
 			outbreak(ctx, out, city, color, infected);
 			continue;
 		}
-		ctx.game.remove_cube_from_supply(color);
-		ctx.cities.add_cube(city, color);
+		infect_city(ctx, city, color);
 		out << "'" << city << "' was infected from an infection card" << std::endl;
 	}
 }
