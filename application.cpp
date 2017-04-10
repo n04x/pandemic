@@ -28,6 +28,7 @@
 #include "controller/action/share_knowledge_from.h"
 #include "controller/action/discover_cure.h"
 #include "controller/editor/validate_city_connections.h"
+#include "controller/pattern.h"
 #include <iomanip>
 #include <fstream>
 #include <sstream>
@@ -39,6 +40,7 @@ application::application(std::istream &in, std::ostream &out) :
 		ctx{},
 		commands{},
 		command_history{} {
+	insert_command<pattern_driver>("setup");
 	insert_command<reference_card>("view");
 	insert_command<status>("view");
 	insert_command<cities>("view");

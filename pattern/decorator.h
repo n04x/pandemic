@@ -11,8 +11,8 @@ struct decks_decorator : decks_model {
 
 	inline virtual auto get_cards() const -> std::vector<handle> {
 		std::vector<handle> result;
-		for (auto card : *this) {
-			result.push_back(card.first);
+		for (auto i = begin("orange"_h); i != end("orange"_h); i++) {
+			result.push_back(*i);
 		}
 		return result;
 	}

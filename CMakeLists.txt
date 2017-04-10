@@ -77,7 +77,8 @@ set(SOURCE_FILES
 		pattern/builder.h
 		pattern/director.h
 		pattern/decorator.h
-		pattern/strategy.h)
+		pattern/strategy.h
+		controller/pattern.h)
 add_executable(pandemic ${SOURCE_FILES})
 
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT pandemic)
