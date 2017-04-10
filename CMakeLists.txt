@@ -71,7 +71,12 @@ set(SOURCE_FILES
 		controller/editor/validate_city_connections.cpp
 		controller/editor/validate_city_connections.h
         controller/end.cpp
-        controller/end.h)
+        controller/end.h
+		pattern/observer.h
+		pattern/subject.h
+		pattern/builder.h
+		pattern/director.h
+		pattern/decorator.h)
 add_executable(pandemic ${SOURCE_FILES})
 
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT pandemic)
