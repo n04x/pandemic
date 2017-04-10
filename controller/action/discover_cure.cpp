@@ -10,7 +10,7 @@ auto discover_cure::description() const -> std::string {
 
 auto discover_cure::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	auto discardDeck = "player_discard"_h;
-	auto roleCheck = "Scientist"_h;
+	auto roleCheck = "scientist"_h;
 	try {
 		auto color = args.at(0);
 		auto player = ctx.players.get_current_turn();
