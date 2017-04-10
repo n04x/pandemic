@@ -79,7 +79,7 @@ auto application::help() -> void {
 		categories.insert(i.first);
 	}
 	// Print help for each command in category
-	auto iterations = 0;
+	auto iterations = 0u;
 	for (auto const &category : categories) {
 		out << category << std::endl;
 		auto const &range = category_commands.equal_range(category);
@@ -206,7 +206,7 @@ auto application::call_command(std::string const &command, std::string &name, st
 		auto const &filename = args.at(0);
 		save(filename);
 	} else if (name == "load") {
-		std::string filename{"setup"};
+		std::string filename{"default"};
 		if (!args.empty()) {
 			filename = args.at(0);
 		}
@@ -239,15 +239,15 @@ auto application::game_end() -> bool {
 		return true;
 	}
 	if (ctx.game.outbreak_limit_reached()) {
-		print_lose(out, "Outbreaks marker reached last space of Outbreaks Track!");
+		print_lose(out, "Worldwide panic! Outbreaks marker reached last space of Outbreaks Track!");
 		return true;
 	}
 	if (ctx.game.out_of_cubes()) {
-		print_lose(out, "Unable to place number of disease cubes needed on the board!");
+		print_lose(out, "Disease spread too much! Unable to place number of disease cubes needed on the board!");
 		return true;
 	}
 	if (ctx.decks.remove_failed("player"_h)) {
-		print_lose(out, "Can not draw 2 Player cards after doing actions!");
+		print_lose(out, "Out of time! Can not draw 2 Player cards after doing actions!");
 		return true;
 	}
 	return false;
