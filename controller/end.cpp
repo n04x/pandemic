@@ -14,8 +14,19 @@ auto end_actions::description() const -> std::string {
 static auto cube_limit = 3;
 
 auto infect_city(context &ctx, handle city, handle color, int amount = 1) -> void {
-	ctx.game.remove_cube_from_supply(color, amount);
-	ctx.cities.add_cube(city, color, amount);
+	auto player = ctx.players.get_current_turn();
+	bool medicCheck = false;
+	for (auto i = ctx.players.begin(); i != ctx.players.end(); i++) {
+		auto temp = ctx.players.get_role(player);
+		if (temp == "Medic"_h)
+			medicCheck = true;
+		else
+			medicCheck = false;
+	}
+	if ((ctx.players.get_city(player) != city) && !medicCheck) {
+		ctx.game.remove_cube_from_supply(color, amount);
+		ctx.cities.add_cube(city, color, amount);
+	}	
 }
 
 auto outbreak(context &ctx, end_actions::ostream_type &out, handle target, handle color, std::vector<handle> &infected, int wave = 1) -> void {
