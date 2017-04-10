@@ -39,7 +39,7 @@ public:
 		try {
 			cards.pop_front();
 			return result;
-		} catch (std::out_of_range const &e) {
+		} catch (std::out_of_range const) {
 			decks.at(name).remove_failed = true;
 			throw;
 		}

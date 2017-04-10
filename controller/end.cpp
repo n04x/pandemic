@@ -1,6 +1,7 @@
 #include "end.h"
 #include <algorithm>
 #include <vector>
+#include <array>
 
 auto end_actions::name() const -> std::string {
 	return "end";

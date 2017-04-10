@@ -79,7 +79,7 @@ auto application::help() -> void {
 		categories.insert(i.first);
 	}
 	// Print help for each command in category
-	auto iterations = 0;
+	auto iterations = 0u;
 	for (auto const &category : categories) {
 		out << category << std::endl;
 		auto const &range = category_commands.equal_range(category);
