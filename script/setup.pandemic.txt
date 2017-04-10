@@ -37,34 +37,10 @@ infect infection infection_discard 1
 infect infection infection_discard 1
 
 # SETUP 4
-add-player red
-add-player blue
-give-role red medic
-give-role blue dispatcher
-place-pawn red atlanta
-place-pawn blue atlanta
-
-shuffle-deck player
-create-deck red
-move-top-card player red
-move-top-card player red
-move-top-card player red
-move-top-card player red
-create-deck blue
-move-top-card player blue
-move-top-card player blue
-move-top-card player blue
-move-top-card player blue
+# handled by player setup script
 
 # SETUP 5
-# TODO should be divided according to game instructions
-add-to-deck player epidemic_1
-add-to-deck player epidemic_2
-add-to-deck player epidemic_3
-add-to-deck player epidemic_4
-add-to-deck player epidemic_5
-add-to-deck player epidemic_6
-shuffle-deck player
+# handled by difficulty script
 
 # SETUP 6
 # TODO player with highest city population goes first

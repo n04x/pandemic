@@ -1,0 +1,34 @@
+load setup
+
+add-player orange
+add-player teal
+add-player green
+add-player pink
+
+give-role orange medic
+give-role teal dispatcher
+give-role green researcher
+give-role pink scientist
+
+place-pawn orange atlanta
+place-pawn teal atlanta
+place-pawn green atlanta
+place-pawn pink atlanta
+
+shuffle-deck player
+
+create-deck orange
+move-top-card player orange
+move-top-card player orange
+
+create-deck teal
+move-top-card player teal
+move-top-card player teal
+
+create-deck green
+move-top-card player green
+move-top-card player green
+
+create-deck pink
+move-top-card player pink
+move-top-card player pink

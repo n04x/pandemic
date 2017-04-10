@@ -1,0 +1,8 @@
+# TODO should be divided according to game instructions
+add-to-deck player epidemic_1
+add-to-deck player epidemic_2
+add-to-deck player epidemic_3
+add-to-deck player epidemic_4
+add-to-deck player epidemic_5
+add-to-deck player epidemic_6
+shuffle-deck player
