@@ -21,27 +21,42 @@ auto share_knowledge_from::run(context &ctx, args_type const &args, ostream_type
 	try {
 		auto playerOne = ctx.players.get_current_turn();
 		auto playerTwo = args.at(0);
+		auto chosenCard = args.at(1);
+		auto p2Role = ctx.players.get_role(playerTwo);
 		auto city = ctx.players.get_city(playerOne);
 
 		if (!(city == ctx.players.get_city(playerTwo))) {
 			out << "Players not in the same city!" << std::endl;
 			return;
 		}
-
-		for (auto card = ctx.decks.begin(playerTwo); card != ctx.decks.end(playerTwo); card++) {
-			if (*card == city) {
-				ctx.decks.remove(playerTwo, city);
-				ctx.decks.add_to_top(playerOne, city);
-				hand_limit(ctx, out, playerOne);
-				ctx.players.decrement_actions_remaining();
-				return;
+		// If the player two is a researcher, player one can takes any card player one wants.
+		else if(p2Role == "researcher"_h) { 
+			for (auto card = ctx.decks.begin(playerTwo); card != ctx.decks.end(playerTwo); card++) {
+				if (*card == chosenCard) {
+					ctx.decks.remove(playerTwo, chosenCard);
+					ctx.decks.add_to_top(playerOne, chosenCard);
+					hand_limit(ctx, out, playerOne);
+					ctx.players.decrement_actions_remaining();
+					return;
+				}
+			}
+		}
+		else {
+			for (auto card = ctx.decks.begin(playerTwo); card != ctx.decks.end(playerTwo); card++) {
+				if (*card == city) {
+					ctx.decks.remove(playerTwo, city);
+					ctx.decks.add_to_top(playerOne, city);
+					hand_limit(ctx, out, playerOne);
+					ctx.players.decrement_actions_remaining();
+					return;
+				}
 			}
 		}
 
 		out << playerTwo << " does not have city card!" << std::endl;
 	}
 	catch (std::out_of_range const &) {
-		out << "usage: " << name() << " <player>" << std::endl;
+		out << "usage: " << name() << " <player> [city]" << std::endl;
 	}
 
 
