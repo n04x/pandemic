@@ -67,8 +67,9 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 				if (event == "one_quiet_night"_h) {
 
 					try {
-
-						//TODO Forecast event card
+					
+						//TODO One Quiet Night
+						
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " one_quiet_night" << std::endl;
@@ -79,7 +80,6 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 				if (event == "resilient_population"_h) {
 
 					try {
-
 						auto infCard = args.at(1);
 						
 						for (auto card = ctx.decks.begin(infectionDiscard); card != ctx.decks.end(infectionDiscard); card++) {
@@ -91,15 +91,12 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 						}
 
 						out << infCard << " is not in the infection discard pile!" << std::endl;
-						
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " resilient_population <card_to_remove>" << std::endl;
 					}
 
 				}
-
-
 
 				ctx.decks.add_to_top(playerDiscard, event);
 				return;
