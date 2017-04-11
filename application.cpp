@@ -28,11 +28,8 @@
 #include "controller/action/share_knowledge_from.h"
 #include "controller/action/discover_cure.h"
 #include "controller/editor/validate_city_connections.h"
-<<<<<<< HEAD
 #include "controller/action/play_event.h"
-=======
 #include "controller/pattern.h"
->>>>>>> origin/master
 #include <iomanip>
 #include <fstream>
 #include <sstream>
