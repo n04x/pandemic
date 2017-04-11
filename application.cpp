@@ -28,6 +28,7 @@
 #include "controller/action/share_knowledge_from.h"
 #include "controller/action/discover_cure.h"
 #include "controller/editor/validate_city_connections.h"
+#include "controller/action/play_event.h"
 #include "controller/pattern.h"
 #include <iomanip>
 #include <fstream>
@@ -70,6 +71,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_command<share_knowledge_from>("action");
 	insert_command<discover_cure>("action");
 	insert_command<validate_city_connections>("setup");
+	insert_command<play_event>("action");
 };
 
 auto application::help() -> void {
