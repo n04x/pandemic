@@ -78,8 +78,8 @@ set(SOURCE_FILES
 		pattern/director.h
 		pattern/decorator.h
 		pattern/strategy.h
-		controller/action/play-event.h
-		controller/action/play-event.cpp
+		controller/action/play_event.h
+		controller/action/play_event.cpp
 		controller/pattern.h)
 add_executable(pandemic ${SOURCE_FILES})
 
