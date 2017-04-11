@@ -77,7 +77,9 @@ set(SOURCE_FILES
 		pattern/builder.h
 		pattern/director.h
 		pattern/decorator.h
-		pattern/strategy.h)
+		pattern/strategy.h
+		controller/action/play-event.h
+		controller/action/play-event.cpp)
 add_executable(pandemic ${SOURCE_FILES})
 
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT pandemic)
