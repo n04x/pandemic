@@ -38,9 +38,11 @@ auto treat_disease::run(context &ctx, args_type const &args, ostream_type &out) 
 			}
 			ctx.players.decrement_actions_remaining();
 		}
-		ctx.cities.remove_cube(city, color);
-		ctx.game.add_cube_to_supply(color);
-		ctx.players.decrement_actions_remaining();
+		else {
+			ctx.cities.remove_cube(city, color);
+			ctx.game.add_cube_to_supply(color);
+			ctx.players.decrement_actions_remaining();
+		}
 	}
 
 	catch (std::out_of_range const &) {
