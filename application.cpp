@@ -30,6 +30,7 @@
 #include "controller/editor/validate_city_connections.h"
 #include "controller/action/play_event.h"
 #include "controller/action/move_player.h"
+#include "controller/action/store_event.h"
 #include "controller/pattern.h"
 #include <iomanip>
 #include <fstream>
@@ -74,6 +75,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_command<validate_city_connections>("setup");
 	insert_command<play_event>("action");
 	insert_command<move_player>("action");
+	insert_command<store_event>("action");
 };
 
 auto application::help() -> void {

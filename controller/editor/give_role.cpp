@@ -17,6 +17,11 @@ auto give_role::run(context &ctx, args_type const &args, ostream_type &out) cons
 	auto player_role = args.at(1);
 	ctx.players.set_role(player_name, player_role);
 
+	//Create extra deck of 1 card for Contingency Planner
+	if (player_role == "contingency_planner"_h) {
+		ctx.decks.create("contingency_planner"_h);
+	}
+
 //	try {
 //
 //		auto playerName = args.at(0);

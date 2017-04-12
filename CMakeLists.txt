@@ -83,6 +83,8 @@ set(SOURCE_FILES
 		controller/pattern.h
 		controller/action/move_player.h
 		controller/action/move_player.cpp
+		controller/action/store_event.h
+		controller/action/store_event.cpp
 )
 add_executable(pandemic ${SOURCE_FILES})
 
