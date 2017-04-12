@@ -15,36 +15,17 @@ static auto cube_limit = 3;
 
 auto infect_city(context &ctx, handle city, handle color, int amount = 1) -> void {
 	auto player = ctx.players.get_current_turn();
-	bool medicRole = false;
-	bool qsRole = false;
+	bool medicCheck = false;
 	for (auto i = ctx.players.begin(); i != ctx.players.end(); i++) {
 		auto temp = ctx.players.get_role(player);
-		if (temp == "medic"_h)
-			medicRole = true;
-		if (temp == "quarantine_specialist"_h)
-			qsRole = true;
+		if (temp == "Medic"_h)
+			medicCheck = true;
+		else
+			medicCheck = false;
 	}
-	// Check if the player is in the right city or not, and if the player in this city
-	// is a Medic or Quarantine Specialist.
-	if ((ctx.players.get_city(player) != city) && (!medicRole || !qsRole)) {
-		// Iterate throught the players in order to see where they are.
-		for (auto adjPlayers : ctx.players) {
-			auto const &temp = adjPlayers.first;
-			auto playerCity = ctx.players.get_city(temp);
-			// Check if the player is a quarantine specialist, do this check before second loop
-			// in order to save some running time (faster maybe?)
-			if (ctx.players.get_role(temp) == "quarantine_specialist"_h)
-			// Check if the city that player are in are connected to the one that being infected
-			for (auto connection = ctx.cities.begin(playerCity); connection != ctx.cities.end(playerCity); connection++) {
-				// If there is a connection.
-				if (*connection == city)
-					qsRole = true;
-			}
-		}
-		if (!qsRole) {
-			ctx.game.remove_cube_from_supply(color, amount);
-			ctx.cities.add_cube(city, color, amount);
-		}
+	if ((ctx.players.get_city(player) != city) && !medicCheck) {
+		ctx.game.remove_cube_from_supply(color, amount);
+		ctx.cities.add_cube(city, color, amount);
 	}	
 }
 
