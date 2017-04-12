@@ -8,35 +8,36 @@ auto play_event::name() const -> std::string
 
 auto play_event::description() const -> std::string
 {
-	return "Play event";
+	return "Play event card from any player's hand (Does not count as a action)";
 }
 
 auto play_event::run(context & ctx, args_type const & args, ostream_type & out) const -> void
 {
 	try {
 		auto player = args.at(0);	//Player with event card
-		auto event = args.at(1);
+		auto event = args.at(1);	//Event card
 		auto playerDiscard = "player_discard"_h;
 		auto infectionDiscard = "infection_discard"_h;
 		auto infectionDeck = "infection"_h;
 
-		for (auto card = ctx.decks.begin(player); card != ctx.decks.end(player); card++) {
-			if (*card == event) {
+		for (auto card = ctx.decks.begin(player); card != ctx.decks.end(player); card++) {	//Check all cards in player's hand
+			if (*card == event) {	//if card found
 
 				if (event == "airlift"_h) {
 					try {
-						auto playerMove = args.at(2);
-						auto city = args.at(3);
+						auto playerMove = args.at(2);	//Player to move
+						auto city = args.at(3);	//City to go to
 
-						ctx.players.set_city(playerMove, city);                // Set the new position of player
+						ctx.players.set_city(playerMove, city);	// Set the new position of player
 						ctx.decks.remove(player, event);
+						ctx.decks.add_to_top(playerDiscard, event);
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> airlift <player_to_move> <city>" << std::endl;
 					}
 				}
 
-				if (event == "forecast"_h) {
+				if (event == "forecast"_h) {	//TODO Figure out why after placing all cards in deck current player name comes up twice
 					try {
 
 						auto a = ctx.decks.remove_from_top(infectionDeck);
@@ -52,7 +53,7 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 
 						std::vector<int> cards;
 
-						for (int i = 1; i <= 6; i++)
+						for (int i = 1; i <= 6; i++)	//Change integer to 0 if number already used
 							cards.push_back(i);
 
 						for (int i = 0; i < 6; i++) {
@@ -116,6 +117,9 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 									out << "Wrong number! Try Again!" << std::endl;
 							}
 						}
+
+						ctx.decks.remove(player, event);
+						ctx.decks.add_to_top(playerDiscard, event);
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> forecast" << std::endl;
@@ -125,12 +129,13 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 
 				if (event == "government_grant"_h) {
 					try {
-						auto city = args.at(2);
+						auto city = args.at(2);	//City to add research station
 
-						if (ctx.cities.has_research_station(city) == false) {
+						if (ctx.cities.has_research_station(city) == false) {	//Check if research station exists
 							ctx.game.remove_research_station_supply();
 							ctx.cities.place_research_station(city);
 							ctx.decks.remove(player, event);
+							ctx.decks.add_to_top(playerDiscard, event);
 						}
 
 						else
@@ -157,31 +162,30 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 				if (event == "resilient_population"_h) {
 
 					try {
-						auto infCard = args.at(2);
+						auto infCard = args.at(2);	//Infection card to remove from play
 						
 						for (auto card = ctx.decks.begin(infectionDiscard); card != ctx.decks.end(infectionDiscard); card++) {
 							if (*card == infCard) {
-								ctx.decks.remove(infectionDiscard, infCard);
+								ctx.decks.remove(infectionDiscard, infCard);	//Completely remove from play card
 								ctx.decks.remove(player, event);
+								ctx.decks.add_to_top(playerDiscard, event);
 								return;
 							}
 						}
 
-						out << infCard << " is not in the infection discard pile!" << std::endl;
+						out << infCard << " is not in the infection discard pile!" << std::endl;	//If no card found
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> resilient_population <card_to_remove>" << std::endl;
 					}
-
 				}
 
-				ctx.decks.add_to_top(playerDiscard, event);
 				return;
 			}
 
 		}
 
-		out << "Event card not found in " << player << "'s hand!" << std::endl;
+		out << event <<" card not found in " << player << "'s hand!" << std::endl;	//If card not found
 
 	}
 	catch (std::out_of_range const &) {
