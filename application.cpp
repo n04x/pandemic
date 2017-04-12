@@ -29,6 +29,7 @@
 #include "controller/action/discover_cure.h"
 #include "controller/editor/validate_city_connections.h"
 #include "controller/action/play_event.h"
+#include "controller/action/move_player.h"
 #include "controller/pattern.h"
 #include <iomanip>
 #include <fstream>
@@ -72,6 +73,7 @@ application::application(std::istream &in, std::ostream &out) :
 	insert_command<discover_cure>("action");
 	insert_command<validate_city_connections>("setup");
 	insert_command<play_event>("action");
+	insert_command<move_player>("action");
 };
 
 auto application::help() -> void {
