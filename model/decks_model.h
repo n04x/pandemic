@@ -20,6 +20,8 @@ class decks_model {
 	using decks_type = std::map<handle, deck>;
 
 	decks_type decks;
+	std::minstd_rand rand;
+	bool seeded;
 
 public:
 	using const_iterator = decks_type::const_iterator;
@@ -77,10 +79,18 @@ public:
 		return decks.at(name).cards.size();
 	}
 
+	inline auto set_seed(std::minstd_rand::result_type s) -> bool {
+		if (!seeded) {
+			seeded = true;
+			rand.seed(s);
+			return true;
+		}
+		return false;
+	}
+
 	inline auto shuffle(handle name) -> void {
-		static std::minstd_rand g{};
 		auto &cards = decks.at(name).cards;
-		std::shuffle(cards.begin(), cards.end(), g);
+		std::shuffle(cards.begin(), cards.end(), rand);
 	}
 
 	inline auto remove_failed(handle name) -> bool {
