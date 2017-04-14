@@ -27,15 +27,15 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 			return;
 		}
 		
-		//TODO Teleport to other player
-		/*		Checks to see if city has a player in it a moves movePlayer to that city
-		if (city == ctx.cities.has_player()) {
-			ctx.players.set_city(movePlayer, city);
-			ctx.players.decrement_actions_remaining();
-			out << "Teleported" << std::endl;
-			return;
+		//Teleport
+		for (auto playerInCity : ctx.players) {
+			if (city == ctx.players.get_city(playerInCity.first)) {
+				ctx.players.set_city(movePlayer, city);
+				ctx.players.decrement_actions_remaining();
+				out << "Teleport: " << movePlayer << " -> " << city << std::endl;
+				return;
+			}
 		}
-		*/	
 
 		//Drive
 		for (auto connection = ctx.cities.begin(currentCity); connection != ctx.cities.end(currentCity); connection++) {
@@ -52,7 +52,7 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 
 		
 		//Shuttle Flight
-		if (ctx.cities.has_research_station(currentCity) == true) {	//TODO test when place-research-station is fixed
+		if (ctx.cities.has_research_station(currentCity) == true) {
 			
 			/*				Can dispatcher move operation expert like operation expert?
 			// Check if the player is the Operation Expert, he can fly to anywhere from a research station.
@@ -102,7 +102,7 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 		out << "Move not possible!" << std::endl;
 	}
 	catch (std::out_of_range const &) {
-		out << "usage: " << name() << "<player> <city>" << std::endl;
+		out << "usage: " << name() << " <player> <city>" << std::endl;
 	}
 
 
