@@ -14,6 +14,12 @@ auto discover_cure::run(context &ctx, args_type const &args, ostream_type &out) 
 	try {
 		auto color = args.at(0);
 		auto player = ctx.players.get_current_turn();
+		auto city = ctx.players.get_city(player);
+		if (!ctx.cities.has_research_station(city)) {
+			out << "'" << city << "' has no research station" << std::endl;
+			return;
+		}
+
 		auto role = ctx.players.get_role(player);
 		if (args.size() > 1) {
 			discardDeck = args.at(1);
