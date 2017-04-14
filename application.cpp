@@ -157,6 +157,11 @@ auto application::run() -> void {
 		if (code == return_code::exit) {
 			break;
 		}
+		// Auto save
+		if (seed != 0) {
+			auto filename = "save-" + std::to_string(seed);
+			save(filename);
+		}
 		prompt();
 	}
 }
@@ -315,14 +320,16 @@ auto application::load(std::string const &filename) -> void {
 			}
 			if (name == "seed") {
 				auto const &seed = args.at(0);
-				auto s = std::stoi(seed);
+				auto s = std::stoul(seed);
 				ctx.decks.set_seed(s);
+				this->seed = s;
 				out << "using existing seed '" << s << "'" << std::endl;
 			} else {
 				std::random_device r;
 				std::default_random_engine e{r()};
 				auto seed = e();
 				if (ctx.decks.set_seed(seed)) {
+					this->seed = seed;
 					auto cmd = "seed " + std::to_string(seed);
 					command_history.push_back(cmd);
 					out << "using new seed '" << seed << "'" << std::endl;

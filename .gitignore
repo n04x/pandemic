@@ -2,3 +2,4 @@ build/
 CMakeFiles/
 cmake-build-debug/
 .idea/
+script/save-*.pandemic.txt
