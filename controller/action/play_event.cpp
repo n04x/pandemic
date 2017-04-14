@@ -149,12 +149,14 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 				if (event == "one_quiet_night"_h) {
 
 					try {
-					
-						//TODO One Quiet Night
-						
+
+						ctx.players.skip_next_infection_phase();
+						ctx.decks.remove(player, event);
+						ctx.decks.add_to_top(playerDiscard, event);
+
 					}
 					catch (std::out_of_range const &) {
-						out << "usage: " << name() << " one_quiet_night" << std::endl;
+						out << "usage: " << name() << " <player_with_card> one_quiet_night" << std::endl;
 					}
 
 				}
@@ -321,11 +323,13 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 
 						try {
 
-							//TODO Copy One Quiet Night event above here
+							ctx.players.skip_next_infection_phase();
+							ctx.decks.remove(player, event);
+							ctx.decks.add_to_top(playerDiscard, event);
 
 						}
 						catch (std::out_of_range const &) {
-							out << "usage: " << name() << " one_quiet_night" << std::endl;
+							out << "usage: " << name() << " <player_with_card> one_quiet_night" << std::endl;
 						}
 
 					}
