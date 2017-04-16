@@ -36,6 +36,7 @@
 #include <fstream>
 #include <sstream>
 #include <set>
+#include <random>
 
 application::application(std::istream &in, std::ostream &out) :
 		in{in},
@@ -156,6 +157,11 @@ auto application::run() -> void {
 		if (code == return_code::exit) {
 			break;
 		}
+		// Auto save
+		if (seed != 0) {
+			auto filename = "save-" + std::to_string(seed);
+			save(filename);
+		}
 		prompt();
 	}
 }
@@ -197,7 +203,7 @@ auto application::call_command(std::string const &command, std::string &name, st
 		args.emplace_back(arg);
 	}
 	// Handle command name
-	if (name == "#") {
+	if (name == "#" || name == "seed") {
 		// Ignore line
 		return return_code::ok;
 	}
@@ -296,8 +302,40 @@ auto application::load(std::string const &filename) -> void {
 	null_buffer nb;
 	std::ostream null_stream{&nb};
 	std::string line;
+	bool after_first_line{false};
 	// Run commands by line
 	while (std::getline(in, line)) {
+		if (!after_first_line) {
+			after_first_line = true;
+			// Split command into tokens
+			std::istringstream iss{line};
+			std::string name;
+			if (!(iss >> name)) {
+				continue;
+			}
+			std::vector<std::string> args;
+			std::string arg;
+			while (iss >> arg) {
+				args.emplace_back(arg);
+			}
+			if (name == "seed") {
+				auto const &seed = args.at(0);
+				auto s = std::stoul(seed);
+				ctx.decks.set_seed(s);
+				this->seed = s;
+				out << "using existing seed '" << s << "'" << std::endl;
+			} else {
+				std::random_device r;
+				std::default_random_engine e{r()};
+				auto seed = e();
+				if (ctx.decks.set_seed(seed)) {
+					this->seed = seed;
+					auto cmd = "seed " + std::to_string(seed);
+					command_history.push_back(cmd);
+					out << "using new seed '" << seed << "'" << std::endl;
+				}
+			}
+		}
 		std::string name;
 		auto code = call_command(line, name, null_stream);
 		if (code == return_code::blank_input) {

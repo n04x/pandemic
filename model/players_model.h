@@ -18,6 +18,7 @@ class players_model {
 	std::vector<handle> turn_order;
 	handle current_turn;
 	int actions_remaining;
+	bool skipping_next_infection_phase;
 
 public:
 	// TODO remove internal iterator leak
@@ -78,6 +79,16 @@ public:
 	inline auto start_turn(handle player) -> void {
 		current_turn = player;
 		actions_remaining = actions_per_turn;
+		skipping_next_infection_phase = false;
+	}
+
+
+	inline auto skip_next_infection_phase() -> void {
+		skipping_next_infection_phase = true;
+	}
+
+	inline auto is_skipping_next_infection_phase() -> bool {
+		return skipping_next_infection_phase;
 	}
 };
 

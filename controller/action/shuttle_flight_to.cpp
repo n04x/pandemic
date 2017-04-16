@@ -19,21 +19,41 @@ auto shuttle_flight_to::run(context &ctx, args_type const &args, ostream_type &o
 			out << "Current city player is in does not have a research station!" << std::endl;
 			return;
 		}
-		// Check if the player is the Operation Expert, he can fly to anywhere from a research station.
-		if (role == "operation_expert"_h) {
-			ctx.players.set_city(player, city);                // Set the new position of player
-			ctx.players.decrement_actions_remaining();
-			return;
-		}
-		else {
-			if (ctx.cities.has_research_station(city) == false) {
-				out << "City flying to does not have a research station!" << std::endl;
-				return;
+		
+		if (ctx.cities.has_research_station(city) == false) {
+
+			// Check if the player is the Operation Expert, he can fly to anywhere from a research station.
+			if (role == "operations_expert"_h) {
+
+				try {
+					auto removeCard = args.at(1);
+					auto playerDiscard = "player_discard"_h;
+
+					for (auto card = ctx.decks.begin(player); card != ctx.decks.end(player); card++) {
+						if (*card == removeCard) {
+							ctx.players.set_city(player, city);					// Set the new position of player
+							ctx.decks.remove(player, removeCard);				// Remove card from player hand
+							ctx.decks.add_to_top(playerDiscard, removeCard);				// Add to discard
+							ctx.players.decrement_actions_remaining();
+							return;
+						}
+					}
+
+					out << removeCard << " is not in " << player << "'s hand!";
+					return;
+				}
+				catch (std::out_of_range const &) {
+					out << "usage: " << name() << " <city> <card_to_remove>" << std::endl;
+					return;
+				}
 			}
 
-			ctx.players.set_city(player, city);                // Set the new position of player
-			ctx.players.decrement_actions_remaining();
+			out << "City flying to does not have a research station!" << std::endl;
+			return;
 		}
+
+		ctx.players.set_city(player, city);                // Set the new position of player
+		ctx.players.decrement_actions_remaining();
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <city>" << std::endl;

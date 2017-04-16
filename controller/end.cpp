@@ -143,6 +143,10 @@ auto hand_limit(context &ctx, end_actions::args_type const &args, end_actions::o
 }
 
 auto infect(context &ctx, end_actions::args_type const &args, end_actions::ostream_type &out) -> void {
+	if (ctx.players.is_skipping_next_infection_phase()) {
+		out << "skipping infection phase because of 'one quiet night' event" << std::endl;
+		return;
+	}
 	auto infection_deck = "infection"_h;
 	auto discard_deck = "infection_discard"_h;
 	if (!args.empty()) {

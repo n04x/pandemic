@@ -65,6 +65,7 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<command>> commands;
 	std::unordered_multimap<std::string, std::string> category_commands;
 	std::vector<std::string> command_history;
+	unsigned long seed;
 };
 
 #endif //PANDEMIC_APPLICATION_H
