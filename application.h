@@ -56,6 +56,9 @@ private:
 	// load loads the command history from a file.
 	auto load(std::string const &filename) -> void;
 
+	// call replay command to replay from a specific file.
+	auto replay(std::string const &filename) -> void;
+
 	// game_end returns true if the game has ended.
 	auto game_end() -> bool;
 

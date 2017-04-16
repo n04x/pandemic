@@ -225,7 +225,15 @@ auto application::call_command(std::string const &command, std::string &name, st
 			filename = args.at(0);
 		}
 		load(filename);
-	} else {
+	}
+	else if (name == "replay") {
+		std::string filename{ "default" };
+		if (!args.empty()) {
+			filename = args.at(0);
+		}
+		replay(filename);
+	}
+	else {
 		try {
 			// Ensure player has enough actions remaining
 			auto category = command_category(name);
@@ -327,6 +335,65 @@ auto application::load(std::string const &filename) -> void {
 			} else {
 				std::random_device r;
 				std::default_random_engine e{r()};
+				auto seed = e();
+				if (ctx.decks.set_seed(seed)) {
+					this->seed = seed;
+					auto cmd = "seed " + std::to_string(seed);
+					command_history.push_back(cmd);
+					out << "using new seed '" << seed << "'" << std::endl;
+				}
+			}
+		}
+		std::string name;
+		auto code = call_command(line, name, null_stream);
+		if (code == return_code::blank_input) {
+			continue;
+		}
+		if (code == return_code::not_found) {
+			invalid_command(name);
+			continue;
+		}
+	}
+}
+
+auto application::replay(std::string const & filename) -> void
+{
+	auto path = "../script/" + filename + ".pandemic.txt";
+	std::ifstream in{ path };
+	if (!in.is_open()) {
+		out << "could not open file '" << path << "'" << std::endl;
+		return;
+	}
+	// Suppress command output
+	null_buffer nb;
+	std::ostream null_stream{ &nb };
+	std::string line;
+	bool after_first_line{ false };
+	// Run commands by line
+	while (std::getline(in, line)) {
+		if (!after_first_line) {
+			after_first_line = true;
+			// Split command into tokens
+			std::istringstream iss{ line };
+			std::string name;
+			if (!(iss >> name)) {
+				continue;
+			}
+			std::vector<std::string> args;
+			std::string arg;
+			while (iss >> arg) {
+				args.emplace_back(arg);
+			}
+			if (name == "seed") {
+				auto const &seed = args.at(0);
+				auto s = std::stoul(seed);
+				ctx.decks.set_seed(s);
+				this->seed = s;
+				out << "using existing seed '" << s << "'" << std::endl;
+			}
+			else {
+				std::random_device r;
+				std::default_random_engine e{ r() };
 				auto seed = e();
 				if (ctx.decks.set_seed(seed)) {
 					this->seed = seed;
