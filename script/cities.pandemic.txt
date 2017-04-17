@@ -23,7 +23,7 @@ add-city yellow khartoum johannesburg kinshrsr lagos cairo
 add-city yellow johannesburg khartoum kinshrsr
 add-city yellow kinshrsr khartoum johannesburg lagos
 add-city black moscow tehran istanbul st_petersburg
-add-city black istanbul milan st_petersburg algiers moscow baghdad
+add-city black istanbul milan st_petersburg algiers moscow baghdad cairo
 add-city black algiers paris madrid istanbul cairo
 add-city black cairo algiers riyadh istanbul baghdad khartoum
 add-city black baghdad istanbul cairo riyadh karachi tehran
