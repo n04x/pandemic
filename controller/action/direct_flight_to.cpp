@@ -17,7 +17,6 @@ auto direct_flight_to::run(context &ctx, args_type const &args, ostream_type &ou
 		if (args.size() > 1) {
 			discard_deck = args.at(1);
 		}
-		auto player = ctx.players.get_current_turn();    // Get the information of which player is playing
 		auto role = ctx.players.get_role(player);
 		ctx.decks.remove(player, city);
 		ctx.decks.add_to_top(discard_deck, city);                // Add the card to the discard card deck
@@ -34,7 +33,6 @@ auto direct_flight_to::run(context &ctx, args_type const &args, ostream_type &ou
 			}
 		}
 		ctx.players.decrement_actions_remaining();
-
 		for (auto card = ctx.decks.begin(player); card != ctx.decks.end(player); card++) {
 			if (*card == city) {
 				ctx.decks.remove(player, city);
