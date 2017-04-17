@@ -31,6 +31,18 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 		for (auto playerInCity : ctx.players) {
 			if (city == ctx.players.get_city(playerInCity.first)) {
 				ctx.players.set_city(movePlayer, city);
+				// Check if the moved player is a medic
+				if (role == "medic"_h) {
+					auto color = ctx.cities.get_color(city);
+					if (ctx.game.discovered_cure(color)) {
+						// If the cure is discovered, the medic remove all the cube without the cost of the action.
+						int cubes = ctx.cities.get_cube_count(city, color);
+						for (cubes; cubes > 0; cubes--) {
+							ctx.cities.remove_cube(city, color);
+							ctx.game.add_cube_to_supply(color);
+						}
+					}
+				}
 				ctx.players.decrement_actions_remaining();
 				out << "Teleport: " << movePlayer << " -> " << city << std::endl;
 				return;
@@ -45,6 +57,18 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 
 		if (connected) {
 			ctx.players.set_city(movePlayer, city);                // Set the new position of player
+			// Check if the moved player is a medic
+			if (role == "medic"_h) {
+				auto color = ctx.cities.get_color(city);
+				if (ctx.game.discovered_cure(color)) {
+					// If the cure is discovered, the medic remove all the cube without the cost of the action.
+					int cubes = ctx.cities.get_cube_count(city, color);
+					for (cubes; cubes > 0; cubes--) {
+						ctx.cities.remove_cube(city, color);
+						ctx.game.add_cube_to_supply(color);
+					}
+				}
+			}
 			ctx.players.decrement_actions_remaining();
 			out << "Drive: " << movePlayer << " -> " << city << std::endl;
 			return;
@@ -66,6 +90,18 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 
 			if (ctx.cities.has_research_station(city) == true) {
 				ctx.players.set_city(movePlayer, city);                // Set the new position of player
+				// Check if the moved player is a medic
+				if (role == "medic"_h) {
+					auto color = ctx.cities.get_color(city);
+					if (ctx.game.discovered_cure(color)) {
+						// If the cure is discovered, the medic remove all the cube without the cost of the action.
+						int cubes = ctx.cities.get_cube_count(city, color);
+						for (cubes; cubes > 0; cubes--) {
+							ctx.cities.remove_cube(city, color);
+							ctx.game.add_cube_to_supply(color);
+						}
+					}
+				}
 				ctx.players.decrement_actions_remaining();
 				out << "Shuttle flight: " << movePlayer << " -> " << city << std::endl;
 				return;
@@ -81,6 +117,18 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 				ctx.decks.remove(player, city);
 				ctx.decks.add_to_top(playerDiscard, city);                // Add the card to the discard card deck
 				ctx.players.set_city(movePlayer, city);                // Set the new position of player
+				// Check if the moved player is a medic
+				if (role == "medic"_h) {
+					auto color = ctx.cities.get_color(city);
+					if (ctx.game.discovered_cure(color)) {
+						// If the cure is discovered, the medic remove all the cube without the cost of the action.
+						int cubes = ctx.cities.get_cube_count(city, color);
+						for (cubes; cubes > 0; cubes--) {
+							ctx.cities.remove_cube(city, color);
+							ctx.game.add_cube_to_supply(color);
+						}
+					}
+				}
 				ctx.players.decrement_actions_remaining();
 				out << "Direct flight: " << movePlayer << " -> " << city << std::endl <<
 					"Discarded " << city << " from " << player << "'s hand!" << std::endl;
@@ -94,6 +142,18 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 				ctx.players.set_city(movePlayer, city);
 				ctx.decks.remove(player, currentCity);
 				ctx.decks.add_to_top(playerDiscard, currentCity);
+				// Check if the moved player is a medic
+				if (role == "medic"_h) {
+					auto color = ctx.cities.get_color(city);
+					if (ctx.game.discovered_cure(color)) {
+						// If the cure is discovered, the medic remove all the cube without the cost of the action.
+						int cubes = ctx.cities.get_cube_count(city, color);
+						for (cubes; cubes > 0; cubes--) {
+							ctx.cities.remove_cube(city, color);
+							ctx.game.add_cube_to_supply(color);
+						}
+					}
+				}
 				ctx.players.decrement_actions_remaining();
 				out << "Chartered flight: " << movePlayer << " -> " << city << std::endl <<
 					"Discarded " << currentCity << " from " << player << "'s hand!" << std::endl;;
