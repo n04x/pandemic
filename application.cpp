@@ -355,7 +355,7 @@ auto application::load(std::string const &filename) -> void {
 		}
 	}
 }
-
+// replay command to replay the two bonus file.
 auto application::replay(std::string const & filename) -> void
 {
 	auto path = "../script/" + filename + ".pandemic.txt";
