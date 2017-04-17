@@ -1,4 +1,3 @@
-# TODO should be divided according to game instructions
 add-to-deck player epidemic_1
 add-to-deck player epidemic_2
 add-to-deck player epidemic_3

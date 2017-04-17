@@ -23,7 +23,6 @@ class cities_model {
 	cities_type cities;
 
 public:
-	// TODO remove internal iterator leak
 	using cities_const_iterator = cities_type::const_iterator;
 	using connected_cities_const_iterator = connected_cities_type::const_iterator;
 
