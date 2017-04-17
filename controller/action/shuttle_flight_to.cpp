@@ -35,6 +35,8 @@ auto shuttle_flight_to::run(context &ctx, args_type const &args, ostream_type &o
 							ctx.decks.remove(player, removeCard);				// Remove card from player hand
 							ctx.decks.add_to_top(playerDiscard, removeCard);				// Add to discard
 							ctx.players.decrement_actions_remaining();
+							out << "Shuttle flight: " << player << " -> " << city << " [Operations Expert]" << std::endl
+								<< "Discarded " << removeCard << " from " << player << std::endl;
 							return;
 						}
 					}
@@ -54,6 +56,8 @@ auto shuttle_flight_to::run(context &ctx, args_type const &args, ostream_type &o
 
 		ctx.players.set_city(player, city);                // Set the new position of player
 		ctx.players.decrement_actions_remaining();
+		out << "Shuttle flight: " << player << " -> " << city << std::endl;
+		return;
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <city>" << std::endl;

@@ -37,6 +37,9 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 						ctx.players.set_city(playerMove, city);	// Set the new position of player
 						ctx.decks.remove(player, event);
 						ctx.decks.add_to_top(playerDiscard, event);
+
+						out << "Airlift: " << playerMove << " -> " << city << std::endl
+							<< "Discarded " << event << " from " << player << "'s hand!" << std::endl;
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> airlift <player_to_move> <city>" << std::endl;
@@ -126,6 +129,7 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 
 						ctx.decks.remove(player, event);
 						ctx.decks.add_to_top(playerDiscard, event);
+						out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> forecast" << std::endl;
@@ -142,6 +146,9 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 							ctx.cities.place_research_station(city);
 							ctx.decks.remove(player, event);
 							ctx.decks.add_to_top(playerDiscard, event);
+
+							out << "Placed research station in " << city << "!" << std::endl << 
+								"Discarded " << event << " from " << player << "'s hand!" << std::endl;
 						}
 
 						else
@@ -159,6 +166,7 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 						ctx.players.skip_next_infection_phase();
 						ctx.decks.remove(player, event);
 						ctx.decks.add_to_top(playerDiscard, event);
+						out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
 
 					}
 					catch (std::out_of_range const &) {
@@ -177,6 +185,9 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 								ctx.decks.remove(infectionDiscard, infCard);	//Completely remove from play card
 								ctx.decks.remove(player, event);
 								ctx.decks.add_to_top(playerDiscard, event);
+
+								out << "Removed " << infCard << " from play!" << std::endl <<
+									"Discarded " << event << " from " << player << "'s hand!" << std::endl;
 								return;
 							}
 						}

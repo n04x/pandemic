@@ -24,11 +24,14 @@ auto charter_flight_to::run(context &ctx, args_type const &args, ostream_type &o
 				ctx.decks.remove(player, currentCity);
 				ctx.decks.add_to_top(discardDeck, currentCity);
 				ctx.players.decrement_actions_remaining();
+				out << "Chartered flight: " << player << " -> " << city << std::endl
+					<< "Discarded " << currentCity << " from " << player << "'s hand!" << std::endl;
 				return;
 			}
 		}
 
-		out << player << " does not have " << city << " card!" << std::endl;
+		out << player << " does not have " << currentCity << " card!" << std::endl;
+		return;
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <city> [discard_deck]" << std::endl;

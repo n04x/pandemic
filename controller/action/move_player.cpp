@@ -82,7 +82,8 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 				ctx.decks.add_to_top(playerDiscard, city);                // Add the card to the discard card deck
 				ctx.players.set_city(movePlayer, city);                // Set the new position of player
 				ctx.players.decrement_actions_remaining();
-				out << "Direct flight: " << movePlayer << " -> " << city << std::endl;
+				out << "Direct flight: " << movePlayer << " -> " << city << std::endl <<
+					"Discarded " << city << " from " << player << "'s hand!" << std::endl;
 				return;
 			}
 		}
@@ -94,7 +95,8 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 				ctx.decks.remove(player, currentCity);
 				ctx.decks.add_to_top(playerDiscard, currentCity);
 				ctx.players.decrement_actions_remaining();
-				out << "Chartered flight: " << movePlayer << " -> " << city << std::endl;
+				out << "Chartered flight: " << movePlayer << " -> " << city << std::endl <<
+					"Discarded " << currentCity << " from " << player << "'s hand!" << std::endl;;
 				return;
 			}
 		}
