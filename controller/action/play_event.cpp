@@ -36,10 +36,19 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 
 						ctx.players.set_city(playerMove, city);	// Set the new position of player
 						ctx.decks.remove(player, event);
-						ctx.decks.add_to_top(playerDiscard, event);
 
-						out << "Airlift: " << playerMove << " -> " << city << std::endl
-							<< "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+						if (player != "contingency_planner")
+							ctx.decks.add_to_top(playerDiscard, event);
+
+						out << "Airlift: " << playerMove << " -> " << city << std::endl;
+						
+						if (player != "contingency_planner") {
+							out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+							return;
+						}
+
+						out << "Removed " << event << " from play!" << std::endl;
+
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> airlift <player_to_move> <city>" << std::endl;
@@ -89,8 +98,18 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 						}
 
 						ctx.decks.remove(player, event);
-						ctx.decks.add_to_top(playerDiscard, event);
-						out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+
+						if (player != "contingency_planner")
+							ctx.decks.add_to_top(playerDiscard, event);
+
+
+						if (player != "contingency_planner") {
+							out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+							return;
+						}
+
+						out << "Removed " << event << " from play!" << std::endl;
+
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> forecast <1> <2> <3> <4> <5> <6>" << std::endl;
@@ -106,10 +125,18 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 							ctx.game.remove_research_station_supply();
 							ctx.cities.place_research_station(city);
 							ctx.decks.remove(player, event);
-							ctx.decks.add_to_top(playerDiscard, event);
 
-							out << "Placed research station in " << city << "!" << std::endl << 
-								"Discarded " << event << " from " << player << "'s hand!" << std::endl;
+							if (player != "contingency_planner")
+								ctx.decks.add_to_top(playerDiscard, event);
+
+							out << "Placed research station in " << city << "!" << std::endl;
+
+							if (player != "contingency_planner") {
+								out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+								return;
+							}
+
+							out << "Removed " << event << " from play!" << std::endl;
 						}
 
 						else
@@ -126,8 +153,16 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 
 						ctx.players.skip_next_infection_phase();
 						ctx.decks.remove(player, event);
-						ctx.decks.add_to_top(playerDiscard, event);
-						out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+						
+						if (player != "contingency_planner")
+							ctx.decks.add_to_top(playerDiscard, event);
+
+						if (player != "contingency_planner") {
+							out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+							return;
+						}
+
+						out << "Removed " << event << " from play!" << std::endl;
 
 					}
 					catch (std::out_of_range const &) {
@@ -145,11 +180,18 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 							if (*card == infCard) {
 								ctx.decks.remove(infectionDiscard, infCard);	//Completely remove from play card
 								ctx.decks.remove(player, event);
-								ctx.decks.add_to_top(playerDiscard, event);
+								
+								if (player != "contingency_planner")
+									ctx.decks.add_to_top(playerDiscard, event);
 
-								out << "Removed " << infCard << " from play!" << std::endl <<
-									"Discarded " << event << " from " << player << "'s hand!" << std::endl;
-								return;
+								out << "Removed " << infCard << " from play!" << std::endl;
+
+								if (player != "contingency_planner") {
+									out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+									return;
+								}
+
+								out << "Removed " << event << " from play!" << std::endl;
 							}
 						}
 
