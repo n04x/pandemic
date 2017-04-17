@@ -36,12 +36,12 @@ auto shuttle_flight_to::run(context &ctx, args_type const &args, ostream_type &o
 							ctx.decks.add_to_top(playerDiscard, removeCard);				// Add to discard
 							ctx.players.decrement_actions_remaining();
 							out << "Shuttle flight: " << player << " -> " << city << " [Operations Expert]" << std::endl
-								<< "Discarded " << removeCard << " from " << player << std::endl;
+								<< "Discarded " << removeCard << " from " << player << "'s hand!" << std::endl;
 							return;
 						}
 					}
 
-					out << removeCard << " is not in " << player << "'s hand!";
+					out << removeCard << " is not in " << player << "'s hand!" << std::endl;
 					return;
 				}
 				catch (std::out_of_range const &) {
