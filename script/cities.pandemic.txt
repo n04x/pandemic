@@ -22,3 +22,27 @@ add-city yellow lagos khartoum kinshrsr sao_paulo
 add-city yellow khartoum johannesburg kinshrsr lagos cairo
 add-city yellow johannesburg khartoum kinshrsr
 add-city yellow kinshrsr khartoum johannesburg lagos
+add-city black moscow tehran istanbul st_petersburg
+add-city black istanbul milan st_petersburg algiers moscow baghdad
+add-city black algiers paris madrid istanbul cairo
+add-city black cairo algiers riyadh istanbul baghdad khartoum
+add-city black baghdad istanbul cairo riyadh karachi tehran
+add-city black tehran moscow baghdad karachi delhi
+add-city black delhi tehran karachi kolkata mumbai chennai
+add-city black karachi tehran delhi mumbai riyadh baghdad
+add-city black riyadh cairo baghdad karachi
+add-city black mumbai karachi delhi chennai
+add-city black chennai mumbai delhi kolkata bangkok jakarta
+add-city black kolkata delhi chennai bangkok hong_kong
+add-city red bangkok kolkata chennai hong_kong ho_chi_minh_city jakarta
+add-city red hong_kong kolkata bangkok ho_chi_minh_city manila taipei shanghai
+add-city red jakarta chennai bangkok ho_chi_minh_city sydney
+add-city red shanghai beijing seoul tokyo taipei hong_kong
+add-city red beijing seoul shanghai
+add-city red seoul beijing shanghai tokyo
+add-city red tokyo seoul shanghai osaka san_francisco
+add-city red osaka tokyo taipei
+add-city red taipei shanghai osaka hong_kong manila
+add-city red ho_chi_minh_city bangkok hong_kong manila jakarta
+add-city red manila ho_chi_minh_city hong_kong taipei sydney san_francisco
+add-city red sydney jakarta manila los_angeles
