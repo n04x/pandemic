@@ -173,7 +173,6 @@ auto infect(context &ctx, end_actions::args_type const &args, end_actions::ostre
 }
 
 auto end_actions::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
-	// TODO throw error if game not started
 	draw_cards(ctx, args, out);
 	hand_limit(ctx, args, out);
 	infect(ctx, args, out);

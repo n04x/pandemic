@@ -43,5 +43,4 @@ infect infection infection_discard 1
 # handled by difficulty script
 
 # SETUP 6
-# TODO player with highest city population goes first
-# call begin-play to start the game
+# call begin to start the game

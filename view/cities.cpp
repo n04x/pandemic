@@ -10,7 +10,7 @@ auto cities::description() const -> std::string {
 }
 
 auto cities::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
-	static constexpr auto col1 = 14;
+	static constexpr auto col1 = 17;
 	static constexpr auto col2 = 8;
 	static constexpr auto colCube = 7;
 	static constexpr auto col4 = 10;

@@ -11,7 +11,7 @@ auto players::description() const -> std::string {
 
 auto players::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	static constexpr auto col1 = 7;
-	static constexpr auto col2 = 12;
+	static constexpr auto col2 = 22;
 	static constexpr auto col3 = 12;
 	static constexpr auto fill = ' ';
 	out << std::left << std::setw(col1) << std::setfill(fill) << "PLAYER";

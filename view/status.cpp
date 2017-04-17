@@ -16,7 +16,7 @@ auto status::run(context &ctx, args_type const &args, ostream_type &out) const -
 		out << "status: game not started" << std::endl;
 		return;
 	}
-	static constexpr auto col1 = 5;
+	static constexpr auto col1 = 7;
 	static constexpr auto col2 = 8;
 	static constexpr auto col3 = 12;
 	static constexpr auto fill = ' ';
@@ -40,17 +40,25 @@ auto status::run(context &ctx, args_type const &args, ostream_type &out) const -
 	out << std::left << std::setw(col3) << std::setfill(fill) << ctx.game.research_station_supply_count();
 	out << std::left << std::setw(col3) << std::setfill(fill) << ctx.game.get_outbreak_level();
 	out << std::left << std::setw(col3) << std::setfill(fill) << ctx.game.get_infection_rate();
+	bool discovered_cure{false};
 	if (ctx.game.discovered_cure("black"_h)) {
 		out << "black ";
+		discovered_cure = true;
 	}
 	if (ctx.game.discovered_cure("yellow"_h)) {
 		out << "yellow ";
+		discovered_cure = true;
 	}
 	if (ctx.game.discovered_cure("red"_h)) {
 		out << "red ";
+		discovered_cure = true;
 	}
 	if (ctx.game.discovered_cure("blue"_h)) {
 		out << "blue ";
+		discovered_cure = true;
+	}
+	if (!discovered_cure) {
+		out << "(none)";
 	}
 	out << std::endl;
 }

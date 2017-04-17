@@ -21,7 +21,6 @@ class players_model {
 	bool skipping_next_infection_phase;
 
 public:
-	// TODO remove internal iterator leak
 	using const_iterator = players_type::const_iterator;
 
 	static const int actions_per_turn = 4;
