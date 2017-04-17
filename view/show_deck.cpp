@@ -35,15 +35,18 @@ auto show_deck::run(context &ctx, args_type const &args, ostream_type &out) cons
 		for (auto i = ctx.decks.begin(deck); i != ctx.decks.end(deck); i++) {
 			out << *i << " ";
 		}
-		//		Saved event card shows up at the end of line in bracket not counting as card ex. [airlift]
-		if (ctx.players.get_role(deck) == "contingency_planner"_h) {
-			for (auto i = ctx.decks.begin("contingency_planner"_h); i != ctx.decks.end("contingency_planner"_h); i++) {
-				out << "[" << *i << "]";
-			}
-		}
-		
-		out << std::endl;
 	} catch (std::out_of_range const &) {
 		out << name() << ": '" << deck << "' does not exist" << std::endl;
 	}
+	try {
+	//		Saved event card shows up at the end of line in bracket not counting as card ex. [airlift]
+	if (ctx.players.get_role(deck) == "contingency_planner"_h) {
+		for (auto i = ctx.decks.begin("contingency_planner"_h); i != ctx.decks.end("contingency_planner"_h); i++) {
+			out << "[" << *i << "]";
+		}
+	}
+	} catch (std::out_of_range const &) {
+		// Do nothing - get_role throws out_of_range if deck is not a player deck
+	}
+	out << std::endl;
 }

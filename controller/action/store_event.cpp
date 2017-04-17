@@ -25,11 +25,13 @@ auto store_event::run(context & ctx, args_type const & args, ostream_type & out)
 		}
 
 		if (ctx.decks.size("contingency_planner"_h) == 0) {
-			for (auto i = ctx.decks.begin(playerDiscard); i != ctx.decks.end(playerDiscard); i++) {
-				if (*i == event) {
+			for (auto card = ctx.decks.begin(playerDiscard); card != ctx.decks.end(playerDiscard); card++) {
+				if (*card == event) {
 					ctx.decks.remove(playerDiscard, event);
 					ctx.decks.add_to_top("contingency_planner"_h, event);
 					ctx.players.decrement_actions_remaining();
+
+					out << "Placed " << event << " on top of contingency planner role card!" << std::endl;
 					
 					return;
 				}

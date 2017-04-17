@@ -36,8 +36,9 @@ auto drive_to::run(context &ctx, args_type const &args, ostream_type &out) const
 				}
 			}
 			ctx.players.decrement_actions_remaining();
+			out << "Drive: " << player << " -> " << city << std::endl;
 		} else
-			out << "Not possible to drive to " << city << std::endl;
+			out << city << " is not possible to drive to from " << currentCity << std::endl;
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <city>" << std::endl;

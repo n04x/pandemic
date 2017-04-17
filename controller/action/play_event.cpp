@@ -1,5 +1,6 @@
 #include "play_event.h"
-
+#include <iterator>
+#include <algorithm>
 
 auto play_event::name() const -> std::string
 {
@@ -36,99 +37,83 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 
 						ctx.players.set_city(playerMove, city);	// Set the new position of player
 						ctx.decks.remove(player, event);
-						ctx.decks.add_to_top(playerDiscard, event);
+
+						if (player != "contingency_planner")
+							ctx.decks.add_to_top(playerDiscard, event);
+
+						out << "Airlift: " << playerMove << " -> " << city << std::endl;
+						
+						if (player != "contingency_planner") {
+							out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+							return;
+						}
+
+						out << "Removed " << event << " from play!" << std::endl;
+
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> airlift <player_to_move> <city>" << std::endl;
 					}
 				}
 
-				if (event == "forecast"_h) {	//TODO Figure out why after placing all cards in deck current player name comes up twice
+				if (event == "forecast"_h) {
+					static const auto amount = 6;
 					try {
+						// Get top 6 cards in infection deck
+						std::vector<handle> top6;
+						std::copy_n(ctx.decks.begin("infection"_h), std::min(std::size_t{ 6 }, ctx.decks.size("infection"_h)), std::back_inserter(top6));
+						if (top6.size() != amount) {
+							out << name() << ": not enough cards in infection deck";
+							return;
+						}
 
-						auto a = ctx.decks.remove_from_top(infectionDeck);
-						auto b = ctx.decks.remove_from_top(infectionDeck);
-						auto c = ctx.decks.remove_from_top(infectionDeck);
-						auto d = ctx.decks.remove_from_top(infectionDeck);
-						auto e = ctx.decks.remove_from_top(infectionDeck);
-						auto f = ctx.decks.remove_from_top(infectionDeck);
+						// Get target order
+						std::vector<handle> target6;
+						auto iterator = args.begin();
+						iterator++;
+						iterator++;
+						std::copy(iterator, args.end(), std::back_inserter(target6));
+						if (target6.size() != amount) {
+							out << "usage: " << name() << " <player_with_card> forecast <1> <2> <3> <4> <5> <6>" << std::endl;
+							return;
+						}
 
-						out << "1. "<< a << " 2. " << b << " 3. " << c << " 4. " << d << " 5. " << e << " 6. " << f << std::endl;
+						// Ensure the target cards exist in the top of infection deck
+						std::vector<handle> top6_sorted{top6};
+						std::vector<handle> target6_sorted{target6};
+						std::sort(top6_sorted.begin(), top6_sorted.end());
+						std::sort(target6_sorted.begin(), target6_sorted.end());
+						std::vector<handle> intersection;
+						std::set_difference(top6_sorted.begin(), top6_sorted.end(), target6_sorted.begin(), target6_sorted.end(), std::back_inserter(intersection));
+						if (!intersection.empty()) {
+							out << name() << ": cards not at top of infection deck";
+							return;
+						}
 
-						out << "Reorder the cards above by number from sixth to first (press enter between numbers):" << std::endl;
-
-						std::vector<int> cards;
-
-						for (int i = 1; i <= 6; i++)	//Change integer to 0 if number already used
-							cards.push_back(i);
-
-						for (int i = 0; i < 6; i++) {
-
-							int x = 0;
-							
-							while ((x > 6) || (x < 1)) {
-								
-								std::cin >> x;
-
-								while ((x > 6) || (x < 1) || (cards[x - 1] == 0)) {
-									
-									while ((x > 6) || (x < 1)) {
-										out << "Wrong number! Try Again!" << std::endl;
-										std::cin >> x;
-									}
-									
-									while (cards[x - 1] == 0){
-										out << "Card already put back in deck! Chose another card!" << std::endl;
-										std::cin >> x;
-
-										while ((x > 6) || (x < 1)) {
-											out << "Wrong number! Try Again!" << std::endl;
-											std::cin >> x;
-										}
-									}	
-								}
-
-								if (x == 1) {
-									ctx.decks.add_to_top(infectionDeck, a);
-									cards[0] = 0;
-								}
-									
-
-								if (x == 2){
-									ctx.decks.add_to_top(infectionDeck, b);
-									cards[1] = 0;
-								}
-
-								if (x == 3){
-									ctx.decks.add_to_top(infectionDeck, c);
-									cards[2] = 0;
-								}
-
-								if (x == 4) {
-									ctx.decks.add_to_top(infectionDeck, d);
-									cards[3] = 0;
-								}
-
-								if (x == 5){
-									ctx.decks.add_to_top(infectionDeck, e);
-									cards[4] = 0;
-								}
-
-								if (x == 6){
-									ctx.decks.add_to_top(infectionDeck, f);
-									cards[5] = 0;
-								}
-
-								if ((x > 6) || (x < 1))
-									out << "Wrong number! Try Again!" << std::endl;
-							}
+						// Re-order the cards
+						for (auto i = 0; i < amount; i++) {
+							ctx.decks.remove_from_top("infection"_h);
+						}
+						for (auto i = target6.rbegin(); i != target6.rend(); i++) {
+							ctx.decks.add_to_top("infection"_h, *i);
 						}
 
 						ctx.decks.remove(player, event);
-						ctx.decks.add_to_top(playerDiscard, event);
+
+						if (player != "contingency_planner")
+							ctx.decks.add_to_top(playerDiscard, event);
+
+
+						if (player != "contingency_planner") {
+							out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+							return;
+						}
+
+						out << "Removed " << event << " from play!" << std::endl;
+
 					}
 					catch (std::out_of_range const &) {
-						out << "usage: " << name() << " <player_with_card> forecast" << std::endl;
+						out << "usage: " << name() << " <player_with_card> forecast <1> <2> <3> <4> <5> <6>" << std::endl;
 					}
 
 				}
@@ -141,7 +126,18 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 							ctx.game.remove_research_station_supply();
 							ctx.cities.place_research_station(city);
 							ctx.decks.remove(player, event);
-							ctx.decks.add_to_top(playerDiscard, event);
+
+							if (player != "contingency_planner")
+								ctx.decks.add_to_top(playerDiscard, event);
+
+							out << "Placed research station in " << city << "!" << std::endl;
+
+							if (player != "contingency_planner") {
+								out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+								return;
+							}
+
+							out << "Removed " << event << " from play!" << std::endl;
 						}
 
 						else
@@ -158,7 +154,16 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 
 						ctx.players.skip_next_infection_phase();
 						ctx.decks.remove(player, event);
-						ctx.decks.add_to_top(playerDiscard, event);
+						
+						if (player != "contingency_planner")
+							ctx.decks.add_to_top(playerDiscard, event);
+
+						if (player != "contingency_planner") {
+							out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+							return;
+						}
+
+						out << "Removed " << event << " from play!" << std::endl;
 
 					}
 					catch (std::out_of_range const &) {
@@ -176,8 +181,18 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 							if (*card == infCard) {
 								ctx.decks.remove(infectionDiscard, infCard);	//Completely remove from play card
 								ctx.decks.remove(player, event);
-								ctx.decks.add_to_top(playerDiscard, event);
-								return;
+								
+								if (player != "contingency_planner")
+									ctx.decks.add_to_top(playerDiscard, event);
+
+								out << "Removed " << infCard << " from play!" << std::endl;
+
+								if (player != "contingency_planner") {
+									out << "Discarded " << event << " from " << player << "'s hand!" << std::endl;
+									return;
+								}
+
+								out << "Removed " << event << " from play!" << std::endl;
 							}
 						}
 

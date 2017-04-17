@@ -10,7 +10,7 @@ auto discover_cure::description() const -> std::string {
 
 auto discover_cure::run(context &ctx, args_type const &args, ostream_type &out) const -> void {
 	auto discardDeck = "player_discard"_h;
-	auto roleCheck = "scientist"_h;
+	
 	try {
 		auto color = args.at(0);
 		auto player = ctx.players.get_current_turn();
@@ -37,7 +37,7 @@ auto discover_cure::run(context &ctx, args_type const &args, ostream_type &out) 
 				v.push_back(*card);
 			}
 			// It will check the role of the user with the role in the condition
-			if (role == roleCheck) {
+			if (role == "scientist"_h) {
 				// The Scientist needs only 4 City cards of the same disease color to Discover a Cure for that disease.
 				if (v.size() == 4) {
 					for (int i = 0; i < v.size(); i++) {
@@ -46,6 +46,8 @@ auto discover_cure::run(context &ctx, args_type const &args, ostream_type &out) 
 					}
 					ctx.game.discovered_cure(color);
 					ctx.players.decrement_actions_remaining();
+
+					out << "Cure for " << color << " has been discovered! [Scientist]" << std::endl;
 
 					return;
 				}
@@ -60,11 +62,13 @@ auto discover_cure::run(context &ctx, args_type const &args, ostream_type &out) 
 				ctx.game.discover_cure(color);
 				ctx.players.decrement_actions_remaining();
 
+				out << "Cure for " << color << " has been discovered!" << std::endl;
+
 				return;
 			}
 		}
 
-		out << "Not enough " << color << " cards in hand!" << std::endl;
+		out << "Not enough " << color << " cards in " << player << "'s hand!" << std::endl;
 
 	}
 	catch (std::out_of_range const &) {

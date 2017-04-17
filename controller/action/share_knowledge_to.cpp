@@ -38,22 +38,34 @@ auto share_knowledge_to::run(context &ctx, args_type const &args, ostream_type &
 					ctx.decks.add_to_top(playerTwo, chosenCard);
 					hand_limit(ctx, out, playerTwo);
 					ctx.players.decrement_actions_remaining();
+					out << chosenCard << " given to " << playerTwo << " from " << playerOne << "! [Researcher]" << std::endl;
 					return;
 				}
 			}
 		}
 		else {
+
+			if (!(city == chosenCard)) {
+				out << "You are not in " << chosenCard << "!" << std::endl;
+				return;
+			}
+
+
 				for (auto card = ctx.decks.begin(playerOne); card != ctx.decks.end(playerOne); card++) {
 					if (*card == city) {
 						ctx.decks.remove(playerOne, city);
 						ctx.decks.add_to_top(playerTwo, city);
 						hand_limit(ctx, out, playerTwo);
 						ctx.players.decrement_actions_remaining();
+						out << chosenCard << " given to " << playerTwo << " from " << playerOne << "!" << std::endl;
 						return;
 					}
 				}
+
+				out << playerOne << " does not have " << city << " card!" << std::endl;
+				return;
 		}
-		out << playerOne << " does not have city card!" << std::endl;
+		
 	}
 	catch (std::out_of_range const &) {
 		out << "usage: " << name() << " <player> [city]" << std::endl;
