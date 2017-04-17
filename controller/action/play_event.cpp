@@ -1,5 +1,6 @@
 #include "play_event.h"
-
+#include <iterator>
+#include <algorithm>
 
 auto play_event::name() const -> std::string
 {
@@ -60,7 +61,7 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 					try {
 						// Get top 6 cards in infection deck
 						std::vector<handle> top6;
-						std::copy_n(ctx.decks.begin("infection"_h), std::min(6ul, ctx.decks.size("infection"_h)), std::back_inserter(top6));
+						std::copy_n(ctx.decks.begin("infection"_h), std::min(std::size_t{ 6 }, ctx.decks.size("infection"_h)), std::back_inserter(top6));
 						if (top6.size() != amount) {
 							out << name() << ": not enough cards in infection deck";
 							return;
