@@ -371,6 +371,7 @@ auto application::replay(std::string const & filename) -> void
 	bool after_first_line{ false };
 	// Run commands by line
 	while (std::getline(in, line)) {
+		//out << "file " << line << std::endl;
 		if (!after_first_line) {
 			after_first_line = true;
 			// Split command into tokens
@@ -381,6 +382,7 @@ auto application::replay(std::string const & filename) -> void
 			}
 			std::vector<std::string> args;
 			std::string arg;
+			
 			while (iss >> arg) {
 				args.emplace_back(arg);
 			}
@@ -404,6 +406,12 @@ auto application::replay(std::string const & filename) -> void
 			}
 		}
 		std::string name;
+		if (line.find("load") != std::string::npos) {
+			line = "replay" + line.substr(4);
+		}
+		if (!(line.find("#") != std::string::npos) && !(line == "")) {
+			out << "commands: " << line << std::endl;
+		}
 		auto code = call_command(line, name, null_stream);
 		if (code == return_code::blank_input) {
 			continue;
