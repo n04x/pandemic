@@ -1,7 +1,5 @@
 # PANDEMIC - COMP 345 W2017 - Team Elephants
 
-[![Build Status](https://travis-ci.com/jephir/pandemic.svg?token=H5s5urysT233MRnGw5EA&branch=master)](https://travis-ci.com/jephir/pandemic)
-
 Implements the PANDEMIC role playing game.
 
 ## Setup
