@@ -79,17 +79,7 @@ auto move_player::run(context & ctx, args_type const & args, ostream_type & out)
 		
 		//Shuttle Flight
 		if (ctx.cities.has_research_station(currentCity) == true) {
-			
-			/*				Can dispatcher move operation expert like operation expert?
-			// Check if the player is the Operation Expert, he can fly to anywhere from a research station.
-			if (role == "operation_expert"_h) {
-				ctx.players.set_city(movePlayer, city);                // Set the new position of player
-				ctx.players.decrement_actions_remaining();
-				out << "Shuttle flight: " << movePlayer << " -> " << city << " [Operation Expert]" << std::endl;
-				return;
-			}
-			*/
-
+	
 			if (ctx.cities.has_research_station(city) == true) {
 				ctx.players.set_city(movePlayer, city);                // Set the new position of player
 				// Check if the moved player is a medic
