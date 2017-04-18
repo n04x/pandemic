@@ -44,4 +44,4 @@ Files can be recursively loaded using the `load` command. This allows command sc
 
 * Marco Tropiano
 * Julian Hoang
-* Tom Bach
+* Thomas Backs
