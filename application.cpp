@@ -32,6 +32,8 @@
 #include "controller/action/move_player.h"
 #include "controller/action/store_event.h"
 #include "controller/pattern.h"
+#include <chrono>
+#include <thread>
 #include <iomanip>
 #include <fstream>
 #include <sstream>
@@ -412,6 +414,7 @@ auto application::replay(std::string const & filename) -> void
 		if (!(line.find("#") != std::string::npos) && !(line == "")) {
 			out << "commands: " << line << std::endl;
 		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(300));
 		auto code = call_command(line, name, null_stream);
 		if (code == return_code::blank_input) {
 			continue;
