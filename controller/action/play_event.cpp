@@ -38,6 +38,22 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 						ctx.players.set_city(playerMove, city);	// Set the new position of player
 						ctx.decks.remove(player, event);
 
+						// Handle medic cures
+						auto role = ctx.players.get_role(playerMove);
+						if (role == "medic"_h) {
+							static const std::vector<handle> colors = {"black"_h, "blue"_h, "yellow"_h, "red"_h};
+							for (auto color : colors) {
+								if (ctx.game.discovered_cure(color)) {
+									// If the cure is discovered, the medic remove all the cube without the cost of the action.
+									int cubes = ctx.cities.get_cube_count(city, color);
+									for (cubes; cubes > 0; cubes--) {
+										ctx.cities.remove_cube(city, color);
+										ctx.game.add_cube_to_supply(color);
+									}
+								}
+							}
+						}
+
 						if (player != "contingency_planner")
 							ctx.decks.add_to_top(playerDiscard, event);
 
@@ -49,7 +65,6 @@ auto play_event::run(context & ctx, args_type const & args, ostream_type & out) 
 						}
 
 						out << "Removed " << event << " from play!" << std::endl;
-
 					}
 					catch (std::out_of_range const &) {
 						out << "usage: " << name() << " <player_with_card> airlift <player_to_move> <city>" << std::endl;
