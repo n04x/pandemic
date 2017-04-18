@@ -367,8 +367,6 @@ auto application::replay(std::string const & filename) -> void
 		return;
 	}
 	// Suppress command output
-	null_buffer nb;
-	std::ostream null_stream{ &nb };
 	std::string line;
 	bool after_first_line{ false };
 	// Run commands by line
@@ -415,7 +413,7 @@ auto application::replay(std::string const & filename) -> void
 			out << "commands: " << line << std::endl;
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(300));
-		auto code = call_command(line, name, null_stream);
+		auto code = call_command(line, name, out);
 		if (code == return_code::blank_input) {
 			continue;
 		}

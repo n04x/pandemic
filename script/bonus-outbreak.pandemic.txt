@@ -1,0 +1,118 @@
+seed 1434765096
+add-city blue san_francisco chicago los_angeles tokyo manila
+add-city blue chicago montreal atlanta mexico_city los_angeles san_francisco
+add-city blue montreal new_york washington chicago
+add-city blue new_york london madrid washington montreal
+add-city blue washington new_york miami atlanta montreal
+add-city blue atlanta washington miami chicago
+add-city blue london essen paris madrid new_york
+add-city blue essen st_petersburg milan paris london
+add-city blue st_petersburg moscow istanbul essen
+add-city blue milan istanbul paris essen
+add-city blue paris essen milan algiers madrid london
+add-city blue madrid london paris algiers sao_paulo new_york
+add-city yellow los_angeles chicago mexico_city sydney san_francisco
+add-city yellow mexico_city chicago miami bogota lima los_angeles
+add-city yellow miami washington bogota mexico_city atlanta
+add-city yellow bogota miami sao_paulo buenos_aires lima mexico_city
+add-city yellow sao_paulo madrid lagos buenos_aires bogota
+add-city yellow buenos_aires sao_paulo bogota
+add-city yellow santirgo lima
+add-city yellow lima bogota santirgo mexico_city
+add-city yellow lagos khartoum kinshrsr sao_paulo
+add-city yellow khartoum johannesburg kinshrsr lagos cairo
+add-city yellow johannesburg khartoum kinshrsr
+add-city yellow kinshrsr khartoum johannesburg lagos
+add-city black moscow tehran istanbul st_petersburg
+add-city black istanbul milan st_petersburg algiers moscow baghdad cairo
+add-city black algiers paris madrid istanbul cairo
+add-city black cairo algiers riyadh istanbul baghdad khartoum
+add-city black baghdad istanbul cairo riyadh karachi tehran
+add-city black tehran moscow baghdad karachi delhi
+add-city black delhi tehran karachi kolkata mumbai chennai
+add-city black karachi tehran delhi mumbai riyadh baghdad
+add-city black riyadh cairo baghdad karachi
+add-city black mumbai karachi delhi chennai
+add-city black chennai mumbai delhi kolkata bangkok jakarta
+add-city black kolkata delhi chennai bangkok hong_kong
+add-city red bangkok kolkata chennai hong_kong ho_chi_minh_city jakarta
+add-city red hong_kong kolkata bangkok ho_chi_minh_city manila taipei shanghai
+add-city red jakarta chennai bangkok ho_chi_minh_city sydney
+add-city red shanghai beijing seoul tokyo taipei hong_kong
+add-city red beijing seoul shanghai
+add-city red seoul beijing shanghai tokyo
+add-city red tokyo seoul shanghai osaka san_francisco
+add-city red osaka tokyo taipei
+add-city red taipei shanghai osaka hong_kong manila
+add-city red ho_chi_minh_city bangkok hong_kong manila jakarta
+add-city red manila ho_chi_minh_city hong_kong taipei sydney san_francisco
+add-city red sydney jakarta manila los_angeles
+create-deck player
+add-cities-to-deck player
+add-to-deck player one_quiet_night
+add-to-deck player forecast
+add-to-deck player government_grant
+add-to-deck player resilient_population
+add-to-deck player airlift
+create-deck player_discard
+set-research-station-supply 6
+set-disease-cube-supply black 24
+set-disease-cube-supply yellow 24
+set-disease-cube-supply blue 24
+set-disease-cube-supply red 24
+place-research-station atlanta
+create-deck infection
+add-cities-to-deck infection
+shuffle-deck infection
+create-deck infection_discard
+infect infection infection_discard 3
+infect infection infection_discard 3
+infect infection infection_discard 3
+infect infection infection_discard 2
+infect infection infection_discard 2
+infect infection infection_discard 2
+infect infection infection_discard 1
+infect infection infection_discard 1
+infect infection infection_discard 1
+add-player orange
+add-player teal
+add-player green
+add-player pink
+give-role orange medic
+give-role teal dispatcher
+give-role green researcher
+give-role pink scientist
+place-pawn orange atlanta
+place-pawn teal atlanta
+place-pawn green atlanta
+place-pawn pink atlanta
+shuffle-deck player
+create-deck orange
+move-top-card player orange
+move-top-card player orange
+create-deck teal
+move-top-card player teal
+move-top-card player teal
+create-deck green
+move-top-card player green
+move-top-card player green
+create-deck pink
+move-top-card player pink
+move-top-card player pink
+add-to-deck player epidemic_1
+add-to-deck player epidemic_2
+add-to-deck player epidemic_3
+add-to-deck player epidemic_4
+add-to-deck player epidemic_5
+shuffle-deck player
+begin
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
