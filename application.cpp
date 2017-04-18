@@ -234,6 +234,7 @@ auto application::call_command(std::string const &command, std::string &name, st
 			filename = args.at(0);
 		}
 		replay(filename);
+		return return_code::exit;
 	}
 	else {
 		try {
