@@ -334,6 +334,8 @@ auto application::load(std::string const &filename) -> void {
 				auto s = std::stoul(seed);
 				ctx.decks.set_seed(s);
 				this->seed = s;
+				auto cmd = "seed " + std::to_string(s);
+				command_history.push_back(cmd);
 				out << "using existing seed '" << s << "'" << std::endl;
 			} else {
 				std::random_device r;
