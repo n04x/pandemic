@@ -18,9 +18,7 @@ auto direct_flight_to::run(context &ctx, args_type const &args, ostream_type &ou
 			discard_deck = args.at(1);
 		}
 		auto role = ctx.players.get_role(player);
-		ctx.decks.remove(player, city);
-		ctx.decks.add_to_top(discard_deck, city);                // Add the card to the discard card deck
-		ctx.players.set_city(player, city);                // Set the new position of player
+
 		if (role == "medic"_h) {
 			static const std::vector<handle> colors = {"black"_h, "blue"_h, "yellow"_h, "red"_h};
 			for (auto color : colors) {
